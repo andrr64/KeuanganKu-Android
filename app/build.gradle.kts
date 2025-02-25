@@ -3,7 +3,6 @@ plugins {
     alias(libs.plugins.kotlin.android)
     id("com.google.devtools.ksp")
     id("kotlin-kapt")
-    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -47,6 +46,8 @@ android {
         viewBinding = true
         dataBinding = true
     }
+    buildToolsVersion = "35.0.0"
+    ndkVersion = "27.1.12297006"
 }
 
 dependencies {
