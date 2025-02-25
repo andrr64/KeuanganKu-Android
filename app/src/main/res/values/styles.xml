@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="CustomAutoCompleteTextView" parent="Widget.MaterialComponents.AutoCompleteTextView.OutlinedBox">
+        <item name="android:popupBackground">@color/white</item>
+    </style>
+    <style name="DropdownTransparent">
+        <item name="fontFamily">@font/poppins</item>
+        <item name="android:popupBackground">@color/white</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+</resources>

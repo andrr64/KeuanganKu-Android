@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/dark_purple"
+    app:cardCornerRadius="10dp">
+
+    <RelativeLayout
+        android:paddingBottom="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/userInfoContainer"
+            android:padding="15dp">
+
+            <!-- Layout 1 (Kiri) -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hai"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/poppins_light"
+                    android:textAppearance="?attr/textAppearanceBody2" />
+
+                <TextView
+                    android:id="@+id/userName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Andreas"
+                    android:textColor="@color/white"
+                    android:textAppearance="?attr/textAppearanceTitleLarge" />
+            </LinearLayout>
+
+            <!-- Layout 2 (Kanan) -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center_vertical"
+                android:gravity="end"> <!-- Rata kanan -->
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_light"
+                    android:text="@string/balance"
+                    android:textColor="@color/white"
+                    android:textAppearance="?attr/textAppearanceBody2" />
+
+                <TextView
+                    android:id="@+id/totalBalanceTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dummy"
+                    android:textColor="@color/white"
+                    android:textAppearance="?attr/textAppearanceTitleLarge" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <include
+            layout="@layout/component_button_add"
+            android:id="@+id/buttonAdd"
+            android:layout_width="128dp"
+            android:layout_centerInParent="true"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/userInfoContainer"/>
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

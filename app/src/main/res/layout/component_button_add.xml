@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.button.MaterialButton
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/button"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/add"
+    android:layout_marginEnd="15dp"
+    android:backgroundTint="#0fffffff"
+    app:cornerRadius="10dp"
+    app:icon="@drawable/ic_add_box_24"
+    app:iconTint="@color/white"
+    app:iconSize="22dp"
+    android:fontFamily="@font/poppins"
+    android:soundEffectsEnabled="false"
+    android:textColor="@color/white" />
