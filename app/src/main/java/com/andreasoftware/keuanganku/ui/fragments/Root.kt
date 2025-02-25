@@ -7,19 +7,17 @@ import android.view.ViewGroup
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
-import androidx.lifecycle.ViewModelProvider
 import com.andreasoftware.keuanganku.R
 import com.andreasoftware.keuanganku.databinding.FragmentAppRootBinding
 import com.andreasoftware.keuanganku.ui.viewmodels.MainViewModel
 
-class Main : Fragment() {
+class Root : Fragment() {
 
     private lateinit var binding: FragmentAppRootBinding
     private lateinit var drawerLayout: DrawerLayout
-    private val viewModel: MainViewModel by lazy {
-        ViewModelProvider(this)[MainViewModel::class.java]
-    }
+    private val viewModel: MainViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
