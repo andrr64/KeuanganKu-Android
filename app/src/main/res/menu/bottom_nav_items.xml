@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu
-    xmlns:android="http://schemas.android.com/apk/res/android"
->
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:title="@string/bottom_nav_item_home"
         android:id="@+id/homeMenuId"
-        android:icon="@drawable/ic_home_24"/>
+        android:icon="@drawable/ic_home_24" />
     <item
         android:title="@string/bottom_nav_item_expense"
         android:id="@+id/expenseMenuId"
-        android:icon="@drawable/ic_expense_24"/>
+        android:icon="@drawable/ic_expense_24" />
 </menu>

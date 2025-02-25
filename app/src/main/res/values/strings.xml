@@ -28,4 +28,6 @@
     <string name="period">Period</string>
     <string name="expense">Expense</string>
     <string name="income">Income</string>
+    <string name="hi">Hi</string>
+    <string name="default_name">John</string>
 </resources>

@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.andreasoftware.keuanganku.R
 import com.andreasoftware.keuanganku.common.enums.PeriodOptions
 import com.andreasoftware.keuanganku.databinding.FragmentAppMainmenuHomeBinding
+import com.andreasoftware.keuanganku.ui.utils.StringFormatter
 import com.andreasoftware.keuanganku.ui.viewmodels.HomeViewModel
 
 class Home : Fragment() {
@@ -52,8 +53,8 @@ class Home : Fragment() {
     @SuppressLint("SetTextI18n")
     private fun setupObservers() {
         ///TODO: formatting
-        viewModel.totalBalance.observe(viewLifecycleOwner) { balance ->
-            binding.balanceCard.totalBalanceTextView.text = balance.toLong().toString()
+        viewModel.totalBalance.observe(viewLifecycleOwner) {
+            binding.balanceCard.totalBalanceTextView.text = StringFormatter.formatNumber(it ?: 0.0)
         }
 
         viewModel.expensePeriod.observe(viewLifecycleOwner) { selectedPeriod ->
@@ -65,16 +66,19 @@ class Home : Fragment() {
         }
 
         ///TODO: formatting
-        viewModel.incomeTotal.observe(viewLifecycleOwner){ it ->
-            val totalIncome = it?: 0.0
-            binding.incomeCard.incomeAmount.text = totalIncome.toString()
+        viewModel.incomeTotal.observe(viewLifecycleOwner) {
+            binding.incomeCard.incomeAmount.text = StringFormatter.formatNumber(it ?: 0.0)
         }
     }
 
     private fun setupPeriodSpinner() {
         val periodLabels = PeriodOptions.entries.map { it.label }
 
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, periodLabels)
+        val adapter = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_dropdown_item_1line,
+            periodLabels
+        )
 
         binding.expenseCard.spinnerPeriod.spinnerLayout.hint = ""
         binding.expenseCard.spinnerPeriod.spinner.apply {

@@ -25,12 +25,14 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     val _incomePeriod = MutableLiveData(PeriodOptions.WEEKLY.label)
     val _incomePeriodEnum = MutableLiveData(PeriodOptions.WEEKLY)
     val incomePeriod: LiveData<String> = _incomePeriod
-    val incomeTotal: LiveData<Double?> = incomeRepository.getTotalIncomeByPeriodOption(_incomePeriodEnum.value!!)
+    val incomeTotal: LiveData<Double?> =
+        incomeRepository.getTotalIncomeByPeriodOption(_incomePeriodEnum.value!!)
 
     fun setExpensePeriod(period: String) {
         _expensePeriod.value = period
         _expensePeriodEnum.value = PeriodOptions.fromString(period)
     }
+
     fun setIncomePeriod(period: String) {
         _incomePeriod.value = period
         _incomePeriodEnum.value = PeriodOptions.fromString(period)

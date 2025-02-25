@@ -24,7 +24,7 @@ class IncomeRepository(application: Application) {
     }
 
     suspend fun delete(income: Income) {
-        withContext(Dispatchers.IO){
+        withContext(Dispatchers.IO) {
 
         }
     }

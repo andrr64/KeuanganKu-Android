@@ -25,20 +25,20 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="16dp">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="@string/expense_form"
                 android:fontFamily="@font/poppins"
-                android:textSize="18sp"
-                />
+                android:textSize="18sp" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="@string/expense_form_desc"
                 android:fontFamily="@font/poppins_light"
-                android:textSize="12sp"
-                />
+                android:textSize="12sp" />
 
             <!-- Field Title -->
             <com.google.android.material.textfield.TextInputLayout
@@ -68,23 +68,27 @@
                     android:layout_height="wrap_content"
                     android:inputType="numberDecimal" />
             </com.google.android.material.textfield.TextInputLayout>
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_marginTop="16dp"
                 android:layout_height="wrap_content">
+
                 <include
                     android:id="@+id/spinnerExpenseCategories"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     app:layout_constraintWidth_percent="0.5"
-                    layout="@layout/component_spinner"/>
+                    layout="@layout/component_spinner" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+
             <include
                 android:id="@+id/expenseRatingBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                layout="@layout/component_rating_bar"/>
+                layout="@layout/component_rating_bar" />
+
             <Button
                 android:id="@+id/submitButton"
                 android:layout_width="match_parent"

@@ -11,7 +11,8 @@ import com.andreasoftware.keuanganku.data.database.entities.Expense
 class ExpenseAdapter(private val expenses: List<Expense>) :
     RecyclerView.Adapter<ExpenseAdapter.ExpenseViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExpenseViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.component_expense_item, parent, false)
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.component_expense_item, parent, false)
         return ExpenseViewHolder(view)
     }
 

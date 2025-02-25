@@ -7,5 +7,5 @@ import androidx.room.PrimaryKey
 data class IncomeCategory(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val title: String,
-    val date: Long= System.currentTimeMillis()
+    val date: Long = System.currentTimeMillis()
 )

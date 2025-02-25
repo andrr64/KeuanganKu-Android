@@ -30,10 +30,12 @@ interface IncomeDao {
                 calendar.add(Calendar.DAY_OF_YEAR, -7)
                 calendar.timeInMillis
             }
+
             PeriodOptions.MONTHLY -> {
                 calendar.add(Calendar.MONTH, -1)
                 calendar.timeInMillis
             }
+
             PeriodOptions.YEARLY -> {
                 calendar.add(Calendar.YEAR, -1)
                 calendar.timeInMillis
