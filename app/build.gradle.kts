@@ -55,14 +55,12 @@ dependencies {
 
     implementation(libs.androidx.ui.android)
 
+
+    // ROOM
     implementation("androidx.room:room-runtime:$room_version")
     annotationProcessor("androidx.room:room-compiler:$room_version")
     ksp("androidx.room:room-compiler:$room_version")
     implementation("androidx.room:room-ktx:$room_version")
-
-    implementation("androidx.hilt:hilt-navigation-fragment:1.2.0")
-    implementation("com.google.dagger:hilt-android:2.51.1")
-    ksp("com.google.dagger:hilt-android-compiler:2.51.1")
 
     // Jetpack Compose integration
     implementation("androidx.navigation:navigation-compose:$nav_version")

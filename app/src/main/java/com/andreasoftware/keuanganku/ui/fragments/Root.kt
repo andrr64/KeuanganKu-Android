@@ -11,13 +11,13 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import com.andreasoftware.keuanganku.R
 import com.andreasoftware.keuanganku.databinding.FragmentAppRootBinding
-import com.andreasoftware.keuanganku.ui.viewmodels.MainViewModel
+import com.andreasoftware.keuanganku.ui.viewmodels.RootViewModel
 
 class Root : Fragment() {
 
     private lateinit var binding: FragmentAppRootBinding
     private lateinit var drawerLayout: DrawerLayout
-    private val viewModel: MainViewModel by activityViewModels()
+    private val viewModel: RootViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

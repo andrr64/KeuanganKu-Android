@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.andreasoftware.keuanganku.R
 import com.andreasoftware.keuanganku.common.enums.PeriodOptions
@@ -17,11 +17,10 @@ import com.andreasoftware.keuanganku.ui.utils.StringFormatter
 import com.andreasoftware.keuanganku.ui.viewmodels.HomeViewModel
 
 class Home : Fragment() {
-
     private var _binding: FragmentAppMainmenuHomeBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: HomeViewModel by viewModels()
+    private val viewModel: HomeViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -10,10 +10,12 @@ import com.andreasoftware.keuanganku.data.repositories.ExpenseRepository
 import com.andreasoftware.keuanganku.data.repositories.IncomeRepository
 import com.andreasoftware.keuanganku.data.repositories.WalletRepository
 
-class HomeViewModel(application: Application) : AndroidViewModel(application) {
-    private val walletRepository = WalletRepository(application)
-    private val incomeRepository = IncomeRepository(application)
-    private val expenseRepository = ExpenseRepository(application)
+class HomeViewModel (
+    application: Application,
+) : AndroidViewModel(application) {
+    val walletRepository: WalletRepository = WalletRepository(application)
+    val incomeRepository: IncomeRepository = IncomeRepository(application)
+    val expenseRepository: ExpenseRepository = ExpenseRepository(application)
 
     val totalBalance: LiveData<Double> = walletRepository.totalBalance
     val allWallets: LiveData<List<Wallet>> = walletRepository.allWallets
