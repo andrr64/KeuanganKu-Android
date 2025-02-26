@@ -1,5 +1,6 @@
 package com.andreasoftware.keuanganku.ui.fragments.menu
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -35,9 +36,14 @@ class Home : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         Log.d("Home", "onViewCreated: Home")
         super.onViewCreated(view, savedInstanceState)
+
+
+        ///TODO: handle name
+        binding.balanceCard.userName.text = "John"
         setupObservers()
         setupClickListeners()
         setupPeriodSpinner()

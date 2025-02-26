@@ -10,13 +10,25 @@
         tools:layout="@layout/fragment_app_main">
         <action
             android:id="@+id/action_main_fragment_to_expenseForm"
-            app:destination="@+id/expenseForm" />
+            app:destination="@+id/expenseForm"
+            app:enterAnim="@anim/ios_slide_in_right"
+            app:exitAnim="@anim/ios_slide_out_left"
+            app:popEnterAnim="@anim/ios_slide_in_left"
+            app:popExitAnim="@anim/ios_slide_out_right"/>
         <action
             android:id="@+id/action_main_fragment_to_incomeForm"
-            app:destination="@id/incomeForm" />
+            app:destination="@id/incomeForm"
+            app:enterAnim="@anim/ios_slide_in_right"
+            app:exitAnim="@anim/ios_slide_out_left"
+            app:popEnterAnim="@anim/ios_slide_in_left"
+            app:popExitAnim="@anim/ios_slide_out_right"/>
         <action
             android:id="@+id/action_main_fragment_to_walletForm"
-            app:destination="@+id/walletForm" />
+            app:destination="@+id/walletForm"
+            app:enterAnim="@anim/ios_slide_in_right"
+            app:exitAnim="@anim/ios_slide_out_left"
+            app:popEnterAnim="@anim/ios_slide_in_left"
+            app:popExitAnim="@anim/ios_slide_out_right"/>
     </fragment>
 
     <fragment

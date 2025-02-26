@@ -47,7 +47,7 @@
                     android:ellipsize="end"
                     android:fontFamily="@font/poppins"
                     android:maxLines="1"
-                    android:text="@string/dummy"
+                    android:text="@string/empty"
                     android:textColor="@color/white"
                     android:textSize="22sp" />
 

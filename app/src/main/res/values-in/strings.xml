@@ -22,4 +22,6 @@
     <string name="this_week">Minggu Ini</string>
     <string name="this_year">Tahun Ini</string>
     <string name="period">Periode</string>
+    <string name="expense">Pengeluaran</string>
+    <string name="income">Pemasukan</string>
 </resources>
