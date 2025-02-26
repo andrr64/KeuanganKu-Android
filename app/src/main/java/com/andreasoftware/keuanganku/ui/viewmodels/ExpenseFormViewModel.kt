@@ -3,11 +3,19 @@ package com.andreasoftware.keuanganku.ui.viewmodels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.andreasoftware.keuanganku.data.database.entities.ExpenseCategory
+import com.andreasoftware.keuanganku.data.repositories.ExpenseCategoryRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class ExpenseFormViewModel : ViewModel() {
-
+@HiltViewModel
+class ExpenseFormViewModel @Inject constructor(
+    repository: ExpenseCategoryRepository
+) : ViewModel() {
     private val _spinnerSelectedText = MutableLiveData<String?>(null)
     val spinnerSelectedText: LiveData<String?> = _spinnerSelectedText
+
+    val allCategories: LiveData<List<ExpenseCategory>> = repository.allCategories
 
     private val _title = MutableLiveData<String?>(null)
     val title: LiveData<String?> = _title

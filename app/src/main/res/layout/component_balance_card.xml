@@ -7,76 +7,77 @@
     app:cardCornerRadius="10dp">
 
     <RelativeLayout
-        android:paddingBottom="16dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingBottom="16dp">
 
         <LinearLayout
+            android:id="@+id/userInfoContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:baselineAligned="false"
             android:orientation="horizontal"
-            android:id="@+id/userInfoContainer"
             android:padding="15dp">
 
             <!-- Layout 1 (Kiri) -->
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_gravity="center_vertical">
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/hi"
-                    android:textColor="@color/white"
                     android:fontFamily="@font/poppins_light"
-                    android:textAppearance="?attr/textAppearanceBody2" />
+                    android:text="@string/hi"
+                    android:textAppearance="?attr/textAppearanceBody2"
+                    android:textColor="@color/white" />
 
                 <TextView
                     android:id="@+id/userName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/default_name"
-                    android:textColor="@color/white"
-                    android:textAppearance="?attr/textAppearanceTitleLarge" />
+                    android:textAppearance="?attr/textAppearanceTitleLarge"
+                    android:textColor="@color/white" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:gravity="end">
+                android:gravity="end"
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_light"
                     android:text="@string/balance"
-                    android:textColor="@color/white"
-                    android:textAppearance="?attr/textAppearanceBody2" />
+                    android:textAppearance="?attr/textAppearanceBody2"
+                    android:textColor="@color/white" />
 
                 <TextView
                     android:id="@+id/totalBalanceTextView"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="@string/dummy"
-                    android:textColor="@color/white"
-                    android:textAppearance="?attr/textAppearanceTitleLarge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
                     android:maxLines="1"
-                    android:ellipsize="end" />
+                    android:text="@string/dummy"
+                    android:textAppearance="?attr/textAppearanceTitleLarge"
+                    android:textColor="@color/white" />
             </LinearLayout>
         </LinearLayout>
 
         <include
-            layout="@layout/component_button_add"
             android:id="@+id/buttonAdd"
+            layout="@layout/component_button_add"
             android:layout_width="128dp"
-            android:layout_centerInParent="true"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/userInfoContainer" />
+            android:layout_below="@+id/userInfoContainer"
+            android:layout_centerInParent="true" />
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

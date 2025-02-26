@@ -11,13 +11,16 @@ import com.andreasoftware.keuanganku.data.database.entities.Wallet
 import com.andreasoftware.keuanganku.data.repositories.ExpenseRepository
 import com.andreasoftware.keuanganku.data.repositories.IncomeRepository
 import com.andreasoftware.keuanganku.data.repositories.WalletRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class HomeViewModel (
+@HiltViewModel
+class HomeViewModel @Inject constructor(
+    private val incomeRepository: IncomeRepository,
+    private val expenseRepository: ExpenseRepository,
+    private val walletRepository: WalletRepository,
     application: Application,
 ) : AndroidViewModel(application) {
-    val walletRepository: WalletRepository by lazy {WalletRepository(application)}
-    val incomeRepository: IncomeRepository by lazy {IncomeRepository(application)}
-    val expenseRepository: ExpenseRepository by lazy {ExpenseRepository(application)}
 
     val totalBalance: LiveData<Double> = walletRepository.totalBalance
     val allWallets: LiveData<List<Wallet>> = walletRepository.allWallets
@@ -44,7 +47,7 @@ class HomeViewModel (
         }
     }
 
-    fun updateIncomeTotal(){
+    fun updateIncomeTotal() {
         _incomePeriodEnum.value = _incomePeriodEnum.value
     }
 

@@ -6,11 +6,14 @@ import androidx.lifecycle.LiveData
 import com.andreasoftware.keuanganku.common.enums.PeriodOptions
 import com.andreasoftware.keuanganku.data.database.AppDatabase
 import com.andreasoftware.keuanganku.data.database.dao.ExpenseDao
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class ExpenseRepository(application: Application) {
+@Singleton
+class ExpenseRepository @Inject constructor(application: Application) {
     private val expenseDao: ExpenseDao = AppDatabase.getDatabase(application).expenseDao()
 
-    fun getExpenseCount(): LiveData<Int>{
+    fun getExpenseCount(): LiveData<Int> {
         return expenseDao.getCount()
     }
 
@@ -22,10 +25,12 @@ class ExpenseRepository(application: Application) {
                 calendar.add(Calendar.DAY_OF_YEAR, -7)
                 calendar.timeInMillis
             }
+
             PeriodOptions.MONTHLY -> {
                 calendar.add(Calendar.MONTH, -1)
                 calendar.timeInMillis
             }
+
             PeriodOptions.YEARLY -> {
                 calendar.add(Calendar.YEAR, -1)
                 calendar.timeInMillis

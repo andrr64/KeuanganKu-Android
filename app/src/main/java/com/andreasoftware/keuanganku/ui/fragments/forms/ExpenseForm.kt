@@ -10,28 +10,18 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.andreasoftware.keuanganku.R
-import com.andreasoftware.keuanganku.data.database.AppDatabase
-import com.andreasoftware.keuanganku.data.repositories.ExpenseCategoryRepository
 import com.andreasoftware.keuanganku.databinding.FragmentAppFormExpenseBinding
-import com.andreasoftware.keuanganku.ui.viewmodels.ExpenseCategoriesFactory
-import com.andreasoftware.keuanganku.ui.viewmodels.ExpenseCategoriesViewModel
 import com.andreasoftware.keuanganku.ui.viewmodels.ExpenseFormViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ExpenseForm : Fragment() {
 
     private lateinit var binding: FragmentAppFormExpenseBinding
-    private val expenseCategoriesViewModel: ExpenseCategoriesViewModel by lazy {
-        val dao = AppDatabase.getDatabase(requireContext()).expenseCategoryDao()
-        val repository = ExpenseCategoryRepository(dao)
-        val factory = ExpenseCategoriesFactory(repository)
-        ViewModelProvider(this, factory)[ExpenseCategoriesViewModel::class.java]
-    }
-    private val formViewModel: ExpenseFormViewModel by lazy {
-        ViewModelProvider(this)[ExpenseFormViewModel::class.java]
-    }
+    private val viewModel: ExpenseFormViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,13 +47,13 @@ class ExpenseForm : Fragment() {
     }
 
     private fun setupTextListeners() {
-        binding.titleEditText.setText(formViewModel.title.value)
-        binding.amountEditText.setText(formViewModel.amount.value)
+        binding.titleEditText.setText(viewModel.title.value)
+        binding.amountEditText.setText(viewModel.amount.value)
 
         binding.titleEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                formViewModel.setTitle(s?.toString())
+                viewModel.setTitle(s?.toString())
             }
 
             override fun afterTextChanged(s: Editable?) {}
@@ -72,7 +62,7 @@ class ExpenseForm : Fragment() {
         binding.amountEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                formViewModel.setAmount(s?.toString())
+                viewModel.setAmount(s?.toString())
             }
 
             override fun afterTextChanged(s: Editable?) {}
@@ -80,7 +70,7 @@ class ExpenseForm : Fragment() {
     }
 
     private fun setupSpinner() {
-        expenseCategoriesViewModel.allCategories.observe(viewLifecycleOwner) { categories ->
+        viewModel.allCategories.observe(viewLifecycleOwner) { categories ->
             val categoryNames = categories.map { it.title }
             val adapter = ArrayAdapter(
                 requireContext(),
@@ -89,14 +79,14 @@ class ExpenseForm : Fragment() {
             )
             binding.spinnerExpenseCategories.spinnerAutoComplete.apply {
                 setAdapter(adapter)
-                if (categories.isNotEmpty() && formViewModel.spinnerSelectedText.value == null) {
+                if (categories.isNotEmpty() && viewModel.spinnerSelectedText.value == null) {
                     setText(categories[0].title, false)
                 } else {
-                    setText(formViewModel.spinnerSelectedText.value, false)
+                    setText(viewModel.spinnerSelectedText.value, false)
                 }
                 onItemClickListener = AdapterView.OnItemClickListener { parent, _, position, _ ->
                     val selectedItem = parent.getItemAtPosition(position).toString()
-                    formViewModel.setSpinnerSelectedText(selectedItem)
+                    viewModel.setSpinnerSelectedText(selectedItem)
                 }
             }
         }

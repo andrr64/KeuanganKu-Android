@@ -6,16 +6,16 @@
     tools:context=".ui.fragments.forms.WalletForm">
 
     <include
-        layout="@layout/appbar_for_children"
         android:id="@+id/appBar"
+        layout="@layout/appbar_for_children"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
-        android:layout_below="@+id/appBar">
+        android:layout_below="@+id/appBar"
+        android:background="@color/white">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -26,15 +26,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:fontFamily="@font/poppins"
                 android:text="@string/wallet_form"
-                android:textSize="18sp"
-                android:fontFamily="@font/poppins" />
+                android:textSize="18sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="@string/wallet_form_desc"
                 android:fontFamily="@font/poppins_light"
+                android:text="@string/wallet_form_desc"
                 android:textSize="12sp" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -54,8 +54,8 @@
                 android:id="@+id/amountInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/initial_amount"
-                android:layout_marginTop="16dp">
+                android:layout_marginTop="16dp"
+                android:hint="@string/initial_amount">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/amountEditText"
@@ -68,9 +68,9 @@
                 android:id="@+id/submitButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/submit"
-                android:backgroundTint="@color/dark_purple"
                 android:layout_marginTop="24dp"
+                android:backgroundTint="@color/dark_purple"
+                android:text="@string/submit"
                 android:textColor="@color/white" />
         </LinearLayout>
     </ScrollView>

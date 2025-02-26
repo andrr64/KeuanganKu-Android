@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.andreasoftware.keuanganku.R
 
-class RootViewModel : ViewModel(){
+class RootViewModel : ViewModel() {
     private val _fragmentId = MutableLiveData(R.id.homeMenuId)
     val bottomNavbarValue: LiveData<Int> = _fragmentId
 

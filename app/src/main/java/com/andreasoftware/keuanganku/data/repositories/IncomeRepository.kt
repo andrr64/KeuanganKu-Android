@@ -11,8 +11,11 @@ import com.andreasoftware.keuanganku.data.database.dao.IncomeDao
 import com.andreasoftware.keuanganku.data.database.entities.Income
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class IncomeRepository(application: Application) {
+@Singleton
+class IncomeRepository @Inject constructor(application: Application) {
     private val incomeDao: IncomeDao = AppDatabase.getDatabase(application).incomeDao()
     private val _refreshTrigger = MutableLiveData<Unit>()
 
@@ -23,7 +26,10 @@ class IncomeRepository(application: Application) {
             incomeDao.insert(income)
             val oldUnit = _refreshTrigger.value
             _refreshTrigger.postValue(Unit)
-            Log.d("IncomeRepository", "Unit Changed: ${oldUnit.hashCode()} ->  ${_refreshTrigger.hashCode()}")
+            Log.d(
+                "IncomeRepository",
+                "Unit Changed: ${oldUnit.hashCode()} ->  ${_refreshTrigger.hashCode()}"
+            )
         }
     }
 
@@ -35,10 +41,12 @@ class IncomeRepository(application: Application) {
                 calendar.add(Calendar.DAY_OF_YEAR, -7)
                 calendar.timeInMillis
             }
+
             PeriodOptions.MONTHLY -> {
                 calendar.add(Calendar.MONTH, -1)
                 calendar.timeInMillis
             }
+
             PeriodOptions.YEARLY -> {
                 calendar.add(Calendar.YEAR, -1)
                 calendar.timeInMillis

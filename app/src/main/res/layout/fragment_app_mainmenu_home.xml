@@ -17,24 +17,24 @@
 
             <include
                 android:id="@+id/balanceCard"
+                layout="@layout/component_balance_card"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15sp"
-                layout="@layout/component_balance_card" />
+                android:layout_marginTop="15sp" />
 
             <include
                 android:id="@+id/expenseCard"
+                layout="@layout/component_expense_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15sp"
-                layout="@layout/component_expense_card" />
+                android:layout_marginTop="15sp" />
 
             <include
                 android:id="@+id/incomeCard"
+                layout="@layout/component_income_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15sp"
-                layout="@layout/component_income_card" />
+                android:layout_marginTop="15sp" />
         </LinearLayout>
     </ScrollView>
 

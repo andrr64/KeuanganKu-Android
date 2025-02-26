@@ -15,7 +15,9 @@ import com.andreasoftware.keuanganku.common.enums.PeriodOptions
 import com.andreasoftware.keuanganku.databinding.FragmentAppMainmenuHomeBinding
 import com.andreasoftware.keuanganku.ui.utils.StringFormatter
 import com.andreasoftware.keuanganku.ui.viewmodels.HomeViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class Home : Fragment() {
     private var _binding: FragmentAppMainmenuHomeBinding? = null
     private val binding get() = _binding!!
