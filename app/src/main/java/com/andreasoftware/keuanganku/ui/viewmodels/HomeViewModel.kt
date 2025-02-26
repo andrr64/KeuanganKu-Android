@@ -47,10 +47,6 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun updateIncomeTotal() {
-        _incomePeriodEnum.value = _incomePeriodEnum.value
-    }
-
     fun setExpensePeriod(period: String) {
         _expensePeriod.value = period
         _expensePeriodEnum.value = PeriodOptions.fromString(period)
