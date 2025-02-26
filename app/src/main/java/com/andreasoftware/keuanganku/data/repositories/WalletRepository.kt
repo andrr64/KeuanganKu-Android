@@ -1,8 +1,6 @@
 package com.andreasoftware.keuanganku.data.repositories
 
-import android.app.Application
 import androidx.lifecycle.LiveData
-import com.andreasoftware.keuanganku.data.database.AppDatabase
 import com.andreasoftware.keuanganku.data.database.dao.WalletDao
 import com.andreasoftware.keuanganku.data.database.entities.Wallet
 import com.andreasoftware.keuanganku.data.di.WalletDaoQualifier

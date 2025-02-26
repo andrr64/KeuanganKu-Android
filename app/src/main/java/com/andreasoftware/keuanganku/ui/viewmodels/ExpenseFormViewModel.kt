@@ -5,8 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.andreasoftware.keuanganku.data.database.entities.ExpenseCategory
 import com.andreasoftware.keuanganku.data.database.entities.Wallet
-import com.andreasoftware.keuanganku.data.di.ExpenseCategoryDaoQualifier
-import com.andreasoftware.keuanganku.data.di.WalletDaoQualifier
 import com.andreasoftware.keuanganku.data.repositories.ExpenseCategoryRepository
 import com.andreasoftware.keuanganku.data.repositories.WalletRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,8 +18,8 @@ class ExpenseFormViewModel @Inject constructor(
     private val _spinnerSelectedText = MutableLiveData<String?>(null)
     val spinnerSelectedText: LiveData<String?> = _spinnerSelectedText
 
-    private  val _spinnerWalletSelectedText = MutableLiveData<String?>(null)
-    val spinnerWalletSelectedText: LiveData<String?> =  _spinnerSelectedText
+    private val _spinnerWalletSelectedText = MutableLiveData<String?>(null)
+    val spinnerWalletSelectedText: LiveData<String?> = _spinnerSelectedText
     fun setSelectedWallet(text: String?) {
         _spinnerWalletSelectedText.value = text
     }

@@ -26,7 +26,7 @@ import kotlinx.coroutines.launch
 class ExpenseForm : Fragment() {
 
     private var _binding: FragmentAppFormExpenseBinding? = null
-    private val binding get()= _binding!!
+    private val binding get() = _binding!!
 
     private val viewModel: ExpenseFormViewModel by viewModels() // mengikuti lifecycle currentCiew
     private val titleTextWatcher = object : TextWatcher {
@@ -34,6 +34,7 @@ class ExpenseForm : Fragment() {
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             viewModel.setTitle(s?.toString())
         }
+
         override fun afterTextChanged(s: Editable?) {}
     }
     private val amountTextWatcher = object : TextWatcher {
@@ -41,6 +42,7 @@ class ExpenseForm : Fragment() {
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             viewModel.setAmount(s?.toString())
         }
+
         override fun afterTextChanged(s: Editable?) {}
     }
 
@@ -70,7 +72,7 @@ class ExpenseForm : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        _binding= null
+        _binding = null
     }
 
     private fun setupTextListeners() {
@@ -120,10 +122,11 @@ class ExpenseForm : Fragment() {
                     } else {
                         setText(selectedText.value, false)
                     }
-                    onItemClickListener = AdapterView.OnItemClickListener { parent, _, position, _ ->
-                        val selectedItem = parent.getItemAtPosition(position).toString()
-                        onItemSelected(selectedItem)
-                    }
+                    onItemClickListener =
+                        AdapterView.OnItemClickListener { parent, _, position, _ ->
+                            val selectedItem = parent.getItemAtPosition(position).toString()
+                            onItemSelected(selectedItem)
+                        }
                 }
             }
         }

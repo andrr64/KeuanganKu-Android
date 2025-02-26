@@ -33,7 +33,7 @@ class IncomeForm : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         viewModel.setSpinnerSelectedText(null)
-        _binding= null
+        _binding = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

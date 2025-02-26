@@ -1,6 +1,5 @@
 package com.andreasoftware.keuanganku.ui.fragments.menu
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -58,7 +57,8 @@ class Home : Fragment() {
     private fun setupObservers() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.totalBalance.observe(viewLifecycleOwner) {
-                binding.balanceCard.totalBalanceTextView.text = StringFormatter.formatNumber(it ?: 0.0)
+                binding.balanceCard.totalBalanceTextView.text =
+                    StringFormatter.formatNumber(it ?: 0.0)
             }
 
             viewModel.expensePeriod.observe(viewLifecycleOwner) { selectedPeriod ->
@@ -111,7 +111,8 @@ class Home : Fragment() {
     }
 
     private fun navigateTo(actionId: Int) {
-        val navHostFragment = activity?.supportFragmentManager?.findFragmentById(R.id.root_nav_host_fragment) as? NavHostFragment
+        val navHostFragment =
+            activity?.supportFragmentManager?.findFragmentById(R.id.root_nav_host_fragment) as? NavHostFragment
         val navController = navHostFragment?.navController
         navController?.navigate(actionId)
         Log.d("Home", "navigateTo: $navController")

@@ -1,10 +1,8 @@
 package com.andreasoftware.keuanganku.data.repositories
 
-import android.app.Application
 import android.icu.util.Calendar
 import androidx.lifecycle.LiveData
 import com.andreasoftware.keuanganku.common.enums.PeriodOptions
-import com.andreasoftware.keuanganku.data.database.AppDatabase
 import com.andreasoftware.keuanganku.data.database.dao.ExpenseDao
 import com.andreasoftware.keuanganku.data.di.ExpenseDaoQualifier
 import javax.inject.Inject
