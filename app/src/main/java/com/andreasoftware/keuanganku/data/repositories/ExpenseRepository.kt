@@ -6,13 +6,14 @@ import androidx.lifecycle.LiveData
 import com.andreasoftware.keuanganku.common.enums.PeriodOptions
 import com.andreasoftware.keuanganku.data.database.AppDatabase
 import com.andreasoftware.keuanganku.data.database.dao.ExpenseDao
+import com.andreasoftware.keuanganku.data.di.ExpenseDaoQualifier
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ExpenseRepository @Inject constructor(application: Application) {
-    private val expenseDao: ExpenseDao = AppDatabase.getDatabase(application).expenseDao()
-
+class ExpenseRepository @Inject constructor(
+    @ExpenseDaoQualifier private val expenseDao: ExpenseDao,
+) {
     fun getExpenseCount(): LiveData<Int> {
         return expenseDao.getCount()
     }

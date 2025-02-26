@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.andreasoftware.keuanganku.R
@@ -19,7 +20,9 @@ import com.andreasoftware.keuanganku.ui.viewmodels.WalletFormViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class WalletForm : Fragment() {
     private lateinit var submitButton: Button
     private lateinit var loadingDialog: LoadingDialog
@@ -27,7 +30,7 @@ class WalletForm : Fragment() {
     private lateinit var amountEditText: TextInputEditText
     private lateinit var titleInputLayout: TextInputLayout
     private lateinit var amountInputLayout: TextInputLayout
-    private lateinit var walletViewModel: WalletFormViewModel
+    private val walletViewModel: WalletFormViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,13 +49,13 @@ class WalletForm : Fragment() {
         amountEditText = view.findViewById(R.id.amountEditText)
         titleInputLayout = view.findViewById(R.id.titleInputLayout)
         amountInputLayout = view.findViewById(R.id.amountInputLayout)
-        walletViewModel = ViewModelProvider(this)[WalletFormViewModel::class.java]
 
         submitButton.setOnClickListener {
             onSubmit()
         }
         return view
     }
+    ///TODO: binding
 
     private fun onSubmit() {
         val title = titleEditText.text.toString().trim()

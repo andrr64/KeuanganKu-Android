@@ -20,14 +20,16 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class ExpenseForm : Fragment() {
 
-    private lateinit var binding: FragmentAppFormExpenseBinding
+    private var _binding: FragmentAppFormExpenseBinding? = null
+    private val binding get()= _binding!!
+
     private val viewModel: ExpenseFormViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentAppFormExpenseBinding.inflate(inflater, container, false)
+        _binding = FragmentAppFormExpenseBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -36,7 +38,6 @@ class ExpenseForm : Fragment() {
         setupAppbar()
         setupTextListeners()
         setupSpinner()
-        setupSubmitButton()
     }
 
     private fun setupAppbar() {
@@ -44,6 +45,11 @@ class ExpenseForm : Fragment() {
             appBarTitle.text = getString(R.string.expense_form)
             appBarBackButton.setOnClickListener { findNavController().navigateUp() }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding= null
     }
 
     private fun setupTextListeners() {
@@ -70,6 +76,27 @@ class ExpenseForm : Fragment() {
     }
 
     private fun setupSpinner() {
+        viewModel.allCategories.observe(viewLifecycleOwner) { wallets ->
+            val walletName = wallets.map { it.title }
+            val adapter = ArrayAdapter(
+                requireContext(),
+                android.R.layout.simple_dropdown_item_1line,
+                walletName
+            )
+            binding.spinnerWallets.spinnerAutoComplete.apply {
+                setAdapter(adapter)
+                if (wallets.isNotEmpty() && viewModel.spinnerSelectedText.value == null) {
+                    setText(wallets[0].title, false)
+                } else {
+                    setText(viewModel.spinnerWalletSelectedText.value, false)
+                }
+                onItemClickListener = AdapterView.OnItemClickListener { parent, _, position, _ ->
+                    val selectedItem = parent.getItemAtPosition(position).toString()
+                    viewModel.setSelectedWallet(selectedItem)
+                }
+            }
+        }
+
         viewModel.allCategories.observe(viewLifecycleOwner) { categories ->
             val categoryNames = categories.map { it.title }
             val adapter = ArrayAdapter(

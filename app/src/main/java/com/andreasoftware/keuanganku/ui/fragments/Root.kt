@@ -9,6 +9,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
+import androidx.fragment.app.viewModels
 import com.andreasoftware.keuanganku.R
 import com.andreasoftware.keuanganku.databinding.FragmentAppRootBinding
 import com.andreasoftware.keuanganku.ui.viewmodels.RootViewModel
@@ -17,7 +18,7 @@ class Root : Fragment() {
 
     private lateinit var binding: FragmentAppRootBinding
     private lateinit var drawerLayout: DrawerLayout
-    private val viewModel: RootViewModel by activityViewModels()
+    private val viewModel: RootViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

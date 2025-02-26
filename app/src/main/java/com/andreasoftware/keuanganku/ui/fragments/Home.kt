@@ -2,6 +2,7 @@ package com.andreasoftware.keuanganku.ui.fragments
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,6 +35,7 @@ class Home : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        Log.d("Home", "onViewCreated: Home")
         super.onViewCreated(view, savedInstanceState)
         setupObservers()
         setupClickListeners()

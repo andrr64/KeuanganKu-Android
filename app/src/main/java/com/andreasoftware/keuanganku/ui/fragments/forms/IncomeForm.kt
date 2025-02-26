@@ -3,6 +3,7 @@ package com.andreasoftware.keuanganku.ui.fragments.forms
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,15 +20,22 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class IncomeForm : Fragment() {
 
-    private lateinit var binding: FragmentAppFormIncomeBinding
+    private var _binding: FragmentAppFormIncomeBinding? = null
+    private val binding get() = _binding!!
     private val viewModel: IncomeFormViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentAppFormIncomeBinding.inflate(inflater, container, false)
+        _binding = FragmentAppFormIncomeBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("IncomeForm", "onDestroy: binding")
+        _binding= null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

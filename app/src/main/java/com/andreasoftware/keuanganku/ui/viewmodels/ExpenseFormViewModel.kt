@@ -4,18 +4,30 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.andreasoftware.keuanganku.data.database.entities.ExpenseCategory
+import com.andreasoftware.keuanganku.data.database.entities.Wallet
+import com.andreasoftware.keuanganku.data.di.ExpenseCategoryDaoQualifier
+import com.andreasoftware.keuanganku.data.di.WalletDaoQualifier
 import com.andreasoftware.keuanganku.data.repositories.ExpenseCategoryRepository
+import com.andreasoftware.keuanganku.data.repositories.WalletRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class ExpenseFormViewModel @Inject constructor(
-    repository: ExpenseCategoryRepository
+    expenseCategoryRepository: ExpenseCategoryRepository,
+    walletRepository: WalletRepository
 ) : ViewModel() {
     private val _spinnerSelectedText = MutableLiveData<String?>(null)
     val spinnerSelectedText: LiveData<String?> = _spinnerSelectedText
 
-    val allCategories: LiveData<List<ExpenseCategory>> = repository.allCategories
+    private  val _spinnerWalletSelectedText = MutableLiveData<String?>(null)
+    val spinnerWalletSelectedText: LiveData<String?> =  _spinnerSelectedText
+    fun setSelectedWallet(text: String?) {
+        _spinnerWalletSelectedText.value = text
+    }
+
+    val allCategories: LiveData<List<ExpenseCategory>> = expenseCategoryRepository.allCategories
+    val allWallet: LiveData<List<Wallet>> = walletRepository.allWallets
 
     private val _title = MutableLiveData<String?>(null)
     val title: LiveData<String?> = _title
