@@ -1,11 +1,10 @@
 package com.andreasoftware.keuanganku.data.database.dao
 
-import android.icu.util.Calendar
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
-import com.andreasoftware.keuanganku.common.enums.PeriodOptions
 import com.andreasoftware.keuanganku.data.database.entities.Income
 
 @Dao
@@ -19,29 +18,15 @@ interface IncomeDao {
     @Query("SELECT * FROM incomes WHERE date BETWEEN :startDate AND :endDate")
     fun getIncomeByPeriods(startDate: String, endDate: String): LiveData<List<Income>>
 
-    @Query("SELECT SUM(amount) FROM incomes WHERE date BETWEEN:startDate AND:endDate")
-    fun getTotalIncomeByPeriods(startDate: Long, endDate: Long): LiveData<Double?>
+    @Query("SELECT COUNT(*) FROM incomes")
+    fun getCount(): LiveData<Int>
 
-    fun getTotalIncomeByPeriodOption(periodOptions: PeriodOptions): LiveData<Double?> {
-        val calendar = Calendar.getInstance()
-        val endDate = calendar.timeInMillis
-        val startDate = when (periodOptions) {
-            PeriodOptions.WEEKLY -> {
-                calendar.add(Calendar.DAY_OF_YEAR, -7)
-                calendar.timeInMillis
-            }
+    @Delete
+    suspend fun delete(income: Income)
 
-            PeriodOptions.MONTHLY -> {
-                calendar.add(Calendar.MONTH, -1)
-                calendar.timeInMillis
-            }
+    @Query("SELECT SUM(amount) FROM incomes")
+    fun getTotalIncome(): LiveData<Double?>
 
-            PeriodOptions.YEARLY -> {
-                calendar.add(Calendar.YEAR, -1)
-                calendar.timeInMillis
-            }
-        }
-        val results = getTotalIncomeByPeriods(startDate, endDate)
-        return results
-    }
+    @Query("SELECT SUM(amount) FROM incomes WHERE date BETWEEN :startDate AND :endDate")
+    fun getTotalIncomeByPeriod(startDate: Long, endDate: Long): LiveData<Double?>
 }

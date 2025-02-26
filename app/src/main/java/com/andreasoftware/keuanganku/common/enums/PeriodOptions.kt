@@ -7,7 +7,7 @@ enum class PeriodOptions(val label: String) {
 
     companion object {
         fun fromString(value: String): PeriodOptions? {
-            return entries.find { it.name.equals(value, ignoreCase = true) }
+            return entries.find { it.label.equals(value, ignoreCase = true) }
         }
     }
 }

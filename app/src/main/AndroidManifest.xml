@@ -12,7 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.KeuanganKu"
         android:name=".KeuanganKuApplication"
-        tools:targetApi="31">
+        android:enableOnBackInvokedCallback="true"
+        tools:targetApi="tiramisu">
         <provider
             android:name="androidx.startup.InitializationProvider"
             android:authorities="${applicationId}.androidx-startup"

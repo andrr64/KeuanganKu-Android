@@ -17,8 +17,7 @@
             android:baselineAligned="false"
             android:orientation="horizontal"
             android:id="@+id/userInfoContainer"
-            android:paddingVertical="15dp"
-            android:paddingHorizontal="25dp">
+            android:padding="15dp">
 
             <!-- Layout 1 (Kiri) -->
             <LinearLayout
@@ -45,7 +44,6 @@
                     android:textAppearance="?attr/textAppearanceTitleLarge" />
             </LinearLayout>
 
-            <!-- Layout 2 (Kanan) -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -64,8 +62,7 @@
 
                 <TextView
                     android:id="@+id/totalBalanceTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:text="@string/dummy"
                     android:textColor="@color/white"
                     android:textAppearance="?attr/textAppearanceTitleLarge"

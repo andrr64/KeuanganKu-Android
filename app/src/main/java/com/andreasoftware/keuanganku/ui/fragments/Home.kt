@@ -51,9 +51,9 @@ class Home : Fragment() {
 
     @SuppressLint("SetTextI18n")
     private fun setupObservers() {
-        ///TODO: formatting
         viewModel.totalBalance.observe(viewLifecycleOwner) {
             binding.balanceCard.totalBalanceTextView.text = StringFormatter.formatNumber(it ?: 0.0)
+            viewModel.updateIncomeTotal()
         }
 
         viewModel.expensePeriod.observe(viewLifecycleOwner) { selectedPeriod ->
@@ -64,9 +64,12 @@ class Home : Fragment() {
             binding.incomeCard.spinnerPeriod.spinner.setText(selectedPeriod, false)
         }
 
-        ///TODO: formatting
         viewModel.incomeTotal.observe(viewLifecycleOwner) {
             binding.incomeCard.incomeAmount.text = StringFormatter.formatNumber(it ?: 0.0)
+        }
+
+        viewModel.expenseTotal.observe(viewLifecycleOwner) {
+            binding.expenseCard.expenseAmount.text = StringFormatter.formatNumber(it ?: 0.0)
         }
     }
 
