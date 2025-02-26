@@ -9,6 +9,7 @@ import androidx.room.Query
 import androidx.room.Transaction
 import com.andreasoftware.keuanganku.data.database.entities.Income
 import com.andreasoftware.keuanganku.data.database.entities.Wallet
+import kotlinx.coroutines.flow.Flow
 
 
 @Dao
@@ -17,6 +18,8 @@ interface WalletDao {
     @Insert
     fun insert(wallet: Wallet): Long
 
+    @Query("SELECT SUM(balance) FROM wallets")
+    fun totalBalanceFlow(): Flow<Double>
 
     @Insert
     fun insertIncome(income: Income): Long

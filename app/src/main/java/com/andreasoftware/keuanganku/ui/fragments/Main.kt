@@ -7,44 +7,50 @@ import android.view.ViewGroup
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.commit
-import androidx.fragment.app.viewModels
+import androidx.viewpager2.widget.ViewPager2
 import com.andreasoftware.keuanganku.R
-import com.andreasoftware.keuanganku.databinding.FragmentAppRootBinding
-import com.andreasoftware.keuanganku.ui.viewmodels.RootViewModel
+import com.andreasoftware.keuanganku.databinding.FragmentAppMainBinding
 
-class Root : Fragment() {
+class Main : Fragment() {
 
-    private lateinit var binding: FragmentAppRootBinding
+    private lateinit var binding: FragmentAppMainBinding
     private lateinit var drawerLayout: DrawerLayout
-    private val viewModel: RootViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentAppRootBinding.inflate(inflater, container, false)
+        binding = FragmentAppMainBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         drawerLayout = binding.drawerLayout
+        binding.viewPager.adapter = MainViewPagerAdapter(requireActivity())
+
         setupBottomNavigation()
         setupNavigationDrawer()
-        observeBottomNavValue()
+        setupViewPager()
+    }
+
+    private fun setupViewPager() {
+        binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                binding.bottomNavbar.menu.getItem(position).isChecked = true
+            }
+        })
     }
 
     private fun setupBottomNavigation() {
         binding.bottomNavbar.setOnItemSelectedListener { item ->
-            viewModel.setFragmentId(
-                when (item.itemId) {
-                    MENU_HOME -> MENU_HOME
-                    MENU_EXPENSES -> MENU_EXPENSES
-                    else -> return@setOnItemSelectedListener false
-                }
-            )
+            val position = when (item.itemId) {
+                MENU_HOME -> 0
+                MENU_EXPENSES -> 1
+                else -> return@setOnItemSelectedListener false
+            }
+            binding.viewPager.currentItem = position
             true
         }
     }
@@ -55,20 +61,6 @@ class Root : Fragment() {
         }
     }
 
-    private fun changeFragment(fragment: Fragment) {
-        parentFragmentManager.commit {
-            replace(R.id.frameLayout, fragment)
-        }
-    }
-
-    private fun observeBottomNavValue() {
-        viewModel.bottomNavbarValue.observe(viewLifecycleOwner) { fragmentId ->
-            when (fragmentId) {
-                MENU_HOME -> changeFragment(Home())
-                MENU_EXPENSES -> changeFragment(Expenses())
-            }
-        }
-    }
 
     companion object {
         private val MENU_HOME = R.id.homeMenuId

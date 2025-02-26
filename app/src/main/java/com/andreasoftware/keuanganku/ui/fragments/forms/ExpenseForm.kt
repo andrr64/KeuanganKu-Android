@@ -8,14 +8,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.andreasoftware.keuanganku.R
 import com.andreasoftware.keuanganku.databinding.FragmentAppFormExpenseBinding
 import com.andreasoftware.keuanganku.ui.viewmodels.ExpenseFormViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ExpenseForm : Fragment() {
@@ -23,7 +28,21 @@ class ExpenseForm : Fragment() {
     private var _binding: FragmentAppFormExpenseBinding? = null
     private val binding get()= _binding!!
 
-    private val viewModel: ExpenseFormViewModel by viewModels()
+    private val viewModel: ExpenseFormViewModel by viewModels() // mengikuti lifecycle currentCiew
+    private val titleTextWatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            viewModel.setTitle(s?.toString())
+        }
+        override fun afterTextChanged(s: Editable?) {}
+    }
+    private val amountTextWatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            viewModel.setAmount(s?.toString())
+        }
+        override fun afterTextChanged(s: Editable?) {}
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,6 +54,8 @@ class ExpenseForm : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        setupSubmitButton()
         setupAppbar()
         setupTextListeners()
         setupSpinner()
@@ -56,64 +77,53 @@ class ExpenseForm : Fragment() {
         binding.titleEditText.setText(viewModel.title.value)
         binding.amountEditText.setText(viewModel.amount.value)
 
-        binding.titleEditText.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                viewModel.setTitle(s?.toString())
-            }
-
-            override fun afterTextChanged(s: Editable?) {}
-        })
-
-        binding.amountEditText.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                viewModel.setAmount(s?.toString())
-            }
-
-            override fun afterTextChanged(s: Editable?) {}
-        })
+        binding.titleEditText.addTextChangedListener(titleTextWatcher)
+        binding.amountEditText.addTextChangedListener(amountTextWatcher)
     }
 
     private fun setupSpinner() {
-        viewModel.allCategories.observe(viewLifecycleOwner) { wallets ->
-            val walletName = wallets.map { it.title }
-            val adapter = ArrayAdapter(
-                requireContext(),
-                android.R.layout.simple_dropdown_item_1line,
-                walletName
-            )
-            binding.spinnerWallets.spinnerAutoComplete.apply {
-                setAdapter(adapter)
-                if (wallets.isNotEmpty() && viewModel.spinnerSelectedText.value == null) {
-                    setText(wallets[0].title, false)
-                } else {
-                    setText(viewModel.spinnerWalletSelectedText.value, false)
-                }
-                onItemClickListener = AdapterView.OnItemClickListener { parent, _, position, _ ->
-                    val selectedItem = parent.getItemAtPosition(position).toString()
-                    viewModel.setSelectedWallet(selectedItem)
-                }
-            }
+        observeSpinnerData(
+            viewModel.allCategories,
+            binding.spinnerExpenseCategories.spinnerAutoComplete,
+            viewModel.spinnerSelectedText
+        ) { selectedItem ->
+            viewModel.setSpinnerSelectedText(selectedItem)
         }
 
-        viewModel.allCategories.observe(viewLifecycleOwner) { categories ->
-            val categoryNames = categories.map { it.title }
-            val adapter = ArrayAdapter(
-                requireContext(),
-                android.R.layout.simple_dropdown_item_1line,
-                categoryNames
-            )
-            binding.spinnerExpenseCategories.spinnerAutoComplete.apply {
-                setAdapter(adapter)
-                if (categories.isNotEmpty() && viewModel.spinnerSelectedText.value == null) {
-                    setText(categories[0].title, false)
-                } else {
-                    setText(viewModel.spinnerSelectedText.value, false)
-                }
-                onItemClickListener = AdapterView.OnItemClickListener { parent, _, position, _ ->
-                    val selectedItem = parent.getItemAtPosition(position).toString()
-                    viewModel.setSpinnerSelectedText(selectedItem)
+        observeSpinnerData(
+            viewModel.allWallet,
+            binding.spinnerWallets.spinnerAutoComplete,
+            viewModel.spinnerWalletSelectedText
+        ) { selectedItem ->
+            viewModel.setSelectedWallet(selectedItem)
+        }
+    }
+
+    private fun <T> observeSpinnerData(
+        data: LiveData<List<T>>,
+        spinner: AutoCompleteTextView,
+        selectedText: LiveData<String?>,
+        onItemSelected: (String) -> Unit
+    ) {
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
+            data.observe(viewLifecycleOwner) { items ->
+                val itemNames = items.map { (it as? Any)?.toString() ?: "" }
+                val adapter = ArrayAdapter(
+                    requireContext(),
+                    android.R.layout.simple_dropdown_item_1line,
+                    itemNames
+                )
+                spinner.apply {
+                    setAdapter(adapter)
+                    if (items.isNotEmpty() && selectedText.value == null) {
+                        setText(items[0].toString(), false)
+                    } else {
+                        setText(selectedText.value, false)
+                    }
+                    onItemClickListener = AdapterView.OnItemClickListener { parent, _, position, _ ->
+                        val selectedItem = parent.getItemAtPosition(position).toString()
+                        onItemSelected(selectedItem)
+                    }
                 }
             }
         }

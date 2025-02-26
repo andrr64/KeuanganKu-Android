@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -6,9 +5,9 @@
     app:startDestination="@id/main_fragment">
     <fragment
         android:id="@+id/main_fragment"
-        android:name="com.andreasoftware.keuanganku.ui.fragments.Root"
+        android:name="com.andreasoftware.keuanganku.ui.fragments.Main"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_app_root">
+        tools:layout="@layout/fragment_app_main">
         <action
             android:id="@+id/action_main_fragment_to_expenseForm"
             app:destination="@+id/expenseForm" />
@@ -24,17 +23,18 @@
         android:id="@+id/expenseForm"
         android:name="com.andreasoftware.keuanganku.ui.fragments.forms.ExpenseForm"
         android:label="fragment_expense_form"
-        tools:layout="@layout/fragment_app_form_expense"></fragment>
+        tools:layout="@layout/fragment_app_form_expense"/>
 
     <fragment
         android:id="@+id/incomeForm"
         android:name="com.andreasoftware.keuanganku.ui.fragments.forms.IncomeForm"
         android:label="fragment_income_form"
-        tools:layout="@layout/fragment_app_form_income"></fragment>
+        tools:layout="@layout/fragment_app_form_income"/>
 
     <fragment
         android:id="@+id/walletForm"
         android:name="com.andreasoftware.keuanganku.ui.fragments.forms.WalletForm"
         android:label="fragment_wallet_form"
-        tools:layout="@layout/fragment_app_form_wallet"></fragment>
+        tools:layout="@layout/fragment_app_form_wallet" />
+
 </navigation>

@@ -3,7 +3,6 @@ package com.andreasoftware.keuanganku.ui.fragments.forms
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +18,6 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class IncomeForm : Fragment() {
-
     private var _binding: FragmentAppFormIncomeBinding? = null
     private val binding get() = _binding!!
     private val viewModel: IncomeFormViewModel by viewModels()
@@ -34,7 +32,7 @@ class IncomeForm : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.d("IncomeForm", "onDestroy: binding")
+        viewModel.setSpinnerSelectedText(null)
         _binding= null
     }
 

@@ -1,4 +1,4 @@
-package com.andreasoftware.keuanganku.ui.fragments
+package com.andreasoftware.keuanganku.ui.fragments.menu
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -10,13 +10,15 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.findNavController
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.NavHostFragment
 import com.andreasoftware.keuanganku.R
 import com.andreasoftware.keuanganku.common.enums.PeriodOptions
 import com.andreasoftware.keuanganku.databinding.FragmentAppMainmenuHomeBinding
 import com.andreasoftware.keuanganku.ui.utils.StringFormatter
 import com.andreasoftware.keuanganku.ui.viewmodels.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class Home : Fragment() {
@@ -53,27 +55,27 @@ class Home : Fragment() {
         binding.balanceCard.buttonAdd.button.setOnClickListener { navigateTo(ACTION_WALLET_FORM) }
     }
 
-    @SuppressLint("SetTextI18n")
     private fun setupObservers() {
-        viewModel.totalBalance.observe(viewLifecycleOwner) {
-            binding.balanceCard.totalBalanceTextView.text = StringFormatter.formatNumber(it ?: 0.0)
-            viewModel.updateIncomeTotal()
-        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.totalBalance.observe(viewLifecycleOwner) {
+                binding.balanceCard.totalBalanceTextView.text = StringFormatter.formatNumber(it ?: 0.0)
+            }
 
-        viewModel.expensePeriod.observe(viewLifecycleOwner) { selectedPeriod ->
-            binding.expenseCard.spinnerPeriod.spinner.setText(selectedPeriod, false)
-        }
+            viewModel.expensePeriod.observe(viewLifecycleOwner) { selectedPeriod ->
+                binding.expenseCard.spinnerPeriod.spinner.setText(selectedPeriod, false)
+            }
 
-        viewModel.incomePeriod.observe(viewLifecycleOwner) { selectedPeriod ->
-            binding.incomeCard.spinnerPeriod.spinner.setText(selectedPeriod, false)
-        }
+            viewModel.incomePeriod.observe(viewLifecycleOwner) { selectedPeriod ->
+                binding.incomeCard.spinnerPeriod.spinner.setText(selectedPeriod, false)
+            }
 
-        viewModel.incomeTotal.observe(viewLifecycleOwner) {
-            binding.incomeCard.incomeAmount.text = StringFormatter.formatNumber(it ?: 0.0)
-        }
+            viewModel.incomeTotal.observe(viewLifecycleOwner) {
+                binding.incomeCard.incomeAmount.text = StringFormatter.formatNumber(it ?: 0.0)
+            }
 
-        viewModel.expenseTotal.observe(viewLifecycleOwner) {
-            binding.expenseCard.expenseAmount.text = StringFormatter.formatNumber(it ?: 0.0)
+            viewModel.expenseTotal.observe(viewLifecycleOwner) {
+                binding.expenseCard.expenseAmount.text = StringFormatter.formatNumber(it ?: 0.0)
+            }
         }
     }
 
@@ -109,7 +111,10 @@ class Home : Fragment() {
     }
 
     private fun navigateTo(actionId: Int) {
-        findNavController().navigate(actionId)
+        val navHostFragment = activity?.supportFragmentManager?.findFragmentById(R.id.root_nav_host_fragment) as? NavHostFragment
+        val navController = navHostFragment?.navController
+        navController?.navigate(actionId)
+        Log.d("Home", "navigateTo: $navController")
     }
 
     companion object {

@@ -6,22 +6,19 @@
     android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragments.Root">
+    tools:context=".ui.fragments.Main">
 
-    <!-- Konten Utama -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white">
 
-        <!-- Toolbar / AppBar -->
         <include
             android:id="@+id/appBar"
             layout="@layout/appbar_for_main" />
 
-        <!-- FrameLayout untuk menampilkan fragment -->
-        <FrameLayout
-            android:id="@+id/frameLayout"
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewPager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@id/bottomNavbar"
