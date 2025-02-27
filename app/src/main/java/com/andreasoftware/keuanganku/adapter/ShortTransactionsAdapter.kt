@@ -4,13 +4,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.andreasoftware.keuanganku.R
 import com.andreasoftware.keuanganku.data.sqlite.entities.Income
+import com.andreasoftware.keuanganku.ui.IncomeDiffCallback
 import com.andreasoftware.keuanganku.ui.utils.StringFormatter
 
-class ShortTransactionsAdapter(private val transactions: List<Income>) :
-    RecyclerView.Adapter<ShortTransactionsAdapter.ShortTransactionViewHolder>() {
+class ShortTransactionsAdapter :
+    ListAdapter<Income, ShortTransactionsAdapter.ShortTransactionViewHolder>(IncomeDiffCallback()) {
 
     class ShortTransactionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val titleTextView: TextView = itemView.findViewById(R.id.tv_title)
@@ -25,11 +27,9 @@ class ShortTransactionsAdapter(private val transactions: List<Income>) :
     }
 
     override fun onBindViewHolder(holder: ShortTransactionViewHolder, position: Int) {
-        val transaction = transactions[position]
+        val transaction = getItem(position) // Gunakan getItem() dari ListAdapter
         holder.titleTextView.text = transaction.title
         holder.descriptionTextView.text = "Dummyyy"
         holder.amountTextView.text = StringFormatter.formatNumber(transaction.amount)
     }
-
-    override fun getItemCount(): Int = transactions.size
 }

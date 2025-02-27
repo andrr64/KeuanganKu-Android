@@ -41,10 +41,6 @@ class Home : Fragment() {
         return binding.root
     }
 
-    fun setupListTransactions(){
-        ///TODO: list transactionsc
-    }
-
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         Log.d("Home", "onViewCreated: Home")
@@ -64,11 +60,12 @@ class Home : Fragment() {
         _binding = null
     }
 
-    private fun setupRvListTransaction(){
+    private fun setupRvListTransaction() {
         binding.listTransaction.rvTransactions.layoutManager = LinearLayoutManager(context)
-        viewModel.allIncomes.observe(viewLifecycleOwner){ incomes ->
-            val adapter = ShortTransactionsAdapter(incomes)
-            binding.listTransaction.rvTransactions.adapter = adapter
+        val adapter = ShortTransactionsAdapter()
+        binding.listTransaction.rvTransactions.adapter = adapter
+        viewModel.allIncomes.observe(viewLifecycleOwner) { incomes ->
+            adapter.submitList(incomes) // Gunakan submitList() untuk memperbarui data
         }
     }
 

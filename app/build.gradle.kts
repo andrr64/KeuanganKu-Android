@@ -62,6 +62,9 @@ dependencies {
 
     implementation(libs.androidx.ui.android)
 
+    // MPChart
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+
     // viewpager2
     implementation("androidx.viewpager2:viewpager2:1.1.0")
 
@@ -69,11 +72,11 @@ dependencies {
     implementation("androidx.datastore:datastore-preferences:1.1.2")
 
     // dagger.hilt
-    implementation("com.google.dagger:hilt-android:2.51.1")
-    kapt("com.google.dagger:hilt-android-compiler:2.51.1")
+    implementation("com.google.dagger:hilt-android:2.55")
+    kapt("com.google.dagger:hilt-android-compiler:2.55")
 
     // LiveData
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.7")
 
     // adnroidx.room
     implementation("androidx.room:room-runtime:$room_version")
