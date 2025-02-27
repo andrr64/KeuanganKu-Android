@@ -2,7 +2,7 @@ package com.andreasoftware.keuanganku.initializer
 
 import android.content.Context
 import androidx.startup.Initializer
-import com.andreasoftware.keuanganku.data.database.AppDatabase
+import com.andreasoftware.keuanganku.data.sqlite.AppDatabase
 
 class DatabaseInitializer : Initializer<AppDatabase> {
     override fun create(context: Context): AppDatabase {

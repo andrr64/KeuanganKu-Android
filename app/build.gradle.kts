@@ -65,6 +65,9 @@ dependencies {
     // viewpager2
     implementation("androidx.viewpager2:viewpager2:1.1.0")
 
+    // androidx.datastore
+    implementation("androidx.datastore:datastore-preferences:1.1.2")
+
     // dagger.hilt
     implementation("com.google.dagger:hilt-android:2.51.1")
     kapt("com.google.dagger:hilt-android-compiler:2.51.1")
