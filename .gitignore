@@ -14,3 +14,4 @@ build
 gradle
 app/build
 app/release
+app/schemas
