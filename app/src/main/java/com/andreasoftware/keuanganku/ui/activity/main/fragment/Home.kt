@@ -1,4 +1,4 @@
-package com.andreasoftware.keuanganku.ui.activity.main.fragment.menu
+package com.andreasoftware.keuanganku.ui.activity.main.fragment
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -12,8 +12,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.andreasoftware.keuanganku.R
+import com.andreasoftware.keuanganku.adapter.ShortTransactionsAdapter
 import com.andreasoftware.keuanganku.common.enums.PeriodOptions
+import com.andreasoftware.keuanganku.common.enums.TransactionType
+import com.andreasoftware.keuanganku.data.dataclass.ShortTransactionItem
 import com.andreasoftware.keuanganku.databinding.FragmentAppMainmenuHomeBinding
 import com.andreasoftware.keuanganku.ui.utils.StringFormatter
 import com.andreasoftware.keuanganku.ui.activity.main.viewmodel.HomeViewModel
@@ -37,6 +41,10 @@ class Home : Fragment() {
         return binding.root
     }
 
+    fun setupListTransactions(){
+        ///TODO: list transactionsc
+    }
+
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         Log.d("Home", "onViewCreated: Home")
@@ -45,6 +53,7 @@ class Home : Fragment() {
 
         ///TODO: handle name
         binding.balanceCard.userName.text = "John"
+        setupRvListTransaction()
         setupObservers()
         setupClickListeners()
         setupPeriodSpinner()
@@ -53,6 +62,14 @@ class Home : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun setupRvListTransaction(){
+        binding.listTransaction.rvTransactions.layoutManager = LinearLayoutManager(context)
+        viewModel.allIncomes.observe(viewLifecycleOwner){ incomes ->
+            val adapter = ShortTransactionsAdapter(incomes)
+            binding.listTransaction.rvTransactions.adapter = adapter
+        }
     }
 
     private fun setupClickListeners() {

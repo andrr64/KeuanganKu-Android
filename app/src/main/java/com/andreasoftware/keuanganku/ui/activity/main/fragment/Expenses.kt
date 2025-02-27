@@ -1,4 +1,4 @@
-package com.andreasoftware.keuanganku.ui.activity.main.fragment.menu
+package com.andreasoftware.keuanganku.ui.activity.main.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater

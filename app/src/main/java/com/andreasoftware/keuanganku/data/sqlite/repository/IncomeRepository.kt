@@ -1,12 +1,11 @@
 package com.andreasoftware.keuanganku.data.sqlite.repository
 
-import android.app.Application
 import android.icu.util.Calendar
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.andreasoftware.keuanganku.common.enums.PeriodOptions
-import com.andreasoftware.keuanganku.data.sqlite.AppDatabase
+import com.andreasoftware.keuanganku.common.qualifier.IncomeDaoQualifier
 import com.andreasoftware.keuanganku.data.sqlite.dao.IncomeDao
 import com.andreasoftware.keuanganku.data.sqlite.entities.Income
 import kotlinx.coroutines.Dispatchers
@@ -15,9 +14,12 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class IncomeRepository @Inject constructor(application: Application) {
-    private val incomeDao: IncomeDao = AppDatabase.getDatabase(application).incomeDao()
+class IncomeRepository @Inject constructor(
+    @IncomeDaoQualifier private val incomeDao: IncomeDao
+) {
     private val _refreshTrigger = MutableLiveData<Unit>()
+
+    val allIncome: LiveData<List<Income>> = incomeDao.getAll()
 
     fun getRefreshTrigger(): LiveData<Unit> = _refreshTrigger
 

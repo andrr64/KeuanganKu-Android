@@ -24,6 +24,13 @@ class ExpenseFormViewModel @Inject constructor(
         _spinnerWalletSelectedText.value = text
     }
 
+    fun reset(){
+        _spinnerSelectedText.value = null
+        _spinnerWalletSelectedText.value = null
+        _title.value = null
+        _amount.value = null
+    }
+
     val allCategories: LiveData<List<ExpenseCategory>> = expenseCategoryRepository.allCategories
     val allWallet: LiveData<List<Wallet>> = walletRepository.allWallets
 

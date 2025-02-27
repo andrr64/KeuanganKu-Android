@@ -13,7 +13,7 @@ interface IncomeDao {
     suspend fun insert(income: Income)
 
     @Query("SELECT * FROM incomes")
-    fun getAllIncomes(): LiveData<List<Income>>
+    fun getAll(): LiveData<List<Income>>
 
     @Query("SELECT * FROM incomes WHERE date BETWEEN :startDate AND :endDate")
     fun getIncomeByPeriods(startDate: String, endDate: String): LiveData<List<Income>>

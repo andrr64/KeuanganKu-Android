@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.switchMap
 import com.andreasoftware.keuanganku.common.enums.PeriodOptions
 import com.andreasoftware.keuanganku.data.datastore.UserDataStore
+import com.andreasoftware.keuanganku.data.sqlite.entities.Income
 import com.andreasoftware.keuanganku.data.sqlite.entities.Wallet
 import com.andreasoftware.keuanganku.data.sqlite.repository.ExpenseRepository
 import com.andreasoftware.keuanganku.data.sqlite.repository.IncomeRepository
@@ -25,13 +26,12 @@ class HomeViewModel @Inject constructor(
 
     val totalBalance: LiveData<Double> = walletRepository.totalBalance
     val allWallets: LiveData<List<Wallet>> = walletRepository.allWallets
+    val allIncomes: LiveData<List<Income>> = incomeRepository.allIncome
     val username: Flow<String> = userdata.usernameFlow
 
-    //   val totalBalance: StateFlow<Double> = walletRepository.totalBalanceFlow
-    //  .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0.0)
-    val _totalExpenses: LiveData<Int> = expenseRepository.getExpenseCount()
-    val _expensePeriod = MutableLiveData(PeriodOptions.WEEKLY.label)
-    val _expensePeriodEnum = MutableLiveData(PeriodOptions.WEEKLY)
+    private val _totalExpenses: LiveData<Int> = expenseRepository.getExpenseCount()
+    private val _expensePeriod = MutableLiveData(PeriodOptions.WEEKLY.label)
+    private val _expensePeriodEnum = MutableLiveData(PeriodOptions.WEEKLY)
     val expensePeriod: LiveData<String> = _expensePeriod
     val expenseTotal = _expensePeriodEnum.switchMap { period ->
         _totalExpenses.switchMap {
@@ -40,9 +40,9 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    val _totalIncomes: LiveData<Int> = incomeRepository.getIncomeCount()
-    val _incomePeriod = MutableLiveData(PeriodOptions.WEEKLY.label)
-    val _incomePeriodEnum = MutableLiveData(PeriodOptions.WEEKLY)
+    private val _totalIncomes: LiveData<Int> = incomeRepository.getIncomeCount()
+    private val _incomePeriod = MutableLiveData(PeriodOptions.WEEKLY.label)
+    private val _incomePeriodEnum = MutableLiveData(PeriodOptions.WEEKLY)
     val incomePeriod: LiveData<String> = _incomePeriod
     val incomeTotal: LiveData<Double?> = _incomePeriodEnum.switchMap { period ->
         _totalIncomes.switchMap {

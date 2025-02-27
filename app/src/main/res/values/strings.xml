@@ -35,5 +35,6 @@
     <string name="empty" translatable="false"></string>
     <string name="what_should_i_call_you">Hi, what should i call you ?</string>
     <string name="call_me">Call me...</string>
-    <string name="let_s_go">Let\'s go</string>
+    <string name="let_s_go" translatable="false">Let\'s go</string>
+    <string name="transactions">Transactions</string>
 </resources>

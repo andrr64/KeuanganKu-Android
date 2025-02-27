@@ -72,6 +72,7 @@ class ExpenseForm : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
+        viewModel.reset()
         _binding = null
     }
 

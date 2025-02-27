@@ -3,8 +3,8 @@ package com.andreasoftware.keuanganku.adapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.andreasoftware.keuanganku.ui.activity.main.fragment.menu.Expenses
-import com.andreasoftware.keuanganku.ui.activity.main.fragment.menu.Home
+import com.andreasoftware.keuanganku.ui.activity.main.fragment.Expenses
+import com.andreasoftware.keuanganku.ui.activity.main.fragment.Home
 
 class MainViewPagerAdapter(fragmentActivity: FragmentActivity) :
     FragmentStateAdapter(fragmentActivity) {

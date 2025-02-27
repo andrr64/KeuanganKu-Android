@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activity.main.fragment.menu.Home">
+    tools:context=".ui.activity.main.fragment.Home">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -32,6 +32,13 @@
             <include
                 android:id="@+id/incomeCard"
                 layout="@layout/component_income_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15sp" />
+
+            <include
+                android:id="@+id/listTransaction"
+                layout="@layout/component_transactions_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15sp" />

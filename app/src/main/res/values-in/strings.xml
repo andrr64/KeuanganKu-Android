@@ -24,4 +24,5 @@
     <string name="period">Periode</string>
     <string name="expense">Pengeluaran</string>
     <string name="income">Pemasukan</string>
+    <string name="call_me">Panggil saya...</string>
 </resources>
