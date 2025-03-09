@@ -1,4 +1,4 @@
-package com.andreasoftware.keuanganku.data.common
+package com.andreasoftware.keuanganku.data.db
 
 import android.content.Context
 import com.andreasoftware.keuanganku.data.dao.ExpenseCategoryDao

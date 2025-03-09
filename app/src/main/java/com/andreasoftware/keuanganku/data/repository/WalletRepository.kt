@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import androidx.room.withTransaction
 import com.andreasoftware.keuanganku.common.DataOperationResult
-import com.andreasoftware.keuanganku.data.common.AppDatabase
+import com.andreasoftware.keuanganku.data.db.AppDatabase
 import com.andreasoftware.keuanganku.data.dao.IncomeDao
 import com.andreasoftware.keuanganku.data.dao.WalletDao
 import com.andreasoftware.keuanganku.data.model.IncomeModel
