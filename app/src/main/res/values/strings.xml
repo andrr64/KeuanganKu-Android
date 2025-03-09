@@ -1,40 +1,5 @@
 <resources>
     <string name="app_name">KeuanganKu</string>
-    <string name="activity_title_expenses">Expenses</string>
-    <string name="select_category">Select a category</string>
-    <string name="rating">Rating</string>
-    <string name="expense_form">Expense Form</string>
-    <string name="income_form">Income Form</string>
-    <string name="expense_form_desc">Please fill out the form below to add a new expense.</string>
-    <string name="income_form_desc">Please fill out the form below to add a new income.</string>
-    <string name="appbar_title" translatable="false">KeuanganKu</string>
-    <string name="drawer_button_app" translatable="false">Drawer Button App</string>
-    <string name="bottom_nav_item_expense">Expense</string>
-    <string name="bottom_nav_item_home">Home</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="wallet_form">Wallet Form</string>
-    <string name="wallet_form_desc">Please fill out the form below to add a new expense.</string>
-    <string name="initial_amount">Initial Amount</string>
-    <string name="title">Title</string>
-    <string name="amount">Amount</string>
-    <string name="submit">Submit</string>
-    <string name="balance">Balance</string>
-    <string name="dummy" translatable="false">Dummy</string>
-    <string name="add">Add</string>
-    <string name="loading" translatable="false">Loading</string>
-    <string name="this_month">This Month</string>
-    <string name="this_week">This Week</string>
-    <string name="this_year">This Year</string>
-    <string name="period">Period</string>
-    <string name="expense">Expense</string>
-    <string name="income">Income</string>
-    <string name="hi" translatable="false">Hi</string>
-    <string name="default_name" translatable="false">John</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
-    <string name="empty" translatable="false"></string>
-    <string name="what_should_i_call_you">Hi, what should i call you ?</string>
-    <string name="call_me">Call me...</string>
-    <string name="let_s_go" translatable="false">Let\'s go</string>
-    <string name="transactions">Transactions</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

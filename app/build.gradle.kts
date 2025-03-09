@@ -1,11 +1,11 @@
+import org.jetbrains.kotlin.resolve.featureDependencies
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     id("com.google.devtools.ksp")
-    id("kotlin-kapt")
-
-    // android.hilt
     id("com.google.dagger.hilt.android")
+    id("kotlin-kapt")
 }
 
 android {
@@ -20,24 +20,15 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments["room.schemaLocation"] = "$projectDir/schemas"
-            }
-        }
     }
 
     buildTypes {
         release {
-            isMinifyEnabled = true
-            isShrinkResources= true
+            isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-//            signingConfig = signingConfigs.getByName("debug")
-            isDebuggable= false
         }
     }
     compileOptions {
@@ -47,50 +38,44 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
-    buildFeatures {
+
+    buildFeatures{
         viewBinding = true
         dataBinding = true
     }
-    buildToolsVersion = "35.0.0"
-    ndkVersion = "27.1.12297006"
-
 }
 
 dependencies {
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
     val room_version = "2.6.1"
-    val nav_version = "2.8.7"
+    val startup_version = "1.2.0"
+    val lifecycle_version = "2.8.7"
+    val fragment_version = "1.8.3"
 
-    implementation(libs.androidx.ui.android)
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
+    implementation("androidx.fragment:fragment-ktx:$fragment_version")
+    implementation("androidx.startup:startup-runtime:$startup_version")
 
-    // MPChart
-    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
-
-    // viewpager2
-    implementation("androidx.viewpager2:viewpager2:1.1.0")
-
-    // androidx.datastore
-    implementation("androidx.datastore:datastore-preferences:1.1.2")
-
-    // dagger.hilt
-    implementation("com.google.dagger:hilt-android:2.55")
-    kapt("com.google.dagger:hilt-android-compiler:2.55")
-
-    // LiveData
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.7")
-
-    // adnroidx.room
+    // Jetpack Room Database
     implementation("androidx.room:room-runtime:$room_version")
     annotationProcessor("androidx.room:room-compiler:$room_version")
     ksp("androidx.room:room-compiler:$room_version")
     implementation("androidx.room:room-ktx:$room_version")
 
-    // startup
-    implementation("androidx.startup:startup-runtime:1.2.0")
+    // MPChart
+//    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
-    // Jetpack Compose integration
-    implementation("androidx.navigation:navigation-compose:$nav_version")
-    implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
-    implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
+    // Viewpager2
+    implementation("androidx.viewpager2:viewpager2:1.1.0")
+
+    // dagger.hilt
+    implementation("com.google.dagger:hilt-android:2.55")
+    kapt("com.google.dagger:hilt-android-compiler:2.55")
+
+
+    // Data Store
+    implementation("androidx.datastore:datastore-preferences:1.1.2")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -100,8 +85,4 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-}
-
-kapt {
-    correctErrorTypes = true
 }

@@ -6,25 +6,23 @@
         android:name=".KeuanganKuApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
-        android:enableOnBackInvokedCallback="true"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.KeuanganKu"
-        tools:targetApi="tiramisu">
+        tools:targetApi="26">
         <activity
-            android:name=".ui.activity.splashscreen.SplashScreenActivity"
-            android:exported="true"
-            android:theme="@style/Theme.KeuanganKu">
+            android:name=".ui.activity.inspection.InspectionActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.activity.introduction.IntroductionActivity"
+            android:name=".ui.activity.intro.IntroActivity"
             android:exported="false" />
 
         <provider
@@ -39,12 +37,8 @@
 
         <activity
             android:name=".ui.activity.main.MainActivity"
-            android:exported="false"
-            android:theme="@style/Theme.KeuanganKu" />
-
-        <meta-data
-            android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts" />
+            android:exported="false">
+        </activity>
     </application>
 
 </manifest>

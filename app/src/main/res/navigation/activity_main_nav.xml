@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:startDestination="@id/mainPage"
+    android:id="@+id/activity_main_nav">
+
+    <fragment
+        android:name="com.andreasoftware.keuanganku.ui.activity.main.page.MainPage"
+        tools:layout="@layout/fragment_main_page"
+        android:label="fragment_main"
+        android:id="@+id/mainPage">
+
+        <action
+            android:id="@+id/action_main_fragment_to_expenseForm"
+            app:destination="@+id/pageExpenseForm"/>
+
+        <action
+            android:id="@+id/action_main_fragment_to_incomeForm"
+            app:destination="@+id/pageIncomeForm"/>
+    </fragment>
+
+    <fragment
+        android:name="com.andreasoftware.keuanganku.ui.activity.main.page.ExpenseFormPage"
+        tools:layout="@layout/fragment_expense_form_page"
+        android:label="fragment_expense_form"
+        android:id="@+id/pageExpenseForm"/>
+
+    <fragment
+        android:name="com.andreasoftware.keuanganku.ui.activity.main.page.IncomeFormPage"
+        tools:layout="@layout/fragment_income_form_page"
+        android:label="page_income_form"
+        android:id="@+id/pageIncomeForm"/>
+</navigation>
