@@ -15,8 +15,8 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeFragmentViewModel
 @Inject constructor(
-    private val userdataRepository: UserdataRepository,
-    private val walletRepository: WalletRepository
+    userdataRepository: UserdataRepository,
+    walletRepository: WalletRepository
 ) : ViewModel() {
 
     private val _userName = MutableStateFlow("")

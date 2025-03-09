@@ -1,6 +1,7 @@
 package com.andreasoftware.keuanganku.ui.activity.main
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.andreasoftware.keuanganku.R
 import com.andreasoftware.keuanganku.databinding.ActivityMainBinding
@@ -14,6 +15,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         activityBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(activityBinding.root)
+        Log.d("MainActivity.kt", "Created")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("MainActivity.kt", "onDestroy called")
     }
 
     companion object {

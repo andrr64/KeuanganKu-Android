@@ -29,7 +29,8 @@ import kotlinx.coroutines.withContext
         IncomeCategoryModel::class,
         WalletModel::class
     ],
-    version = 1
+    version = 1,
+    exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun expenseDao(): ExpenseDao

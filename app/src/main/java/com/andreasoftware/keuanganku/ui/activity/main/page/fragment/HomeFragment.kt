@@ -7,8 +7,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
@@ -45,9 +43,16 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.userinfoCard.findViewById<MaterialButton>(R.id.buttonAdd).setOnClickListener {
+        binding.buttonAddWallet.button.setOnClickListener {
             navigateTo(MainActivity.ACTION_MAIN_TO_WALLET_FORM)
         }
+        binding.buttonAddIncome.button.setOnClickListener {
+            navigateTo(MainActivity.ACTION_MAIN_TO_INCOME_FORM)
+        }
+        binding.buttonAddExpense.button.setOnClickListener {
+            navigateTo(MainActivity.ACTION_MAIN_TO_EXPENSE_FORM)
+        }
+
         observeUsername()
         observeBalance()
     }

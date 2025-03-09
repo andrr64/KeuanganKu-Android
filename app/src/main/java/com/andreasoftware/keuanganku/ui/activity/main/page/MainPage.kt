@@ -35,6 +35,7 @@ class MainPage : Fragment() {
         setupViewPager()
         setupBottomNavigation()
         setupDrawer()
+        Log.d("MainPage.kt", "Created...")
     }
 
     override fun onDestroyView() {

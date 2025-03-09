@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.resolve.featureDependencies
-
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)

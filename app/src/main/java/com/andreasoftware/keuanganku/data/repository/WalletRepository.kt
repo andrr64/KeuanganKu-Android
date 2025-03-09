@@ -1,6 +1,7 @@
 package com.andreasoftware.keuanganku.data.repository
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.map
 import com.andreasoftware.keuanganku.common.DataOperationResult
 import com.andreasoftware.keuanganku.data.dao.WalletDao
 import com.andreasoftware.keuanganku.data.model.WalletModel
@@ -13,7 +14,7 @@ import javax.inject.Singleton
 class WalletRepository
 @Inject constructor(private val walletDao: WalletDao) {
     val allWallet: LiveData<List<WalletModel>> = walletDao.getAll()
-    val totalAmount: LiveData<Double> = walletDao.getTotalAmount()
+    val totalAmount: LiveData<Double> = walletDao.getTotalAmount().map { it ?: 0.0 }
 
     suspend fun insertWallet(wallet: WalletModel): DataOperationResult {
         return withContext(Dispatchers.IO) {

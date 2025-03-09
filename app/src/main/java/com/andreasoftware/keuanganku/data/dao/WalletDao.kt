@@ -15,5 +15,5 @@ interface WalletDao {
     suspend fun insert(wallet: WalletModel)
 
     @Query("SELECT SUM(amount) FROM wallet")
-    fun getTotalAmount(): LiveData<Double>
+    fun getTotalAmount(): LiveData<Double?>
 }

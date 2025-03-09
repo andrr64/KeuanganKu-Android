@@ -1,6 +1,7 @@
 package com.andreasoftware.keuanganku.ui.activity.main.page
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -27,11 +28,13 @@ class WalletFormPage : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentWalletFormPageBinding.inflate(inflater, container, false)
+        Log.d("WalletFormPage.kt", "onCreateView called")
         return binding.root
     }
 
     override fun onDestroy() {
         super.onDestroy()
+        Log.d("WalletFormPage.kt", "onDestroy called")
         _binding = null
     }
 
