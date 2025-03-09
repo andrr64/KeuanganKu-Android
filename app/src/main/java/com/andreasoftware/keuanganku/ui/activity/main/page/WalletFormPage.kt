@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.andreasoftware.keuanganku.R
 import com.andreasoftware.keuanganku.data.model.WalletModel
@@ -15,7 +14,6 @@ import com.andreasoftware.keuanganku.databinding.FragmentWalletFormPageBinding
 import com.andreasoftware.keuanganku.ui.common.MySnackbar
 import com.andreasoftware.keuanganku.ui.exceptionhandler.HandleExceptionWithSnackbar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class WalletFormPage : Fragment() {
@@ -52,11 +50,12 @@ class WalletFormPage : Fragment() {
     fun onSubmit(){
         val newWallet = WalletModel(
             name = binding.titleEditText.text.toString(),
-            amount = binding.amountEditText.text.toString().toDouble()
+            balance = binding.amountEditText.text.toString().toDouble()
         )
         viewModel.insertWallet(newWallet) {
             if (it.isSuccess()) {
                 MySnackbar.success(binding.root, "Success!")
+                findNavController().navigateUp()
             } else {
                 HandleExceptionWithSnackbar.failed(binding.root, it.errorMessage!!)
             }
