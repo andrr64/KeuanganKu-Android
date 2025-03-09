@@ -102,13 +102,6 @@ abstract class AppDatabase : RoomDatabase() {
                             Log.d("Database", "Database created")
                             initDatabase(context)
                         }
-
-                        override fun onOpen(db: SupportSQLiteDatabase) {
-                            super.onOpen(db)
-                            CoroutineScope(Dispatchers.IO).launch {
-                                initDatabase(context)
-                            }
-                        }
                     })
                     .build()
                 INSTANCE = instance
