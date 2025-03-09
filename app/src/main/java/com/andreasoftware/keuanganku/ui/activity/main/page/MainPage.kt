@@ -1,6 +1,7 @@
 package com.andreasoftware.keuanganku.ui.activity.main.page
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +13,9 @@ import androidx.core.view.get
 import com.andreasoftware.keuanganku.R
 import com.andreasoftware.keuanganku.databinding.FragmentMainPageBinding
 import com.google.android.material.navigation.NavigationBarView
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainPage : Fragment() {
     private var _binding : FragmentMainPageBinding? = null
     private lateinit var drawerLayout: DrawerLayout
@@ -32,6 +35,12 @@ class MainPage : Fragment() {
         setupViewPager()
         setupBottomNavigation()
         setupDrawer()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+        Log.d("MainPage.kt", "Destroyed..")
     }
 
     private fun setupViewPager() {

@@ -19,6 +19,10 @@
         <action
             android:id="@+id/action_main_fragment_to_incomeForm"
             app:destination="@+id/pageIncomeForm"/>
+
+        <action
+            android:id="@+id/action_main_fragment_to_walletForm"
+            app:destination="@id/walletFormPage"/>
     </fragment>
 
     <fragment
@@ -32,4 +36,10 @@
         tools:layout="@layout/fragment_income_form_page"
         android:label="page_income_form"
         android:id="@+id/pageIncomeForm"/>
+
+    <fragment
+        android:name="com.andreasoftware.keuanganku.ui.activity.main.page.WalletFormPage"
+        tools:layout="@layout/fragment_wallet_form_page"
+        android:label="page_income_form"
+        android:id="@+id/walletFormPage"/>
 </navigation>

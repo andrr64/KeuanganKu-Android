@@ -5,13 +5,22 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.andreasoftware.keuanganku.R
+import com.andreasoftware.keuanganku.data.model.WalletModel
 import com.andreasoftware.keuanganku.databinding.FragmentWalletFormPageBinding
+import com.andreasoftware.keuanganku.ui.common.MySnackbar
+import com.andreasoftware.keuanganku.ui.exceptionhandler.HandleExceptionWithSnackbar
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class WalletFormPage : Fragment() {
-
     private var _binding: FragmentWalletFormPageBinding? = null
     private val binding get() = _binding!!
+    private val viewModel: WalletFormPageViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -19,5 +28,35 @@ class WalletFormPage : Fragment() {
     ): View? {
         _binding = FragmentWalletFormPageBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.appBar.appBarTitle.text = getString(R.string.wallet_form)
+        binding.appBar.appBarBackButton.setOnClickListener {
+            findNavController().navigateUp()
+        }
+        binding.submitButton.setOnClickListener {
+            onSubmit()
+        }
+    }
+
+    fun onSubmit(){
+        val newWallet = WalletModel(
+            name = binding.titleEditText.text.toString(),
+            amount = binding.amountEditText.text.toString().toDouble()
+        )
+        viewModel.insertWallet(newWallet) {
+            if (it.isSuccess()) {
+                MySnackbar.success(binding.root, "Success!")
+            } else {
+                HandleExceptionWithSnackbar.failed(binding.root, it.errorMessage!!)
+            }
+        }
     }
 }

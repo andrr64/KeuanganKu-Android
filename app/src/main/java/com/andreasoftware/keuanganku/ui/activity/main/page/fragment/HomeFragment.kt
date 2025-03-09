@@ -1,24 +1,32 @@
 package com.andreasoftware.keuanganku.ui.activity.main.page.fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.NavHostFragment
 import com.andreasoftware.keuanganku.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlin.getValue
+import com.andreasoftware.keuanganku.R
+import com.andreasoftware.keuanganku.ui.activity.main.MainActivity
+import com.google.android.material.button.MaterialButton
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: HomeFragmentViewModel by activityViewModels()
+    private val viewModel: HomeFragmentViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,6 +34,29 @@ class HomeFragment : Fragment() {
     ): View? {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("HomeFragment.kt", "Destroyed..")
+        _binding = null
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.userinfoCard.findViewById<MaterialButton>(R.id.buttonAdd).setOnClickListener {
+            navigateTo(MainActivity.ACTION_MAIN_TO_WALLET_FORM)
+        }
+        observeUsername()
+        observeBalance()
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun observeBalance(){
+        viewModel.balance.observe(viewLifecycleOwner) { balance ->
+            binding.totalBalanceTextView.text = "IDR $balance"
+        }
     }
 
     private fun observeUsername(){
@@ -36,8 +67,10 @@ class HomeFragment : Fragment() {
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        observeUsername()
+    private fun navigateTo(actionId: Int) {
+        val navHostFragment = activity?.supportFragmentManager?.findFragmentById(R.id.root_nav_host_fragment) as? NavHostFragment
+        val navController = navHostFragment?.navController
+        navController?.navigate(actionId)
     }
+
 }

@@ -1,7 +1,9 @@
 package com.andreasoftware.keuanganku.ui.activity.main.page.fragment
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.andreasoftware.keuanganku.data.repository.WalletRepository
 import com.andreasoftware.keuanganku.data.repository.app.UserdataRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,11 +15,13 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeFragmentViewModel
 @Inject constructor(
-    private val userdataRepository: UserdataRepository
+    private val userdataRepository: UserdataRepository,
+    private val walletRepository: WalletRepository
 ) : ViewModel() {
 
     private val _userName = MutableStateFlow("")
     val userName: StateFlow<String> = _userName
+    val balance: LiveData<Double> = walletRepository.totalAmount
 
     init {
         viewModelScope.launch {
