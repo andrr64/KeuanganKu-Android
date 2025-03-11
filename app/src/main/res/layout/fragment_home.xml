@@ -41,7 +41,6 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/inter"
                             android:text="Hi"
                             android:textAppearance="?attr/textAppearanceBody2"
                             android:textColor="@color/white" />
@@ -66,7 +65,6 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/inter"
                             android:text="Balance"
                             android:textAppearance="?attr/textAppearanceBody2"
                             android:textColor="@color/white" />
@@ -118,7 +116,7 @@
 
                     <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginBottom="10dp"
                         android:orientation="horizontal">
@@ -133,23 +131,50 @@
                             android:id="@+id/incomeCardTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/inter"
                             android:text="@string/income"
                             android:textColor="@color/white"
                             tools:targetApi="p" />
                     </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/incomeAmount"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:fontFamily="@font/inter"
-                        android:maxLines="1"
-                        android:text="@string/empty"
-                        android:textColor="@color/white"
-                        android:textSize="22sp" />
+                        android:orientation="horizontal"
+                        android:weightSum="2"
+                        >
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="10dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+                            <TextView
+                                android:id="@+id/incomePeriod"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:text="@string/empty"
+                                android:textColor="@color/white"
+                                android:textSize="12sp" />
+                            <TextView
+                                android:id="@+id/incomeAmount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:text="@string/empty"
+                                android:textColor="@color/white"
+                                android:textSize="22sp" />
+                        </LinearLayout>
 
+                        <include
+                            layout="@layout/component_spinner_transparent"
+                            android:id="@+id/spinnerIncomePeriod"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"/>
+                    </LinearLayout>
                 </LinearLayout>
 
                 <include
@@ -179,6 +204,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
+                    android:layout_marginBottom="10dp"
                     android:orientation="vertical"
                     android:paddingTop="10dp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -186,7 +212,7 @@
 
                     <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginBottom="10dp"
                         android:orientation="horizontal">
@@ -201,26 +227,52 @@
                             android:id="@+id/expenseCardTextview"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/inter"
                             android:text="@string/expense"
                             android:textColor="@color/white"
                             tools:targetApi="p" />
                     </LinearLayout>
 
 
-                    <TextView
-                        android:id="@+id/expenseAmount"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:fontFamily="@font/inter"
-                        android:maxLines="1"
-                        android:text="@string/empty"
-                        android:textColor="@color/white"
-                        android:textSize="22sp" />
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+                        <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:id="@+id/expensePeriod"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="@string/empty"
+                            android:textColor="@color/white"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/expenseAmount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="@string/empty"
+                            android:textColor="@color/white"
+                            android:textSize="22sp" />
+
+                    </LinearLayout>
+                    <include
+                        layout="@layout/component_spinner_transparent"
+                        android:id="@+id/spinnerExpensePeriod"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"/>
+                    </LinearLayout>
                 </LinearLayout>
-
-
                 <include
                     android:id="@+id/buttonAddExpense"
                     layout="@layout/component_button_add"

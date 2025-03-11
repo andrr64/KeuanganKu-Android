@@ -1,26 +1,25 @@
 package com.andreasoftware.keuanganku.ui.activity.main.page.fragment
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
+import com.andreasoftware.keuanganku.R
+import com.andreasoftware.keuanganku.common.enm.TimePeriod
 import com.andreasoftware.keuanganku.databinding.FragmentHomeBinding
+import com.andreasoftware.keuanganku.ui.activity.main.MainActivity
+import com.andreasoftware.keuanganku.ui.common.AppSnackBar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import kotlin.getValue
-import com.andreasoftware.keuanganku.R
-import com.andreasoftware.keuanganku.ui.activity.main.MainActivity
-import com.andreasoftware.keuanganku.ui.common.AppSnackBar
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
-
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private val viewModel: HomeFragmentViewModel by viewModels()
@@ -40,11 +39,61 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupListener()
+        setupExpensePeriodSpinner()
+        setupObserver()
+    }
 
+    private fun setupListener(){
         binding.buttonAddWallet.button.setOnClickListener {
             navigateTo(MainActivity.ACTION_MAIN_TO_WALLET_FORM)
         }
+    }
 
+    private fun setupExpensePeriodSpinner(){
+        val periods = TimePeriod.entries.map { it.displayName }
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, periods)
+        binding.spinnerExpensePeriod.spinner.setAdapter(adapter)
+        binding.spinnerIncomePeriod.spinner.setAdapter(adapter)
+
+        binding.spinnerExpensePeriod.spinner.setText(viewModel.expensePeriod.value.displayName, false)
+        binding.spinnerIncomePeriod.spinner.setText(viewModel.incomePeriod.value.displayName, false)
+
+        binding.spinnerExpensePeriod.spinner.setOnItemClickListener { _, _, position, _ ->
+            viewModel.setExpensePeriod(TimePeriod.entries[position])
+            binding.spinnerExpensePeriod.spinner.setText(periods[position], false)
+        }
+        binding.spinnerIncomePeriod.spinner.setOnItemClickListener { _, _, position, _ ->
+            viewModel.setIncomePeriod(TimePeriod.entries[position])
+            binding.spinnerIncomePeriod.spinner.setText(periods[position], false)
+        }
+    }
+
+    private fun setupObserver(){
+        viewModel.balance.observe(viewLifecycleOwner) { balance ->
+            binding.totalBalanceTextView.text = "IDR $balance"
+        }
+        viewModel.totalExpense.observe(viewLifecycleOwner) { expense ->
+            binding.expenseAmount.text = "IDR $expense"
+        }
+        viewModel.totalIncome.observe(viewLifecycleOwner){ income ->
+            binding.incomeAmount.text = "IDR $income"
+        }
+        lifecycleScope.launch {
+            viewModel.expensePeriod.collectLatest {
+                binding.expensePeriod.text = it.displayName
+            }
+        }
+        lifecycleScope.launch {
+            viewModel.userName.collectLatest { name ->
+                binding.userName.text = name
+            }
+        }
+        lifecycleScope.launch {
+            viewModel.incomePeriod.collectLatest {
+                binding.incomePeriod.text = it.displayName
+            }
+        }
         viewModel.walletCount.observe(viewLifecycleOwner) { walletCount ->
             if (walletCount != null && walletCount > 0) {
                 binding.buttonAddIncome.button.setOnClickListener {
@@ -60,24 +109,6 @@ class HomeFragment : Fragment() {
                 binding.buttonAddExpense.button.setOnClickListener {
                     AppSnackBar.error(binding.root, "Anda belum memiliki dompet!")
                 }
-            }
-        }
-
-        observeUsername()
-        observeBalance()
-    }
-
-    @SuppressLint("SetTextI18n")
-    private fun observeBalance(){
-        viewModel.balance.observe(viewLifecycleOwner) { balance ->
-            binding.totalBalanceTextView.text = "IDR $balance"
-        }
-    }
-
-    private fun observeUsername(){
-        lifecycleScope.launch {
-            viewModel.userName.collectLatest { name ->
-                binding.userName.text = name
             }
         }
     }

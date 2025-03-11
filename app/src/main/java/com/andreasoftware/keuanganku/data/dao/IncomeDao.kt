@@ -1,5 +1,6 @@
 package com.andreasoftware.keuanganku.data.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
@@ -22,4 +23,17 @@ interface IncomeDao {
 
     @Insert
     suspend fun insert(income: IncomeModel)
+
+    @Query("""
+        SELECT SUM(amount) FROM income 
+        WHERE (:startTime IS NULL OR date >= :startTime) 
+        AND (:endTime IS NULL OR date <= :endTime)
+    """)
+    fun once_sumIncome(
+        startTime: Long?,
+        endTime: Long?
+    ): Double?
+
+    @Query("SELECT COUNT(*) FROM income")
+    fun countIncome(): LiveData<Long?>
 }
