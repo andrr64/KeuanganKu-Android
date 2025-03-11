@@ -54,7 +54,6 @@ class IncomeFormPage : Fragment() {
     }
 
     private fun setupAppBar() {
-        binding.appBar.appBarTitle.text = getString(R.string.income_form)
         binding.appBar.appBarBackButton.setOnClickListener { navigateUp() }
     }
 

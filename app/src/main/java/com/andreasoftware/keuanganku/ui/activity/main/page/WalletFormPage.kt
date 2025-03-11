@@ -38,7 +38,6 @@ class WalletFormPage : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.appBar.appBarTitle.text = getString(R.string.wallet_form)
         binding.appBar.appBarBackButton.setOnClickListener {
             findNavController().navigateUp()
         }

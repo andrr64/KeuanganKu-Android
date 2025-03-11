@@ -54,7 +54,6 @@ class ExpenseFormPage : Fragment() {
     }
 
     private fun setupAppBar() {
-        binding.appBar.appBarTitle.text = getString(R.string.expense_form)
         binding.appBar.appBarBackButton.setOnClickListener { navigateUp() }
     }
 
