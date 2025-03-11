@@ -26,15 +26,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:fontFamily="@font/inter"
                 android:text="@string/wallet_form"
+                android:textColor="@color/dark_gray"
                 android:textFontWeight="600"
                 android:textSize="18sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:fontFamily="@font/inter"
                 android:text="@string/wallet_form_desc"
                 android:textSize="12sp" />
 

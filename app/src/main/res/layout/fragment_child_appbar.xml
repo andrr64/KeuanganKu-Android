@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:fontFamily="@font/inter"
-        android:text="Title"
+        android:text="@string/empty"
         android:textColor="@color/dark_gray"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"

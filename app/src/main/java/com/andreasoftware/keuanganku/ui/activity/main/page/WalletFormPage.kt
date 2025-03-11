@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.andreasoftware.keuanganku.R
 import com.andreasoftware.keuanganku.data.model.WalletModel
 import com.andreasoftware.keuanganku.databinding.FragmentWalletFormPageBinding
 import com.andreasoftware.keuanganku.ui.common.AppSnackBar
