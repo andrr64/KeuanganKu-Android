@@ -1,4 +1,4 @@
-package com.andreasoftware.keuanganku.common
+package com.andreasoftware.keuanganku.common.`class`
 
 class DataOperationResult (internal val success: Boolean, private val errorCode: Long? = null, internal val errorMessage: String? = null) {
     fun isError(): Boolean = !success

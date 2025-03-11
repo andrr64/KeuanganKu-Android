@@ -2,7 +2,7 @@ package com.andreasoftware.keuanganku.ui.activity.main.page
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.andreasoftware.keuanganku.common.DataOperationResult
+import com.andreasoftware.keuanganku.common.`class`.DataOperationResult
 import com.andreasoftware.keuanganku.data.model.WalletModel
 import com.andreasoftware.keuanganku.data.repository.WalletRepository
 import com.andreasoftware.keuanganku.data.repository.cache.IncomeCacheRepository

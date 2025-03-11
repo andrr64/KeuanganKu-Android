@@ -2,7 +2,7 @@ package com.andreasoftware.keuanganku.ui.activity.intro
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.ViewModel
 import com.andreasoftware.keuanganku.data.repository.app.UserdataRepository
-import com.andreasoftware.keuanganku.common.DataOperationResult
+import com.andreasoftware.keuanganku.common.`class`.DataOperationResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
