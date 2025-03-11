@@ -10,27 +10,27 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.andreasoftware.keuanganku.R
-import com.andreasoftware.keuanganku.data.model.IncomeCategoryModel
-import com.andreasoftware.keuanganku.data.model.IncomeModel
+import com.andreasoftware.keuanganku.data.model.ExpenseCategoryModel
+import com.andreasoftware.keuanganku.data.model.ExpenseModel
 import com.andreasoftware.keuanganku.data.model.WalletModel
-import com.andreasoftware.keuanganku.databinding.FragmentIncomeFormPageBinding
+import com.andreasoftware.keuanganku.databinding.PageExpenseFormBinding
 import com.andreasoftware.keuanganku.ui.common.AppSnackBar
 import com.andreasoftware.keuanganku.ui.exceptionhandler.HandleExceptionWithModal
 import com.andreasoftware.keuanganku.ui.exceptionhandler.HandleExceptionWithSnackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class IncomeFormPage : Fragment() {
+class PageExpenseForm : Fragment() {
 
-    private var _binding: FragmentIncomeFormPageBinding? = null
+    private var _binding: PageExpenseFormBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: IncomeFormPageViewModel by viewModels()
+    private val viewModel: PageExpenseFormVM by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentIncomeFormPageBinding.inflate(inflater, container, false)
+        _binding = PageExpenseFormBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -38,12 +38,12 @@ class IncomeFormPage : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initializeUI()
         setupObservers()
-        Log.d("IncomeFormPage", "Created!")
+        Log.d("ExpenseFormPage", "Created!")
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        Log.d("IncomeFormPage", "Destroyed!")
+        Log.d("ExpenseFormPage", "Destroyed!")
         _binding = null
     }
 
@@ -72,7 +72,7 @@ class IncomeFormPage : Fragment() {
         viewModel.wallets.observe(viewLifecycleOwner, ::observeWallets)
     }
 
-    private fun observeCategories(categories: List<IncomeCategoryModel>?) {
+    private fun observeCategories(categories: List<ExpenseCategoryModel>?) {
         categories?.let { setupCategoryDropdown(it) }
     }
 
@@ -91,7 +91,7 @@ class IncomeFormPage : Fragment() {
         }
     }
 
-    private fun setupCategoryDropdown(categories: List<IncomeCategoryModel>) {
+    private fun setupCategoryDropdown(categories: List<ExpenseCategoryModel>) {
         val adapter = createArrayAdapter(categories.map { it.name })
         val autoCompleteTextView = binding.dropdownSpinnerCategory.dropdownAutoCompleteTextView
         autoCompleteTextView.setAdapter(adapter)
@@ -108,14 +108,12 @@ class IncomeFormPage : Fragment() {
 
     private fun eventOnSubmitButtonClicked() {
         if (!validateInput()) return
-        val income = createIncomeModel() ?: return
-        viewModel.insertIncome(income) { result ->
-            if (result.isError()) {
-                ///TODO: use string resource
-                HandleExceptionWithModal.info(requireContext(), "Error", result.errorMessage.toString())
+        val expense = createExpenseModel() ?: return
+        viewModel.insertExpense(expense){ result ->
+            if (result.isError()){
+                HandleExceptionWithModal.info(requireContext(), "Error", "Error aje")
             } else {
-                ///TODO: use string resource
-                AppSnackBar.success(binding.root, "Income added successfully")
+                AppSnackBar.success(binding.root, "Expense added successfully")
                 findNavController().navigateUp()
             }
         }
@@ -129,14 +127,14 @@ class IncomeFormPage : Fragment() {
         binding.titleInputLayout.error = null
         binding.amountInputLayout.error = null
 
+        ///TODO: use string resource
         if (title.isEmpty()) {
-            ///TODO: use string resource
             binding.titleInputLayout.error = "Title cannot be empty"
             isValid = false
         }
 
+        ///TODO: use string resource
         if (amountString.isEmpty()) {
-            ///TODO: use string resource
             binding.amountInputLayout.error = "Amount cannot be empty"
             isValid = false
         }
@@ -150,21 +148,21 @@ class IncomeFormPage : Fragment() {
             return false
         }
 
+        ///TODO: use string resource
         if (viewModel.selectedCategory.value == null) {
-            ///TODO: use string resource
-            HandleExceptionWithSnackbar.show(binding.root, "Category cannot be empty")
+            HandleExceptionWithSnackbar.show(binding.root, "Cannot empty")
             return false
         }
         return true
     }
 
-    private fun createIncomeModel(): IncomeModel? {
+    private fun createExpenseModel(): ExpenseModel? {
         val title = binding.titleEditText.text.toString()
         val amountString = binding.amountEditText.text.toString()
         val selectedCategory = viewModel.selectedCategory.value ?: return null
         val amount = amountString.toDouble()
 
-        return IncomeModel(
+        return ExpenseModel(
             description = title,
             amount = amount,
             category_id = selectedCategory.id,
@@ -172,7 +170,7 @@ class IncomeFormPage : Fragment() {
             date = System.currentTimeMillis(),
             createdAt = System.currentTimeMillis(),
             updatedAt = System.currentTimeMillis(),
-            wallet_id = viewModel.selectedWallet.value?.id ?: 0
+            wallet_id = viewModel.selectedWallet.value?.id ?: 0 // Use selected wallet id or 0
         )
     }
 

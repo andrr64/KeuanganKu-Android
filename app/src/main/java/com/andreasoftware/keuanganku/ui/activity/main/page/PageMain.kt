@@ -11,13 +11,13 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.viewpager2.widget.ViewPager2
 import androidx.core.view.get
 import com.andreasoftware.keuanganku.R
-import com.andreasoftware.keuanganku.databinding.FragmentMainPageBinding
+import com.andreasoftware.keuanganku.databinding.PageMainBinding
 import com.google.android.material.navigation.NavigationBarView
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainPage : Fragment() {
-    private var _binding : FragmentMainPageBinding? = null
+class PageMain : Fragment() {
+    private var _binding : PageMainBinding? = null
     private lateinit var drawerLayout: DrawerLayout
     private val binding get() = _binding!!
 
@@ -25,7 +25,7 @@ class MainPage : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentMainPageBinding.inflate(inflater, container, false)
+        _binding = PageMainBinding.inflate(inflater, container, false)
         drawerLayout = binding.drawerLayout
         return binding.root
     }
@@ -45,7 +45,7 @@ class MainPage : Fragment() {
     }
 
     private fun setupViewPager() {
-        binding.viewPager.adapter = MainPageViewpagerAdapter(requireActivity())
+        binding.viewPager.adapter = PageMainVPagerADP(requireActivity())
         binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)

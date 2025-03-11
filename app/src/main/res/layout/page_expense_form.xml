@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activity.main.page.ExpenseFormPage">
+    tools:context=".ui.activity.main.page.PageExpenseForm">
 
     <include
         android:id="@+id/appBar"

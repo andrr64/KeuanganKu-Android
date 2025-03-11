@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class WalletFormPageViewModel
+class PageWalletFormVM
 @Inject constructor(val repository: WalletRepository, val incomeCache: IncomeCacheRepository) : ViewModel()
 {
     fun insertWallet(wallet: WalletModel, callback: (DataOperationResult) -> Unit) {

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:id="@+id/drawerLayout"
     android:layout_height="match_parent"
-    tools:context=".ui.activity.main.page.MainPage">
+    tools:context=".ui.activity.main.page.PageMain">
     
     <androidx.constraintlayout.widget.ConstraintLayout
         android:background="@color/white"

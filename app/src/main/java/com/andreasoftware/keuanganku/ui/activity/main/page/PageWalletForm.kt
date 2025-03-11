@@ -9,22 +9,22 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.andreasoftware.keuanganku.data.model.WalletModel
-import com.andreasoftware.keuanganku.databinding.FragmentWalletFormPageBinding
+import com.andreasoftware.keuanganku.databinding.PageWalletFormBinding
 import com.andreasoftware.keuanganku.ui.common.AppSnackBar
 import com.andreasoftware.keuanganku.ui.exceptionhandler.HandleExceptionWithSnackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class WalletFormPage : Fragment() {
-    private var _binding: FragmentWalletFormPageBinding? = null
+class PageWalletForm : Fragment() {
+    private var _binding: PageWalletFormBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: WalletFormPageViewModel by viewModels()
+    private val viewModel: PageWalletFormVM by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentWalletFormPageBinding.inflate(inflater, container, false)
+        _binding = PageWalletFormBinding.inflate(inflater, container, false)
         Log.d("WalletFormPage.kt", "onCreateView called")
         return binding.root
     }
