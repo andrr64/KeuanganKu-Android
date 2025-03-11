@@ -25,7 +25,6 @@ class InspectionActivity : AppCompatActivity() {
         setContentView(R.layout.activity_inspection)
 
         CoroutineScope(Dispatchers.Main).launch {
-            delay(250)
             val hasUsername = checkData()
             val nextActivity =
                 if (hasUsername) MainActivity::class.java else IntroActivity::class.java

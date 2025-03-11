@@ -6,7 +6,7 @@
     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:hint="@string/dummy"
+    android:hint="@string/empty"
     android:textColorHint="@android:color/white"
     app:endIconDrawable="@drawable/ic_dropdown_24"
     app:endIconTint="@color/white">
