@@ -13,7 +13,7 @@
     <string name="bottom_nav_item_home">Home</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="wallet_form">Wallet Form</string>
-    <string name="wallet_form_desc">Please fill out the form below to add a new expense.</string>
+    <string name="wallet_form_desc">Please fill out the form below to add a new wallet.</string>
     <string name="initial_amount">Initial Amount</string>
     <string name="title">Title</string>
     <string name="amount">Amount</string>
