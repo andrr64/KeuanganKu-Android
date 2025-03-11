@@ -57,7 +57,7 @@ class WalletFormPage : Fragment() {
                 MySnackbar.success(binding.root, "Success!")
                 findNavController().navigateUp()
             } else {
-                HandleExceptionWithSnackbar.failed(binding.root, it.errMsg()!!)
+                HandleExceptionWithSnackbar.show(binding.root, it.errMsg()!!)
             }
         }
     }

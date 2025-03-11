@@ -1,5 +1,6 @@
 package com.andreasoftware.keuanganku.data.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import androidx.room.withTransaction
@@ -31,7 +32,7 @@ class WalletRepository
     }
 
     val allWallet: LiveData<List<WalletModel>> = walletDao.getAll()
-    val totalAmount: LiveData<Double> = walletDao.getTotalAmount().map { it ?: 0.0 }
+    val totalAmount: LiveData<Double> = walletDao.getTotalBalance().map { it ?: 0.0 }
 
     suspend fun insertWallet(wallet: WalletModel): DataOperationResult {
         return withContext(Dispatchers.IO) {
@@ -56,4 +57,6 @@ class WalletRepository
             }
         }
     }
+
+    val count: LiveData<Long?> = walletDao.getCount()
 }

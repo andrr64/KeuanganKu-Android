@@ -17,6 +17,7 @@ import kotlinx.coroutines.launch
 import kotlin.getValue
 import com.andreasoftware.keuanganku.R
 import com.andreasoftware.keuanganku.ui.activity.main.MainActivity
+import com.andreasoftware.keuanganku.ui.common.MySnackbar
 import com.google.android.material.button.MaterialButton
 
 @AndroidEntryPoint
@@ -36,7 +37,6 @@ class HomeFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.d("HomeFragment.kt", "Destroyed..")
         _binding = null
     }
 
@@ -47,10 +47,24 @@ class HomeFragment : Fragment() {
             navigateTo(MainActivity.ACTION_MAIN_TO_WALLET_FORM)
         }
         binding.buttonAddIncome.button.setOnClickListener {
-            navigateTo(MainActivity.ACTION_MAIN_TO_INCOME_FORM)
+            val walletCount = viewModel.walletCount.value
+            if (walletCount != null) {
+                navigateTo(MainActivity.ACTION_MAIN_TO_INCOME_FORM)
+                return@setOnClickListener
+            } else {
+                MySnackbar.error(binding.root, "Anda belum memiliki dompet!")
+                return@setOnClickListener
+            }
         }
         binding.buttonAddExpense.button.setOnClickListener {
-            navigateTo(MainActivity.ACTION_MAIN_TO_EXPENSE_FORM)
+            val walletCount = viewModel.walletCount.value
+            if (walletCount != null) {
+                navigateTo(MainActivity.ACTION_MAIN_TO_EXPENSE_FORM)
+                return@setOnClickListener
+            } else {
+                MySnackbar.error(binding.root, "Anda belum memiliki dompet!")
+                return@setOnClickListener
+            }
         }
 
         observeUsername()
