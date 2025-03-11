@@ -11,7 +11,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.andreasoftware.keuanganku.ui.activity.main.MainActivity
 import com.andreasoftware.keuanganku.ui.exceptionhandler.HandleExceptionWithSnackbar
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -45,7 +44,7 @@ class IntroPage2Page : Fragment() {
                             startActivity(intent)
                             requireActivity().finish()
                         } else {
-                            HandleExceptionWithSnackbar.failed(binding.root, errorMessage ?: "An error occurred")
+                            HandleExceptionWithSnackbar.show(binding.root, errorMessage ?: "An error occurred")
                         }
                     }
                 }
