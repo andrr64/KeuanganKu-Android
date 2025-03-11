@@ -14,7 +14,7 @@ import com.andreasoftware.keuanganku.data.model.ExpenseCategoryModel
 import com.andreasoftware.keuanganku.data.model.ExpenseModel
 import com.andreasoftware.keuanganku.data.model.WalletModel
 import com.andreasoftware.keuanganku.databinding.FragmentExpenseFormPageBinding
-import com.andreasoftware.keuanganku.ui.common.MySnackbar
+import com.andreasoftware.keuanganku.ui.common.AppSnackBar
 import com.andreasoftware.keuanganku.ui.exceptionhandler.HandleExceptionWithModal
 import com.andreasoftware.keuanganku.ui.exceptionhandler.HandleExceptionWithSnackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -114,7 +114,7 @@ class ExpenseFormPage : Fragment() {
             if (result.isError()){
                 HandleExceptionWithModal.info(requireContext(), "Error", "Error aje")
             } else {
-                MySnackbar.success(binding.root, "Expense added successfully")
+                AppSnackBar.success(binding.root, "Expense added successfully")
                 findNavController().navigateUp()
             }
         }

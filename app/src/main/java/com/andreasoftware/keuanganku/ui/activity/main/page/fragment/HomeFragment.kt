@@ -2,7 +2,6 @@ package com.andreasoftware.keuanganku.ui.activity.main.page.fragment
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,8 +16,7 @@ import kotlinx.coroutines.launch
 import kotlin.getValue
 import com.andreasoftware.keuanganku.R
 import com.andreasoftware.keuanganku.ui.activity.main.MainActivity
-import com.andreasoftware.keuanganku.ui.common.MySnackbar
-import com.google.android.material.button.MaterialButton
+import com.andreasoftware.keuanganku.ui.common.AppSnackBar
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -57,10 +55,10 @@ class HomeFragment : Fragment() {
                 }
             } else {
                 binding.buttonAddIncome.button.setOnClickListener {
-                    MySnackbar.error(binding.root, "Anda belum memiliki dompet!")
+                    AppSnackBar.error(binding.root, "Anda belum memiliki dompet!")
                 }
                 binding.buttonAddExpense.button.setOnClickListener {
-                    MySnackbar.error(binding.root, "Anda belum memiliki dompet!")
+                    AppSnackBar.error(binding.root, "Anda belum memiliki dompet!")
                 }
             }
         }

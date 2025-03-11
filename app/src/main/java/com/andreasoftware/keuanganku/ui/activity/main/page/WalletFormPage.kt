@@ -11,7 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.andreasoftware.keuanganku.R
 import com.andreasoftware.keuanganku.data.model.WalletModel
 import com.andreasoftware.keuanganku.databinding.FragmentWalletFormPageBinding
-import com.andreasoftware.keuanganku.ui.common.MySnackbar
+import com.andreasoftware.keuanganku.ui.common.AppSnackBar
 import com.andreasoftware.keuanganku.ui.exceptionhandler.HandleExceptionWithSnackbar
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -54,7 +54,7 @@ class WalletFormPage : Fragment() {
         )
         viewModel.insertWallet(newWallet) {
             if (it.isSuccess()) {
-                MySnackbar.success(binding.root, "Success!")
+                AppSnackBar.success(binding.root, "Success!")
                 findNavController().navigateUp()
             } else {
                 HandleExceptionWithSnackbar.show(binding.root, it.errMsg()!!)
