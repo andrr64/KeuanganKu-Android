@@ -1,6 +1,6 @@
 package com.andreasoftware.keuanganku.common.util
 
-import com.andreasoftware.keuanganku.common.enum.TimePeriod
+import com.andreasoftware.keuanganku.common.enm.TimePeriod
 import java.util.*
 
 fun getLongTimeByPeriod(

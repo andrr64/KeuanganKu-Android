@@ -1,5 +1,6 @@
 package com.andreasoftware.keuanganku.data.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
@@ -27,5 +28,8 @@ interface ExpenseDao {
         SELECT SUM(amount) FROM expense 
         WHERE date >= :startDate AND date <= :endDate
     """)
-    fun once_sumExpense(startDate: Long, endDate: Long): Long?
+    fun once_sumExpense(startDate: Long, endDate: Long): Double?
+
+    @Query("SELECT COUNT(*) FROM expense")
+    fun countExpense(): LiveData<Long?>
 }
