@@ -1,4 +1,4 @@
-package com.andreasoftware.keuanganku.ui.activity.intro
+package com.andreasoftware.keuanganku.ui.activity.intro.page
 
 import android.content.Intent
 import android.os.Bundle
@@ -15,11 +15,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class IntroPage2Page : Fragment() {
+class PageIntro2 : Fragment() {
 
     private var _binding: PageIntroPage2Binding? = null
     private val binding get()= _binding!!
-    private val viewModel: IntroPage2ViewModel by viewModels()
+    private val viewModel: PageIntro2VM by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

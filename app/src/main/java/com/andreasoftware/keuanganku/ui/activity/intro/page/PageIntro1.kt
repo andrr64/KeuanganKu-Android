@@ -1,4 +1,4 @@
-package com.andreasoftware.keuanganku.ui.activity.intro
+package com.andreasoftware.keuanganku.ui.activity.intro.page
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.andreasoftware.keuanganku.databinding.PageIntroPage1Binding
 
-class IntroPage1Page : Fragment() {
+class PageIntro1 : Fragment() {
     private var _binding: PageIntroPage1Binding? = null
     private val binding get()= _binding!!
 

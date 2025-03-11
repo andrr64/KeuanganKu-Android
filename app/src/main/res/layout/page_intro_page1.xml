@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".ui.activity.intro.IntroPage1Page">
+    tools:context=".ui.activity.intro.page.PageIntro1">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView

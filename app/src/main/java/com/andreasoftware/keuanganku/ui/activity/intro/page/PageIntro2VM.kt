@@ -1,4 +1,4 @@
-package com.andreasoftware.keuanganku.ui.activity.intro
+package com.andreasoftware.keuanganku.ui.activity.intro.page
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.ViewModel
 import com.andreasoftware.keuanganku.data.repository.app.UserdataRepository
@@ -8,7 +8,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class IntroPage2ViewModel @Inject constructor(
+class PageIntro2VM @Inject constructor(
     private val userdataRepository: UserdataRepository
 ) : ViewModel() {
 
