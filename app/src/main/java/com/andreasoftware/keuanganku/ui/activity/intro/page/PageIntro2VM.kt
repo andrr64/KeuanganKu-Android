@@ -1,8 +1,9 @@
 package com.andreasoftware.keuanganku.ui.activity.intro.page
-import androidx.lifecycle.viewModelScope
+
 import androidx.lifecycle.ViewModel
-import com.andreasoftware.keuanganku.data.repository.app.UserdataRepository
+import androidx.lifecycle.viewModelScope
 import com.andreasoftware.keuanganku.common.cls.DataOperationResult
+import com.andreasoftware.keuanganku.data.repository.app.UserdataRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

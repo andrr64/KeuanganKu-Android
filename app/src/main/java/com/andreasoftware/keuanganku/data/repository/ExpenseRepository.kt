@@ -21,8 +21,8 @@ class ExpenseRepository
 @Inject constructor(
     private val expenseDao: ExpenseDao,
     private val walletDao: WalletDao,
-    private val db: AppDatabase): ViewModel()
-{
+    private val db: AppDatabase
+) : ViewModel() {
     suspend fun insertExpense(expense: ExpenseModel): DataOperationResult {
         return withContext(Dispatchers.IO) {
             try {
@@ -31,11 +31,16 @@ class ExpenseRepository
                     walletDao.subtractBalance(expense.wallet_id, expense.amount)
                 }
                 return@withContext DataOperationResult(true)
-            } catch (e: Exception){
-                return@withContext DataOperationResult(false, ExpenseDAOException.CREATE_ERROR.code, e.toString())
+            } catch (e: Exception) {
+                return@withContext DataOperationResult(
+                    false,
+                    ExpenseDAOException.CREATE_ERROR.code,
+                    e.toString()
+                )
             }
         }
     }
+
     suspend fun totalExpense(period: TimePeriod): DataOperationResult2<Double?> {
         return withContext(Dispatchers.IO) {
             try {
@@ -46,10 +51,12 @@ class ExpenseRepository
                         calendar.add(Calendar.DAY_OF_YEAR, -7)
                         calendar.timeInMillis
                     }
+
                     TimePeriod.MONTH -> {
                         calendar.add(Calendar.MONTH, -1)
                         calendar.timeInMillis
                     }
+
                     TimePeriod.YEAR -> {
                         calendar.add(Calendar.YEAR, -1)
                         calendar.timeInMillis
@@ -58,9 +65,14 @@ class ExpenseRepository
                 val total = expenseDao.once_sumExpense(startDate, endDate)?.toDouble()
                 return@withContext DataOperationResult2(true, data = total)
             } catch (e: Exception) {
-                return@withContext DataOperationResult2(false, ExpenseDAOException.READ_ERROR.code, e.toString())
+                return@withContext DataOperationResult2(
+                    false,
+                    ExpenseDAOException.READ_ERROR.code,
+                    e.toString()
+                )
             }
         }
     }
+
     val countExpense = expenseDao.countExpense()
 }

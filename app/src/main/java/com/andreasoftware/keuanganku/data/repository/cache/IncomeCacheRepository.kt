@@ -6,6 +6,4 @@ import javax.inject.Singleton
 
 @Singleton
 class IncomeCacheRepository
-@Inject constructor(incomeCache: IncomeCacheDS){
-
-}
+@Inject constructor(incomeCache: IncomeCacheDS)

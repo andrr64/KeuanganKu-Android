@@ -58,7 +58,8 @@ class PageExpenseForm : Fragment() {
     }
 
     private fun setupDropdownHints() {
-        binding.dropdownSpinnerCategory.dropdownTextInputLayout.hint = getString(R.string.select_category)
+        binding.dropdownSpinnerCategory.dropdownTextInputLayout.hint =
+            getString(R.string.select_category)
         ///TODO: use string resource
         binding.dropdownSpinnerWallet.dropdownTextInputLayout.hint = "Select Wallet"
     }
@@ -109,8 +110,8 @@ class PageExpenseForm : Fragment() {
     private fun eventOnSubmitButtonClicked() {
         if (!validateInput()) return
         val expense = createExpenseModel() ?: return
-        viewModel.insertExpense(expense){ result ->
-            if (result.isError()){
+        viewModel.insertExpense(expense) { result ->
+            if (result.isError()) {
                 HandleExceptionWithModal.info(requireContext(), "Error", "Error aje")
             } else {
                 AppSnackBar.success(binding.root, "Expense added successfully")

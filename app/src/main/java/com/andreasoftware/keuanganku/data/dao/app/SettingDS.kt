@@ -10,8 +10,9 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 private val Context.settingDatastore by preferencesDataStore(name = "setting")
+
 class SettingDS
-@Inject constructor (@ApplicationContext private val context: Context) {
+@Inject constructor(@ApplicationContext private val context: Context) {
     companion object {
         private val LANGUAGE_LOCALE_KEY = stringPreferencesKey("language_locale")
     }

@@ -1,45 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:startDestination="@id/mainPage"
-    android:id="@+id/activity_main_nav">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main_nav"
+    app:startDestination="@id/mainPage">
 
     <fragment
+        android:id="@+id/mainPage"
         android:name="com.andreasoftware.keuanganku.ui.activity.main.page.PageMain"
-        tools:layout="@layout/page_main"
         android:label="fragment_main"
-        android:id="@+id/mainPage">
+        tools:layout="@layout/page_main">
 
         <action
             android:id="@+id/action_main_fragment_to_expenseForm"
-            app:destination="@+id/pageExpenseForm"/>
+            app:destination="@+id/pageExpenseForm" />
 
         <action
             android:id="@+id/action_main_fragment_to_incomeForm"
-            app:destination="@+id/pageIncomeForm"/>
+            app:destination="@+id/pageIncomeForm" />
 
         <action
             android:id="@+id/action_main_fragment_to_walletForm"
-            app:destination="@id/walletFormPage"/>
+            app:destination="@id/walletFormPage" />
     </fragment>
 
     <fragment
+        android:id="@+id/pageExpenseForm"
         android:name="com.andreasoftware.keuanganku.ui.activity.main.page.PageExpenseForm"
-        tools:layout="@layout/page_expense_form"
         android:label="fragment_expense_form"
-        android:id="@+id/pageExpenseForm"/>
+        tools:layout="@layout/page_expense_form" />
 
     <fragment
+        android:id="@+id/pageIncomeForm"
         android:name="com.andreasoftware.keuanganku.ui.activity.main.page.PageIncomeForm"
-        tools:layout="@layout/page_income_form"
         android:label="page_income_form"
-        android:id="@+id/pageIncomeForm"/>
+        tools:layout="@layout/page_income_form" />
 
     <fragment
+        android:id="@+id/walletFormPage"
         android:name="com.andreasoftware.keuanganku.ui.activity.main.page.PageWalletForm"
-        tools:layout="@layout/page_wallet_form"
         android:label="page_income_form"
-        android:id="@+id/walletFormPage"/>
+        tools:layout="@layout/page_wallet_form" />
 </navigation>

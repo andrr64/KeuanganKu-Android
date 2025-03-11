@@ -3,10 +3,10 @@ package com.andreasoftware.keuanganku.ui.activity.inspection
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.andreasoftware.keuanganku.ui.activity.main.MainActivity
 import com.andreasoftware.keuanganku.R
 import com.andreasoftware.keuanganku.data.repository.app.UserdataRepository
 import com.andreasoftware.keuanganku.ui.activity.intro.IntroActivity
+import com.andreasoftware.keuanganku.ui.activity.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -27,7 +27,8 @@ class InspectionActivity : AppCompatActivity() {
         CoroutineScope(Dispatchers.Main).launch {
             delay(250)
             val hasUsername = checkData()
-            val nextActivity = if (hasUsername) MainActivity::class.java else IntroActivity::class.java
+            val nextActivity =
+                if (hasUsername) MainActivity::class.java else IntroActivity::class.java
             startActivity(Intent(this@InspectionActivity, nextActivity))
             finish()
         }

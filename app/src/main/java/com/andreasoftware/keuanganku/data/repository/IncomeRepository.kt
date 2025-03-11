@@ -33,7 +33,11 @@ class IncomeRepository
                 }
                 return@withContext DataOperationResult(true)
             } catch (e: Exception) {
-                return@withContext DataOperationResult(false, IncomeDAOException.CREATE_ERROR.code, e.toString())
+                return@withContext DataOperationResult(
+                    false,
+                    IncomeDAOException.CREATE_ERROR.code,
+                    e.toString()
+                )
             }
         }
     }
@@ -48,10 +52,12 @@ class IncomeRepository
                         calendar.add(Calendar.DAY_OF_YEAR, -7)
                         calendar.timeInMillis
                     }
+
                     TimePeriod.MONTH -> {
                         calendar.add(Calendar.MONTH, -1)
                         calendar.timeInMillis
                     }
+
                     TimePeriod.YEAR -> {
                         calendar.add(Calendar.YEAR, -1)
                         calendar.timeInMillis
@@ -60,7 +66,11 @@ class IncomeRepository
                 val total = incomeDao.once_sumIncome(startDate, endDate)?.toDouble()
                 return@withContext DataOperationResult2(true, data = total)
             } catch (e: Exception) {
-                return@withContext DataOperationResult2(false, IncomeDAOException.READ_ERROR.code, e.toString())
+                return@withContext DataOperationResult2(
+                    false,
+                    IncomeDAOException.READ_ERROR.code,
+                    e.toString()
+                )
             }
         }
     }

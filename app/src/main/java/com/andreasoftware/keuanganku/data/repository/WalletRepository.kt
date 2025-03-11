@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import androidx.room.withTransaction
 import com.andreasoftware.keuanganku.common.cls.DataOperationResult
-import com.andreasoftware.keuanganku.data.db.AppDatabase
 import com.andreasoftware.keuanganku.data.dao.IncomeDao
 import com.andreasoftware.keuanganku.data.dao.WalletDao
+import com.andreasoftware.keuanganku.data.db.AppDatabase
 import com.andreasoftware.keuanganku.data.exception.WalletDAOException
 import com.andreasoftware.keuanganku.data.model.IncomeModel
 import com.andreasoftware.keuanganku.data.model.WalletModel
@@ -52,7 +52,11 @@ class WalletRepository
                 }
                 return@withContext DataOperationResult(true)
             } catch (e: Exception) {
-                return@withContext DataOperationResult(false, WalletDAOException.CREATE_ERROR.code, e.toString())
+                return@withContext DataOperationResult(
+                    false,
+                    WalletDAOException.CREATE_ERROR.code,
+                    e.toString()
+                )
             }
         }
     }

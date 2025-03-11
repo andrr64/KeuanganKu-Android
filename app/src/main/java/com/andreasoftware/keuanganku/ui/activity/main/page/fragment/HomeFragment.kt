@@ -44,19 +44,23 @@ class HomeFragment : Fragment() {
         setupObserver()
     }
 
-    private fun setupListener(){
+    private fun setupListener() {
         binding.buttonAddWallet.button.setOnClickListener {
             navigateTo(MainActivity.ACTION_MAIN_TO_WALLET_FORM)
         }
     }
 
-    private fun setupExpensePeriodSpinner(){
+    private fun setupExpensePeriodSpinner() {
         val periods = TimePeriod.entries.map { it.displayName }
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, periods)
+        val adapter =
+            ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, periods)
         binding.spinnerExpensePeriod.spinner.setAdapter(adapter)
         binding.spinnerIncomePeriod.spinner.setAdapter(adapter)
 
-        binding.spinnerExpensePeriod.spinner.setText(viewModel.expensePeriod.value.displayName, false)
+        binding.spinnerExpensePeriod.spinner.setText(
+            viewModel.expensePeriod.value.displayName,
+            false
+        )
         binding.spinnerIncomePeriod.spinner.setText(viewModel.incomePeriod.value.displayName, false)
 
         binding.spinnerExpensePeriod.spinner.setOnItemClickListener { _, _, position, _ ->
@@ -69,14 +73,14 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun setupObserver(){
+    private fun setupObserver() {
         viewModel.balance.observe(viewLifecycleOwner) { balance ->
             binding.totalBalanceTextView.text = "IDR $balance"
         }
         viewModel.totalExpense.observe(viewLifecycleOwner) { expense ->
             binding.expenseAmount.text = "IDR $expense"
         }
-        viewModel.totalIncome.observe(viewLifecycleOwner){ income ->
+        viewModel.totalIncome.observe(viewLifecycleOwner) { income ->
             binding.incomeAmount.text = "IDR $income"
         }
         lifecycleScope.launch {
@@ -114,7 +118,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun navigateTo(actionId: Int) {
-        val navHostFragment = activity?.supportFragmentManager?.findFragmentById(R.id.root_nav_host_fragment) as? NavHostFragment
+        val navHostFragment =
+            activity?.supportFragmentManager?.findFragmentById(R.id.root_nav_host_fragment) as? NavHostFragment
         val navController = navHostFragment?.navController
         navController?.navigate(actionId)
     }

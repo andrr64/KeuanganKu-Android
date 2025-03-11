@@ -8,9 +8,10 @@ import com.andreasoftware.keuanganku.ui.activity.main.page.fragment.HomeFragment
 import com.andreasoftware.keuanganku.ui.activity.main.page.fragment.ToPayFragment
 import com.andreasoftware.keuanganku.ui.activity.main.page.fragment.WalletFragment
 
-class PageMainVPagerADP(fragmentActivity: FragmentActivity): FragmentStateAdapter(fragmentActivity){
+class PageMainVPagerADP(fragmentActivity: FragmentActivity) :
+    FragmentStateAdapter(fragmentActivity) {
     override fun createFragment(position: Int): Fragment {
-        return when(position) {
+        return when (position) {
             0 -> HomeFragment()
             1 -> WalletFragment()
             2 -> AnalysisFragment()

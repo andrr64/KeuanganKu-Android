@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -12,21 +13,21 @@
             android:id="@+id/appBarDrawerButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_menu"
             android:layout_gravity="start"
-            android:contentDescription="Drawer Icon" />
+            android:contentDescription="Drawer Icon"
+            android:src="@drawable/ic_menu" />
 
         <TextView
             android:id="@+id/appBarTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="16dp"
             android:fontFamily="@font/inter"
             android:gravity="center"
             android:text="KeuanganKu"
             android:textColor="@color/black"
             android:textFontWeight="600"
-            android:textSize="18sp"
-            android:layout_gravity="center"
-            android:layout_marginStart="16dp" />
+            android:textSize="18sp" />
     </androidx.appcompat.widget.Toolbar>
 </layout>

@@ -8,7 +8,12 @@ import com.google.android.material.snackbar.Snackbar
 
 object AppSnackBar {
     fun success(view: View, message: String) {
-        showSnackBar(view, message, ContextCompat.getColor(view.context, R.color.green), android.graphics.Color.WHITE)
+        showSnackBar(
+            view,
+            message,
+            ContextCompat.getColor(view.context, R.color.green),
+            android.graphics.Color.WHITE
+        )
     }
 
     fun warning(view: View, message: String) {
@@ -16,7 +21,12 @@ object AppSnackBar {
     }
 
     fun error(view: View, message: String) {
-        showSnackBar(view, message, ContextCompat.getColor(view.context, R.color.red), android.graphics.Color.WHITE)
+        showSnackBar(
+            view,
+            message,
+            ContextCompat.getColor(view.context, R.color.red),
+            android.graphics.Color.WHITE
+        )
     }
 
     private fun showSnackBar(view: View, message: String, backgroundColor: Int, textColor: Int) {
@@ -26,7 +36,7 @@ object AppSnackBar {
             Snackbar.make(view, message, Snackbar.LENGTH_SHORT)
                 .setBackgroundTint(backgroundColor)
                 .setTextColor(textColor)
-                .addCallback(object : Snackbar.Callback(){
+                .addCallback(object : Snackbar.Callback() {
                     override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
                         super.onDismissed(transientBottomBar, event)
                         GlobalUIState.makeSnackbarAvailable() //Re-enable snackbars after dismissal

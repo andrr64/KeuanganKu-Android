@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 private val Context.expenseCacheDatastore by preferencesDataStore(name = "expense_cache")
+
 class ExpenseCacheDS
 @Inject constructor(@ApplicationContext private val context: Context) {
     companion object {

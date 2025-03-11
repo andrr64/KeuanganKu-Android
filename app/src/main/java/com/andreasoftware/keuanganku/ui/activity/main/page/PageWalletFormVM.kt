@@ -12,8 +12,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PageWalletFormVM
-@Inject constructor(val repository: WalletRepository, val incomeCache: IncomeCacheRepository) : ViewModel()
-{
+@Inject constructor(val repository: WalletRepository, val incomeCache: IncomeCacheRepository) :
+    ViewModel() {
     fun insertWallet(wallet: WalletModel, callback: (DataOperationResult) -> Unit) {
         viewModelScope.launch {
             val result = repository.insertWallet(wallet)

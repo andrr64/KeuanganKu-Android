@@ -17,7 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class PageMain : Fragment() {
-    private var _binding : PageMainBinding? = null
+    private var _binding: PageMainBinding? = null
     private lateinit var drawerLayout: DrawerLayout
     private val binding get() = _binding!!
 

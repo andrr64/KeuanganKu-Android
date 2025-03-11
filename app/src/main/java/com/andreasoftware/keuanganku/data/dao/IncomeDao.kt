@@ -8,12 +8,14 @@ import com.andreasoftware.keuanganku.data.model.IncomeModel
 
 @Dao
 interface IncomeDao {
-    @Query("""
+    @Query(
+        """
         SELECT * FROM income 
         WHERE (:startTime IS NULL OR date >= :startTime) 
         AND (:endTime IS NULL OR date <= :endTime)
         LIMIT :limit OFFSET :offset
-    """)
+    """
+    )
     fun getAllStrict(
         startTime: Long?,
         endTime: Long?,
@@ -24,11 +26,13 @@ interface IncomeDao {
     @Insert
     suspend fun insert(income: IncomeModel)
 
-    @Query("""
+    @Query(
+        """
         SELECT SUM(amount) FROM income 
         WHERE (:startTime IS NULL OR date >= :startTime) 
         AND (:endTime IS NULL OR date <= :endTime)
-    """)
+    """
+    )
     fun once_sumIncome(
         startTime: Long?,
         endTime: Long?

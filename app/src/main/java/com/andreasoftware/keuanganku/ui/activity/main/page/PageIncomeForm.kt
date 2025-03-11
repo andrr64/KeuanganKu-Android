@@ -58,7 +58,8 @@ class PageIncomeForm : Fragment() {
     }
 
     private fun setupDropdownHints() {
-        binding.dropdownSpinnerCategory.dropdownTextInputLayout.hint = getString(R.string.select_category)
+        binding.dropdownSpinnerCategory.dropdownTextInputLayout.hint =
+            getString(R.string.select_category)
         ///TODO: use string resource
         binding.dropdownSpinnerWallet.dropdownTextInputLayout.hint = "Select Wallet"
     }
@@ -112,7 +113,11 @@ class PageIncomeForm : Fragment() {
         viewModel.insertIncome(income) { result ->
             if (result.isError()) {
                 ///TODO: use string resource
-                HandleExceptionWithModal.info(requireContext(), "Error", result.errorMessage.toString())
+                HandleExceptionWithModal.info(
+                    requireContext(),
+                    "Error",
+                    result.errorMessage.toString()
+                )
             } else {
                 ///TODO: use string resource
                 AppSnackBar.success(binding.root, "Income added successfully")

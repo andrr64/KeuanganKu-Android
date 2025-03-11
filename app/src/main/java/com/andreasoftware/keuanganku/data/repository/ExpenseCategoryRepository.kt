@@ -8,6 +8,6 @@ import javax.inject.Singleton
 
 @Singleton
 class ExpenseCategoryRepository
-@Inject constructor(expenseCategoryDao: ExpenseCategoryDao){
+@Inject constructor(expenseCategoryDao: ExpenseCategoryDao) {
     val allCategories: LiveData<List<ExpenseCategoryModel>> = expenseCategoryDao.getAll()
 }

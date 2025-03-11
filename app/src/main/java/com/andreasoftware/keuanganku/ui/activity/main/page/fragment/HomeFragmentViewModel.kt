@@ -48,7 +48,8 @@ class HomeFragmentViewModel
         _expensePeriod.value = period
         getExpense(period)
     }
-    fun setIncomePeriod(period: TimePeriod){
+
+    fun setIncomePeriod(period: TimePeriod) {
         _incomePeriod.value = period
         getIncome(period)
     }

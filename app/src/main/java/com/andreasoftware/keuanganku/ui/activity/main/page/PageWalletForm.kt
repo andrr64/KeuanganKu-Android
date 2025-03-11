@@ -45,7 +45,7 @@ class PageWalletForm : Fragment() {
         }
     }
 
-    fun eventOnButtonSubmitClicked(){
+    fun eventOnButtonSubmitClicked() {
         val newWallet = WalletModel(
             name = binding.titleEditText.text.toString(),
             balance = binding.amountEditText.text.toString().toDouble()
