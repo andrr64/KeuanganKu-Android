@@ -3,13 +3,11 @@ package com.andreasoftware.keuanganku.ui.exceptionhandler
 import android.view.View
 import androidx.core.content.ContextCompat
 import com.andreasoftware.keuanganku.R
+import com.andreasoftware.keuanganku.ui.common.AppSnackBar
 import com.google.android.material.snackbar.Snackbar
 
 object HandleExceptionWithSnackbar {
     fun show(view: View, message: String) {
-        Snackbar.make(view, message, Snackbar.LENGTH_SHORT)
-            .setBackgroundTint(ContextCompat.getColor(view.context, R.color.red))
-            .setTextColor(android.graphics.Color.WHITE)
-            .show()
+        AppSnackBar.error(view, message)
     }
 }
