@@ -1,6 +1,7 @@
 package com.andreasoftware.keuanganku.data.dao
 
 import androidx.room.Dao
+import androidx.room.Insert
 import androidx.room.Query
 import com.andreasoftware.keuanganku.data.model.ExpenseModel
 
@@ -18,4 +19,7 @@ interface ExpenseDao {
         limit: Int,
         offset: Int
     ): List<ExpenseModel>
+
+    @Insert
+    suspend fun insert(expense: ExpenseModel): Long
 }
