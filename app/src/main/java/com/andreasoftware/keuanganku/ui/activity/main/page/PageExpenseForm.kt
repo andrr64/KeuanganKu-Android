@@ -170,7 +170,7 @@ class PageExpenseForm : Fragment() {
             date = System.currentTimeMillis(),
             createdAt = System.currentTimeMillis(),
             updatedAt = System.currentTimeMillis(),
-            wallet_id = viewModel.selectedWallet.value?.id ?: 0 // Use selected wallet id or 0
+            wallet_id = viewModel.selectedWallet.value?.id ?: 0
         )
     }
 

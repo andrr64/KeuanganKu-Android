@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.andreasoftware.keuanganku.common.`class`.DataOperationResult
+import com.andreasoftware.keuanganku.common.cls.DataOperationResult
 import com.andreasoftware.keuanganku.data.model.ExpenseCategoryModel
 import com.andreasoftware.keuanganku.data.model.ExpenseModel
 import com.andreasoftware.keuanganku.data.model.WalletModel
