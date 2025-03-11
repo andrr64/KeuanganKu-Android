@@ -1,27 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.activity.main.page.fragment.HomeFragment">
+
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="20dp"
-        android:layout_height="wrap_content">
+        android:padding="20dp">
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/userinfoCard"
             android:layout_width="match_parent"
-            app:cardCornerRadius="5dp"
             android:layout_height="wrap_content"
-            app:cardBackgroundColor="@color/dark_purple"
             android:layout_marginBottom="15dp"
-            android:id="@+id/userinfoCard">
+            app:cardBackgroundColor="@color/dark_purple"
+            app:cardCornerRadius="5dp">
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="16dp">
+
                 <LinearLayout
                     android:id="@+id/userInfoContainer"
                     android:layout_width="match_parent"
@@ -41,7 +44,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Hi"
+                            android:text="@string/hi"
                             android:textAppearance="?attr/textAppearanceBody2"
                             android:textColor="@color/white" />
 
@@ -49,11 +52,12 @@
                             android:id="@+id/userName"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Andreas"
+                            android:text="@string/empty"
                             android:textAppearance="?attr/textAppearanceTitleLarge"
                             android:textColor="@color/white" />
                     </LinearLayout>
 
+                    <!-- Layout 2 (Kanan) -->
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -65,7 +69,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Balance"
+                            android:text="@string/balance"
                             android:textAppearance="?attr/textAppearanceBody2"
                             android:textColor="@color/white" />
 
@@ -80,6 +84,7 @@
                             android:textColor="@color/white" />
                     </LinearLayout>
                 </LinearLayout>
+
                 <include
                     android:id="@+id/buttonAddWallet"
                     layout="@layout/component_button_add"
@@ -91,12 +96,13 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/incomeCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardBackgroundColor="@color/green"
             android:layout_marginBottom="15dp"
-            app:cardCornerRadius="5dp"
-            android:id="@+id/incomeCard">
+            app:cardBackgroundColor="@color/green"
+            app:cardCornerRadius="5dp">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -106,83 +112,79 @@
                 android:paddingVertical="10dp">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:paddingTop="10dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
 
-                    <LinearLayout
+                    <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginBottom="10dp"
-                        android:orientation="horizontal">
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:tint="@color/white"
-                            android:layout_marginEnd="5dp"
-                            android:importantForAccessibility="no"
-                            android:src="@drawable/ic_wallet_24"/>
-                        <TextView
-                            android:id="@+id/incomeCardTextView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/income"
-                            android:textColor="@color/white"
-                            tools:targetApi="p" />
-                    </LinearLayout>
+                        android:layout_marginEnd="5dp"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_wallet_24"
+                        app:tint="@color/white" />
+
+                    <TextView
+                        android:id="@+id/incomeCardTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/income"
+                        android:textColor="@color/white"
+                        tools:targetApi="p" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="2"
-                        >
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="10dp"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-                            <TextView
-                                android:id="@+id/incomePeriod"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:ellipsize="end"
-                                android:maxLines="1"
-                                android:text="@string/empty"
-                                android:textColor="@color/white"
-                                android:textSize="12sp" />
-                            <TextView
-                                android:id="@+id/incomeAmount"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:ellipsize="end"
-                                android:maxLines="1"
-                                android:text="@string/empty"
-                                android:textColor="@color/white"
-                                android:textSize="22sp" />
-                        </LinearLayout>
+                        android:layout_marginEnd="10dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
 
-                        <include
-                            layout="@layout/component_spinner_transparent"
-                            android:id="@+id/spinnerIncomePeriod"
-                            android:layout_width="0dp"
+                        <TextView
+                            android:id="@+id/incomePeriod"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"/>
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="@string/empty"
+                            android:textColor="@color/white"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/incomeAmount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="@string/empty"
+                            android:textColor="@color/white"
+                            android:textSize="22sp" />
                     </LinearLayout>
+
+                    <include
+                        android:id="@+id/spinnerIncomePeriod"
+                        layout="@layout/component_spinner_transparent"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
                 </LinearLayout>
 
                 <include
                     android:id="@+id/buttonAddIncome"
                     layout="@layout/component_button_add"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp" />
             </LinearLayout>
+
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
@@ -191,6 +193,7 @@
             android:padding="10dp"
             app:cardBackgroundColor="@color/red"
             app:cardCornerRadius="10dp">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -199,50 +202,41 @@
                 android:paddingHorizontal="15dp"
                 android:paddingVertical="10dp">
 
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_arrow_down_24"
+                        app:tint="@color/white" />
+
+                    <TextView
+                        android:id="@+id/expenseCardTextview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/expense"
+                        android:textColor="@color/white"
+                        tools:targetApi="p" />
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="vertical"
-                    android:paddingTop="10dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginBottom="10dp"
-                        android:orientation="horizontal">
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:tint="@color/white"
-                            android:layout_marginEnd="5dp"
-                            android:importantForAccessibility="no"
-                            android:src="@drawable/ic_arrow_down_24"/>
-                        <TextView
-                            android:id="@+id/expenseCardTextview"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/expense"
-                            android:textColor="@color/white"
-                            tools:targetApi="p" />
-                    </LinearLayout>
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
-                        <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_weight="1">
+                        android:layout_weight="1"
+                        android:orientation="vertical">
 
                         <TextView
                             android:id="@+id/expensePeriod"
@@ -265,19 +259,21 @@
                             android:textSize="22sp" />
 
                     </LinearLayout>
+
                     <include
-                        layout="@layout/component_spinner_transparent"
                         android:id="@+id/spinnerExpensePeriod"
+                        layout="@layout/component_spinner_transparent"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"/>
-                    </LinearLayout>
+                        android:layout_weight="1" />
                 </LinearLayout>
+
                 <include
                     android:id="@+id/buttonAddExpense"
                     layout="@layout/component_button_add"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
     </LinearLayout>
