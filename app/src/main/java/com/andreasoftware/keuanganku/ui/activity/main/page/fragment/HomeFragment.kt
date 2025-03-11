@@ -46,24 +46,22 @@ class HomeFragment : Fragment() {
         binding.buttonAddWallet.button.setOnClickListener {
             navigateTo(MainActivity.ACTION_MAIN_TO_WALLET_FORM)
         }
-        binding.buttonAddIncome.button.setOnClickListener {
-            val walletCount = viewModel.walletCount.value
-            if (walletCount != null) {
-                navigateTo(MainActivity.ACTION_MAIN_TO_INCOME_FORM)
-                return@setOnClickListener
+
+        viewModel.walletCount.observe(viewLifecycleOwner) { walletCount ->
+            if (walletCount != null && walletCount > 0) {
+                binding.buttonAddIncome.button.setOnClickListener {
+                    navigateTo(MainActivity.ACTION_MAIN_TO_INCOME_FORM)
+                }
+                binding.buttonAddExpense.button.setOnClickListener {
+                    navigateTo(MainActivity.ACTION_MAIN_TO_EXPENSE_FORM)
+                }
             } else {
-                MySnackbar.error(binding.root, "Anda belum memiliki dompet!")
-                return@setOnClickListener
-            }
-        }
-        binding.buttonAddExpense.button.setOnClickListener {
-            val walletCount = viewModel.walletCount.value
-            if (walletCount != null) {
-                navigateTo(MainActivity.ACTION_MAIN_TO_EXPENSE_FORM)
-                return@setOnClickListener
-            } else {
-                MySnackbar.error(binding.root, "Anda belum memiliki dompet!")
-                return@setOnClickListener
+                binding.buttonAddIncome.button.setOnClickListener {
+                    MySnackbar.error(binding.root, "Anda belum memiliki dompet!")
+                }
+                binding.buttonAddExpense.button.setOnClickListener {
+                    MySnackbar.error(binding.root, "Anda belum memiliki dompet!")
+                }
             }
         }
 
@@ -91,5 +89,4 @@ class HomeFragment : Fragment() {
         val navController = navHostFragment?.navController
         navController?.navigate(actionId)
     }
-
 }

@@ -43,11 +43,11 @@ class WalletFormPage : Fragment() {
             findNavController().navigateUp()
         }
         binding.submitButton.setOnClickListener {
-            onSubmit()
+            eventOnButtonSubmitClicked()
         }
     }
 
-    fun onSubmit(){
+    fun eventOnButtonSubmitClicked(){
         val newWallet = WalletModel(
             name = binding.titleEditText.text.toString(),
             balance = binding.amountEditText.text.toString().toDouble()
