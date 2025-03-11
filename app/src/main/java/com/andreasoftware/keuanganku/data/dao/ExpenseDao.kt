@@ -22,4 +22,10 @@ interface ExpenseDao {
 
     @Insert
     suspend fun insert(expense: ExpenseModel): Long
+
+    @Query("""
+        SELECT SUM(amount) FROM expense 
+        WHERE date >= :startDate AND date <= :endDate
+    """)
+    fun once_sumExpense(startDate: Long, endDate: Long): Long?
 }
