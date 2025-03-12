@@ -14,7 +14,7 @@
 
         <include
             android:id="@+id/appBar"
-            layout="@layout/fragment_appbar" />
+            layout="@layout/component_appbar" />
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewPager"
