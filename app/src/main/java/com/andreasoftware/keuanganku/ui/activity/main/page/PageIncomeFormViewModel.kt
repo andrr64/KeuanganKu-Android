@@ -5,34 +5,34 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.andreasoftware.keuanganku.common.cls.DataOperationResult
-import com.andreasoftware.keuanganku.data.model.ExpenseCategoryModel
-import com.andreasoftware.keuanganku.data.model.ExpenseModel
+import com.andreasoftware.keuanganku.data.model.CategoryModel
+import com.andreasoftware.keuanganku.data.model.TransactionModel
 import com.andreasoftware.keuanganku.data.model.WalletModel
-import com.andreasoftware.keuanganku.data.repository.ExpenseCategoryRepository
-import com.andreasoftware.keuanganku.data.repository.ExpenseRepository
+import com.andreasoftware.keuanganku.data.repository.CategoryRepository
+import com.andreasoftware.keuanganku.data.repository.TransactionRepository
 import com.andreasoftware.keuanganku.data.repository.WalletRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class PageExpenseFormVM
+class PageIncomeFormViewModel
 @Inject constructor(
-    expenseCategoryRepository: ExpenseCategoryRepository,
+    categoryRepository: CategoryRepository,
     walletRepository: WalletRepository,
-    private val expenseRepository: ExpenseRepository
+    private val transactionRepository: TransactionRepository
 ) : ViewModel() {
 
-    val categories: LiveData<List<ExpenseCategoryModel>> = expenseCategoryRepository.allCategories
+    val categories: LiveData<List<CategoryModel>> = categoryRepository.incomeCategories
     val wallets: LiveData<List<WalletModel>> = walletRepository.allWallet
 
-    private val _selectedCategory = MutableLiveData<ExpenseCategoryModel?>()
-    val selectedCategory: LiveData<ExpenseCategoryModel?> get() = _selectedCategory
+    private val _selectedCategory = MutableLiveData<CategoryModel?>()
+    val selectedCategory: LiveData<CategoryModel?> get() = _selectedCategory
 
     private val _selectedWallet = MutableLiveData<WalletModel?>()
     val selectedWallet: LiveData<WalletModel?> get() = _selectedWallet
 
-    fun setSelectedCategory(category: ExpenseCategoryModel) {
+    fun setSelectedCategory(category: CategoryModel) {
         _selectedCategory.value = category
     }
 
@@ -40,9 +40,9 @@ class PageExpenseFormVM
         _selectedWallet.value = wallet
     }
 
-    fun insertExpense(expense: ExpenseModel, callback: (DataOperationResult) -> Unit) {
+    fun insertIncome(income: TransactionModel, callback: (DataOperationResult) -> Unit) {
         viewModelScope.launch {
-            val result = expenseRepository.insertExpense(expense)
+            val result = transactionRepository.insertIncome(income)
             callback(result)
         }
     }
