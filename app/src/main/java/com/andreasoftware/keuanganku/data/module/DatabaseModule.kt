@@ -1,9 +1,10 @@
-package com.andreasoftware.keuanganku.data.db
+package com.andreasoftware.keuanganku.data.module
 
 import android.content.Context
 import com.andreasoftware.keuanganku.data.dao.CategoryDao
 import com.andreasoftware.keuanganku.data.dao.TransactionDao
 import com.andreasoftware.keuanganku.data.dao.WalletDao
+import com.andreasoftware.keuanganku.data.db.AppDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,16 +18,16 @@ object DatabaseModule {
     @Provides
     @Singleton
     fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase {
-        return AppDatabase.getDatabase(context)
+        return AppDatabase.Companion.getDatabase(context)
     }
 
     @Provides
-    fun provideCategoryDao(appDatabase: AppDatabase): CategoryDao{
+    fun provideCategoryDao(appDatabase: AppDatabase): CategoryDao {
         return appDatabase.categoryDao()
     }
 
     @Provides
-    fun provideTransactionDao(appDatabase: AppDatabase): TransactionDao{
+    fun provideTransactionDao(appDatabase: AppDatabase): TransactionDao {
         return appDatabase.transactionDao()
     }
 
