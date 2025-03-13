@@ -1,5 +1,6 @@
 package com.andreasoftware.keuanganku.ui.activity.main.page
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -33,16 +34,20 @@ class PageExpenseFormViewModel
     val selectedWallet: LiveData<WalletModel?> get() = _selectedWallet
 
     fun setSelectedCategory(category: CategoryModel) {
+        Log.d("PageExpenseFormViewModel", "setSelectedCategory: $category")
         _selectedCategory.value = category
     }
 
     fun setSelectedWallet(wallet: WalletModel) {
+        Log.d("PageExpenseFormViewModel", "setSelectedWallet: $wallet")
         _selectedWallet.value = wallet
     }
 
     fun insertExpense(expense: TransactionModel, callback: (DataOperationResult) -> Unit) {
         viewModelScope.launch {
+            Log.d("PageExpenseFormViewModel", "Inserting expense: $expense")
             val result = transactionRepository.insertExpense(expense)
+            Log.d("PageExpenseFormViewModel", "Insert result: $result")
             callback(result)
         }
     }

@@ -12,4 +12,10 @@ class DataOperationResult2<T>(
     @OptIn(ExperimentalStdlibApi::class)
     fun errMsg(): String? = "Error Code ($errorCode): $errorMessage"
     fun errCode(): Long? = errorCode
+
+    companion object {
+        fun <T> success(data: T): DataOperationResult2<T> = DataOperationResult2(true, data = data)
+        fun error(errorCode: Long, errorMessage: String): DataOperationResult2<Any> =
+            DataOperationResult2(false, errorCode, errorMessage)
+    }
 }

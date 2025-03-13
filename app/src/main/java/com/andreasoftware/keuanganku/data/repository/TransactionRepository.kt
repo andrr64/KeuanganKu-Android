@@ -2,11 +2,13 @@ package com.andreasoftware.keuanganku.data.repository
 
 import androidx.room.withTransaction
 import com.andreasoftware.keuanganku.common.cls.DataOperationResult
+import com.andreasoftware.keuanganku.common.cls.DataOperationResult2
 import com.andreasoftware.keuanganku.common.enm.TimePeriod
 import com.andreasoftware.keuanganku.common.util.getLongTimeByPeriod
 import com.andreasoftware.keuanganku.data.dao.TransactionDao
 import com.andreasoftware.keuanganku.data.dao.WalletDao
 import com.andreasoftware.keuanganku.data.db.AppDatabase
+import com.andreasoftware.keuanganku.data.exception.ExpenseDAOException
 import com.andreasoftware.keuanganku.data.exception.IncomeDAOException
 import com.andreasoftware.keuanganku.data.model.TransactionModel
 import java.util.Date
@@ -62,17 +64,27 @@ class TransactionRepository
         timePeriod: TimePeriod,
         startDate: Date? = null,
         endDate: Date? = null
-    ): Double? {
+    ): DataOperationResult2<Any> {
         val (start, end) = getLongTimeByPeriod(timePeriod, startDate, endDate)
-        return transactionDao.totalExpense(startDate = start, endDate = end)
+        try {
+            val result = transactionDao.totalExpense(startDate = start, endDate = end)
+            return DataOperationResult2.success(result?: 0.0)
+        } catch (e: Exception){
+            return DataOperationResult2.error(errorCode = ExpenseDAOException.READ_ERROR.code, errorMessage = e.localizedMessage ?: "Unknown error")
+        }
     }
 
     suspend fun totalIncome(
         timePeriod: TimePeriod,
         startDate: Date? = null,
-        endDate: Date? = null
-    ): Double? {
+        endDate: Date? = null): DataOperationResult2<Any> {
         val (start, end) = getLongTimeByPeriod(timePeriod, startDate, endDate)
-        return transactionDao.totalIncome(startDate = start, endDate = end)
+        try {
+            val result = transactionDao.totalIncome(startDate = start, endDate = end)
+            return DataOperationResult2.success(result ?: 0.0)
+        } catch (e: Exception) {
+            return DataOperationResult2.error(errorCode = IncomeDAOException.READ_ERROR.code, errorMessage = e.localizedMessage
+                ?: "Unknown error")
+        }
     }
 }

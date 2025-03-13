@@ -1,5 +1,6 @@
 package com.andreasoftware.keuanganku.ui.activity.main.page.fragment
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -45,39 +46,50 @@ class HomeFragmentViewModel
     private val _countIncome = transactionRepository.countIncome
 
     fun setExpensePeriod(period: TimePeriod) {
+        Log.d("HomeFragmentViewModel", "setExpensePeriod: $period")
         _expensePeriod.value = period
-        getExpense(period)
     }
 
     fun setIncomePeriod(period: TimePeriod) {
+        Log.d("HomeFragmentViewModel", "setIncomePeriod: $period")
         _incomePeriod.value = period
-        getIncome(period)
     }
 
     fun setTransactionPeriod(period: TimePeriod) {
+        Log.d("HomeFragmentViewModel", "setTransactionPeriod: $period")
         _transactionPeriod.value = period
     }
 
     init {
         viewModelScope.launch {
             _countExpense.observeForever {
+                Log.d("HomeFragmentViewModel", "_countExpense updated")
                 getExpense(_expensePeriod.value)
             }
         }
         viewModelScope.launch {
             _countIncome.observeForever {
+                Log.d("HomeFragmentViewModel", "_countIncome updated")
                 getIncome(_incomePeriod.value)
             }
         }
 
         viewModelScope.launch {
             userdataRepository.getUsername().collectLatest { name ->
+                Log.d("HomeFragmentViewModel", "Username collected: $name")
                 _userName.value = name
             }
         }
         viewModelScope.launch {
             _expensePeriod.collectLatest { period ->
+                Log.d("HomeFragmentViewModel", "Expense period changed: $period")
                 getExpense(period)
+            }
+        }
+
+        viewModelScope.launch {
+            _incomePeriod.collectLatest { period ->
+                Log.d("HomeFragmentViewModel", "Income period changed: $period")
                 getIncome(period)
             }
         }
@@ -85,15 +97,23 @@ class HomeFragmentViewModel
 
     private fun getExpense(period: TimePeriod) {
         viewModelScope.launch {
+            Log.d("HomeFragmentViewModel", "Fetching expense for period: $period")
             val result = transactionRepository.totalExpense(period)
-            _totalExpense.value = result ?: 0.0
+            if (result.isSuccess()) {
+                _totalExpense.value = (result.data ?: 0.0) as Double
+                Log.d("HomeFragmentViewModel", "Expense fetched: ${_totalExpense.value}")
+            }
         }
     }
 
     private fun getIncome(period: TimePeriod) {
         viewModelScope.launch {
+            Log.d("HomeFragmentViewModel", "Fetching income for period: $period")
             val result = transactionRepository.totalIncome(period)
-            _totalIncome.value = result ?: 0.0
+            if (result.isSuccess()) {
+                _totalIncome.value = (result.data ?: 0.0) as Double
+                Log.d("HomeFragmentViewModel", "Income fetched: ${_totalIncome.value}")
+            }
         }
     }
 }
