@@ -4,11 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import androidx.room.withTransaction
 import com.andreasoftware.keuanganku.common.cls.DataOperationResult
-import com.andreasoftware.keuanganku.data.dao.IncomeDao
+import com.andreasoftware.keuanganku.common.enm.TransactionType
+import com.andreasoftware.keuanganku.data.dao.TransactionDao
 import com.andreasoftware.keuanganku.data.dao.WalletDao
 import com.andreasoftware.keuanganku.data.db.AppDatabase
 import com.andreasoftware.keuanganku.data.exception.WalletDAOException
-import com.andreasoftware.keuanganku.data.model.IncomeModel
+import com.andreasoftware.keuanganku.data.model.TransactionModel
 import com.andreasoftware.keuanganku.data.model.WalletModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -19,7 +20,7 @@ import javax.inject.Singleton
 class WalletRepository
 @Inject constructor(
     private val walletDao: WalletDao,
-    private val incomeDao: IncomeDao,
+    private val transactionDao: TransactionDao,
     private val db: AppDatabase
 ) {
 
@@ -38,17 +39,18 @@ class WalletRepository
             try {
                 db.withTransaction {
                     val insertedId = walletDao.insert(wallet) // Tangkap ID yang dikembalikan
-                    val newIncome = IncomeModel(
+                    val newIncome = TransactionModel(
                         description = "$WALLET_INIT_DESCRIPTION_PREFIX${wallet.name}$WALLET_INIT_DESCRIPTION_SUFFIX",
                         amount = wallet.balance,
-                        wallet_id = insertedId,
-                        category_id = WALLET_INIT_CATEGORY_ID,
+                        walletId = insertedId,
+                        categoryId = WALLET_INIT_CATEGORY_ID,
                         rating = WALLET_INIT_RATING,
                         date = System.currentTimeMillis(),
                         createdAt = System.currentTimeMillis(),
-                        updatedAt = System.currentTimeMillis()
+                        updatedAt = System.currentTimeMillis(),
+                        transactionTypeId = TransactionType.INCOME.value
                     )
-                    incomeDao.insert(newIncome)
+                    transactionDao.insert(newIncome)
                 }
                 return@withContext DataOperationResult(true)
             } catch (e: Exception) {

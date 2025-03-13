@@ -10,7 +10,6 @@ fun getLongTimeByPeriod(
     endDate: Date? = null
 ): Pair<Long, Long> {
     val calendar = Calendar.getInstance()
-
     return when (period) {
         TimePeriod.WEEK -> {
             calendar.time = startDate

@@ -10,8 +10,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.andreasoftware.keuanganku.R
-import com.andreasoftware.keuanganku.data.model.ExpenseCategoryModel
-import com.andreasoftware.keuanganku.data.model.ExpenseModel
+import com.andreasoftware.keuanganku.common.enm.TransactionType
+import com.andreasoftware.keuanganku.data.model.CategoryModel
+import com.andreasoftware.keuanganku.data.model.TransactionModel
 import com.andreasoftware.keuanganku.data.model.WalletModel
 import com.andreasoftware.keuanganku.databinding.PageExpenseFormBinding
 import com.andreasoftware.keuanganku.ui.common.AppSnackBar
@@ -24,7 +25,7 @@ class PageExpenseForm : Fragment() {
 
     private var _binding: PageExpenseFormBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: PageExpenseFormVM by viewModels()
+    private val viewModel: PageExpenseFormViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -73,7 +74,7 @@ class PageExpenseForm : Fragment() {
         viewModel.wallets.observe(viewLifecycleOwner, ::observeWallets)
     }
 
-    private fun observeCategories(categories: List<ExpenseCategoryModel>?) {
+    private fun observeCategories(categories: List<CategoryModel>?) {
         categories?.let { setupCategoryDropdown(it) }
     }
 
@@ -92,7 +93,7 @@ class PageExpenseForm : Fragment() {
         }
     }
 
-    private fun setupCategoryDropdown(categories: List<ExpenseCategoryModel>) {
+    private fun setupCategoryDropdown(categories: List<CategoryModel>) {
         val adapter = createArrayAdapter(categories.map { it.name })
         val autoCompleteTextView = binding.dropdownSpinnerCategory.dropdownAutoCompleteTextView
         autoCompleteTextView.setAdapter(adapter)
@@ -157,21 +158,22 @@ class PageExpenseForm : Fragment() {
         return true
     }
 
-    private fun createExpenseModel(): ExpenseModel? {
+    private fun createExpenseModel(): TransactionModel? {
         val title = binding.titleEditText.text.toString()
         val amountString = binding.amountEditText.text.toString()
         val selectedCategory = viewModel.selectedCategory.value ?: return null
         val amount = amountString.toDouble()
 
-        return ExpenseModel(
+        return TransactionModel(
             description = title,
             amount = amount,
-            category_id = selectedCategory.id,
+            categoryId = selectedCategory.id,
             rating = 5,
             date = System.currentTimeMillis(),
             createdAt = System.currentTimeMillis(),
             updatedAt = System.currentTimeMillis(),
-            wallet_id = viewModel.selectedWallet.value?.id ?: 0
+            walletId = viewModel.selectedWallet.value?.id ?: 0,
+            transactionTypeId = TransactionType.EXPENSE.value
         )
     }
 

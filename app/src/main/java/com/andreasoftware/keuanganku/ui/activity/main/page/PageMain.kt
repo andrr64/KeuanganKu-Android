@@ -45,7 +45,7 @@ class PageMain : Fragment() {
     }
 
     private fun setupViewPager() {
-        binding.viewPager.adapter = PageMainVPagerADP(requireActivity())
+        binding.viewPager.adapter = PageMainVPagerAdapter(requireActivity())
         binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)

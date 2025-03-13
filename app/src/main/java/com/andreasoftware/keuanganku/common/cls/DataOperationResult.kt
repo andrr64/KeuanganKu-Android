@@ -11,4 +11,10 @@ class DataOperationResult(
     @OptIn(ExperimentalStdlibApi::class)
     fun errMsg(): String? = "Error Code ($errorCode): $errorMessage"
     fun errCode(): Long? = errorCode
+
+    companion object {
+        fun success(): DataOperationResult = DataOperationResult(true)
+        fun error(errorCode: Long, errorMessage: String): DataOperationResult =
+            DataOperationResult(false, errorCode, errorMessage)
+    }
 }

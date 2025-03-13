@@ -17,6 +17,9 @@ interface WalletDao {
     @Insert
     suspend fun insert(wallet: WalletModel): Long
 
+    @Query("SELECT balance FROM wallet WHERE id = :walletId")
+    suspend fun getBalance(walletId: Long): Double?
+
     @Query("SELECT SUM(balance) FROM wallet")
     fun getTotalBalance(): LiveData<Double?>
 

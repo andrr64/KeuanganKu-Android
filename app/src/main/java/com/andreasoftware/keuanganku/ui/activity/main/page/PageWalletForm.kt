@@ -18,7 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class PageWalletForm : Fragment() {
     private var _binding: PageWalletFormBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: PageWalletFormVM by viewModels()
+    private val viewModel: PageWalletFormViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -6,15 +6,12 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.andreasoftware.keuanganku.data.dao.ExpenseCategoryDao
-import com.andreasoftware.keuanganku.data.dao.ExpenseDao
-import com.andreasoftware.keuanganku.data.dao.IncomeCategoryDao
-import com.andreasoftware.keuanganku.data.dao.IncomeDao
+import com.andreasoftware.keuanganku.common.enm.TransactionType
+import com.andreasoftware.keuanganku.data.dao.CategoryDao
+import com.andreasoftware.keuanganku.data.dao.TransactionDao
 import com.andreasoftware.keuanganku.data.dao.WalletDao
-import com.andreasoftware.keuanganku.data.model.ExpenseCategoryModel
-import com.andreasoftware.keuanganku.data.model.ExpenseModel
-import com.andreasoftware.keuanganku.data.model.IncomeCategoryModel
-import com.andreasoftware.keuanganku.data.model.IncomeModel
+import com.andreasoftware.keuanganku.data.model.CategoryModel
+import com.andreasoftware.keuanganku.data.model.TransactionModel
 import com.andreasoftware.keuanganku.data.model.WalletModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -23,21 +20,17 @@ import kotlinx.coroutines.withContext
 
 @Database(
     entities = [
-        ExpenseModel::class,
-        ExpenseCategoryModel::class,
-        IncomeModel::class,
-        IncomeCategoryModel::class,
-        WalletModel::class
+        WalletModel::class,
+        TransactionModel::class,
+        CategoryModel::class
     ],
     version = 1,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun expenseDao(): ExpenseDao
-    abstract fun expenseCategoryDao(): ExpenseCategoryDao
-    abstract fun incomeCategoryDao(): IncomeCategoryDao
+    abstract fun transactionDao(): TransactionDao
     abstract fun walletDao(): WalletDao
-    abstract fun incomeDao(): IncomeDao
+    abstract fun categoryDao(): CategoryDao
 
     companion object {
         @Volatile
@@ -45,45 +38,43 @@ abstract class AppDatabase : RoomDatabase() {
 
         const val DATABASE_NAME = "keuanganku.db"
 
-        private fun initDatabase(context: Context) {
+        private fun initDb(context: Context) {
             CoroutineScope(Dispatchers.IO).launch {
                 try {
                     val db = getDatabase(context)
-                    val expenseCategoryDao = db.expenseCategoryDao()
-                    val incomeCategoryDao = db.incomeCategoryDao()
 
-                    val expenseCount = withContext(Dispatchers.IO) { expenseCategoryDao.getCount() }
-                    val incomeCount = withContext(Dispatchers.IO) { incomeCategoryDao.getCount() }
+                    val categoryDao = db.categoryDao()
+                    val transactionExpenseTypeId = TransactionType.EXPENSE.value
+                    val transactionIncomeTypeId = TransactionType.INCOME.value
 
-                    Log.d("DatabaseInit", "Jumlah kategori pengeluaran: $expenseCount")
-                    Log.d("DatabaseInit", "Jumlah kategori pemasukan: $incomeCount")
-
-                    if (expenseCount == 0) {
-                        val expenseCategories = listOf(
-                            ExpenseCategoryModel(name = "Food"),
-                            ExpenseCategoryModel(name = "Transport"),
-                            ExpenseCategoryModel(name = "Utilities"),
-                            ExpenseCategoryModel(name = "Entertainment"),
-                            ExpenseCategoryModel(name = "Shopping")
-                        )
-                        expenseCategories.forEach { expenseCategoryDao.insert(it) }
-                        Log.d("DatabaseInit", "Kategori pengeluaran ditambahkan")
-                    }
+                    val expenseCount = withContext(Dispatchers.IO) { categoryDao.getCategoryCountByType(transactionExpenseTypeId) }
+                    val incomeCount = withContext(Dispatchers.IO) { categoryDao.getCategoryCountByType(TransactionType.INCOME.value) }
 
                     if (incomeCount == 0) {
                         val incomeCategories = listOf(
-                            IncomeCategoryModel(name = "Wallet Initialization"),
-                            IncomeCategoryModel(name = "Salary"),
-                            IncomeCategoryModel(name = "Freelance"),
-                            IncomeCategoryModel(name = "Investment"),
-                            IncomeCategoryModel(name = "Gift"),
-                            IncomeCategoryModel(name = "Rental Income")
+                            CategoryModel(name = "Wallet Initialization", id = 1,  transactionTypeId = transactionIncomeTypeId),
+                            CategoryModel(name = "Salary", transactionTypeId = transactionIncomeTypeId),
+                            CategoryModel(name = "Freelance", transactionTypeId = transactionIncomeTypeId),
+                            CategoryModel(name = "Investment", transactionTypeId = transactionIncomeTypeId),
+                            CategoryModel(name = "Gift", transactionTypeId = transactionIncomeTypeId),
+                            CategoryModel(name = "Rental Income", transactionTypeId = transactionIncomeTypeId)
                         )
-                        incomeCategories.forEach { incomeCategoryDao.insert(it) }
+                        incomeCategories.forEach { categoryDao.insert(it) }
                         Log.d("DatabaseInit", "Kategori pemasukan ditambahkan")
                     }
 
-                } catch (e: Exception) {
+                    if (expenseCount == 0) {
+                        val expenseCategories = listOf(
+                            CategoryModel(name = "Food", transactionTypeId = transactionExpenseTypeId),
+                            CategoryModel(name = "Transport", transactionTypeId = transactionExpenseTypeId),
+                            CategoryModel(name = "Utilities", transactionTypeId = transactionExpenseTypeId),
+                            CategoryModel(name = "Entertainment", transactionTypeId = transactionExpenseTypeId),
+                            CategoryModel(name = "Shopping", transactionTypeId = transactionExpenseTypeId)
+                        )
+                        expenseCategories.forEach { categoryDao.insert(it) }
+                    }
+                }  catch (e: Exception){
+                    ///TODO: handle exception
                     Log.e("DatabaseInit", "Error initializing database", e)
                 }
             }
@@ -100,7 +91,7 @@ abstract class AppDatabase : RoomDatabase() {
                         override fun onCreate(db: SupportSQLiteDatabase) {
                             super.onCreate(db)
                             Log.d("Database", "Database created")
-                            initDatabase(context)
+                            initDb(context)
                         }
                     })
                     .build()

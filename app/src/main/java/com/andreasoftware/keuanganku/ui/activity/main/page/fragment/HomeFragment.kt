@@ -42,9 +42,13 @@ class HomeFragment : Fragment() {
 
         binding.spinnerExpensePeriod.spinnerLayout.hint = getString(R.string.period)
         binding.spinnerIncomePeriod.spinnerLayout.hint = getString(R.string.period)
+        binding.spinnerRecentTransactionsPeriod.spinnerLayout.hint = getString(R.string.period)
+
+        ///TODO: use string resource instead
+        binding.spinnerSortTransactionsBy.spinnerLayout.hint = "Sort By"
 
         setupListener()
-        setupExpensePeriodSpinner()
+        setupPeriodSpinner()
         setupObserver()
     }
 
@@ -54,26 +58,25 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun setupExpensePeriodSpinner() {
+    private fun setupPeriodSpinner() {
         val periods = TimePeriod.entries.map { it.displayName }
-        val adapter =
-            ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, periods)
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, periods)
         binding.spinnerExpensePeriod.spinner.setAdapter(adapter)
         binding.spinnerIncomePeriod.spinner.setAdapter(adapter)
+        binding.spinnerRecentTransactionsPeriod.spinner.setAdapter(adapter)
 
-        binding.spinnerExpensePeriod.spinner.setText(
-            viewModel.expensePeriod.value.displayName,
-            false
-        )
+        binding.spinnerExpensePeriod.spinner.setText(viewModel.expensePeriod.value.displayName,false)
         binding.spinnerIncomePeriod.spinner.setText(viewModel.incomePeriod.value.displayName, false)
+        binding.spinnerRecentTransactionsPeriod.spinner.setText(viewModel.incomePeriod.value.displayName, false)
 
         binding.spinnerExpensePeriod.spinner.setOnItemClickListener { _, _, position, _ ->
             viewModel.setExpensePeriod(TimePeriod.entries[position])
-            binding.spinnerExpensePeriod.spinner.setText(periods[position], false)
         }
         binding.spinnerIncomePeriod.spinner.setOnItemClickListener { _, _, position, _ ->
             viewModel.setIncomePeriod(TimePeriod.entries[position])
-            binding.spinnerIncomePeriod.spinner.setText(periods[position], false)
+        }
+        binding.spinnerRecentTransactionsPeriod.spinner.setOnItemClickListener { _, _, position, _ ->
+            viewModel.setTransactionPeriod(TimePeriod.entries[position])
         }
     }
 
@@ -90,6 +93,7 @@ class HomeFragment : Fragment() {
         lifecycleScope.launch {
             viewModel.expensePeriod.collectLatest {
                 binding.expensePeriod.text = it.displayName
+                binding.spinnerExpensePeriod.spinner.setText(it.displayName, false)
             }
         }
         lifecycleScope.launch {
@@ -98,8 +102,14 @@ class HomeFragment : Fragment() {
             }
         }
         lifecycleScope.launch {
+            viewModel.transactionPeriod.collectLatest {
+                binding.spinnerRecentTransactionsPeriod.spinner.setText(it.displayName, false)
+            }
+        }
+        lifecycleScope.launch {
             viewModel.incomePeriod.collectLatest {
                 binding.incomePeriod.text = it.displayName
+                binding.spinnerIncomePeriod.spinner.setText(it.displayName, false)
             }
         }
         viewModel.walletCount.observe(viewLifecycleOwner) { walletCount ->

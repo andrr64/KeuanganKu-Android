@@ -1,10 +1,8 @@
 package com.andreasoftware.keuanganku.data.db
 
 import android.content.Context
-import com.andreasoftware.keuanganku.data.dao.ExpenseCategoryDao
-import com.andreasoftware.keuanganku.data.dao.ExpenseDao
-import com.andreasoftware.keuanganku.data.dao.IncomeCategoryDao
-import com.andreasoftware.keuanganku.data.dao.IncomeDao
+import com.andreasoftware.keuanganku.data.dao.CategoryDao
+import com.andreasoftware.keuanganku.data.dao.TransactionDao
 import com.andreasoftware.keuanganku.data.dao.WalletDao
 import dagger.Module
 import dagger.Provides
@@ -23,27 +21,17 @@ object DatabaseModule {
     }
 
     @Provides
-    fun provideExpenseDao(appDatabase: AppDatabase): ExpenseDao {
-        return appDatabase.expenseDao()
+    fun provideCategoryDao(appDatabase: AppDatabase): CategoryDao{
+        return appDatabase.categoryDao()
     }
 
     @Provides
-    fun provideExpenseCategoryDao(appDatabase: AppDatabase): ExpenseCategoryDao {
-        return appDatabase.expenseCategoryDao()
-    }
-
-    @Provides
-    fun provideIncomeCategoryDao(appDatabase: AppDatabase): IncomeCategoryDao {
-        return appDatabase.incomeCategoryDao()
+    fun provideTransactionDao(appDatabase: AppDatabase): TransactionDao{
+        return appDatabase.transactionDao()
     }
 
     @Provides
     fun provideWalletDao(appDatabase: AppDatabase): WalletDao {
         return appDatabase.walletDao()
-    }
-
-    @Provides
-    fun provideIncomeDao(appDatabase: AppDatabase): IncomeDao {
-        return appDatabase.incomeDao()
     }
 }

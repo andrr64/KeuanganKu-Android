@@ -5,8 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.andreasoftware.keuanganku.common.enm.TimePeriod
-import com.andreasoftware.keuanganku.data.repository.ExpenseRepository
-import com.andreasoftware.keuanganku.data.repository.IncomeRepository
+import com.andreasoftware.keuanganku.data.repository.TransactionRepository
 import com.andreasoftware.keuanganku.data.repository.WalletRepository
 import com.andreasoftware.keuanganku.data.repository.app.UserdataRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,8 +20,7 @@ class HomeFragmentViewModel
 @Inject constructor(
     userdataRepository: UserdataRepository,
     walletRepository: WalletRepository,
-    private val expenseRepository: ExpenseRepository,
-    private val incomeRepository: IncomeRepository
+    private val transactionRepository: TransactionRepository
 ) : ViewModel() {
 
     private val _userName = MutableStateFlow("")
@@ -34,6 +32,8 @@ class HomeFragmentViewModel
     val expensePeriod: StateFlow<TimePeriod> = _expensePeriod
     private val _incomePeriod = MutableStateFlow(TimePeriod.WEEK)
     val incomePeriod: StateFlow<TimePeriod> = _incomePeriod
+    private val _transactionPeriod = MutableStateFlow(TimePeriod.WEEK)
+    val transactionPeriod: StateFlow<TimePeriod> = _transactionPeriod
 
     private val _totalExpense = MutableLiveData(0.0)
     val totalExpense: LiveData<Double> = _totalExpense
@@ -41,8 +41,8 @@ class HomeFragmentViewModel
     private val _totalIncome = MutableLiveData(0.0)
     val totalIncome: LiveData<Double> = _totalIncome
 
-    private val _countExpense = expenseRepository.countExpense
-    private val _countIncome = incomeRepository.countIncome
+    private val _countExpense = transactionRepository.countExpense
+    private val _countIncome = transactionRepository.countIncome
 
     fun setExpensePeriod(period: TimePeriod) {
         _expensePeriod.value = period
@@ -52,6 +52,10 @@ class HomeFragmentViewModel
     fun setIncomePeriod(period: TimePeriod) {
         _incomePeriod.value = period
         getIncome(period)
+    }
+
+    fun setTransactionPeriod(period: TimePeriod) {
+        _transactionPeriod.value = period
     }
 
     init {
@@ -81,19 +85,15 @@ class HomeFragmentViewModel
 
     private fun getExpense(period: TimePeriod) {
         viewModelScope.launch {
-            val result = expenseRepository.totalExpense(period)
-            if (result.isSuccess()) {
-                _totalExpense.value = result.data ?: 0.0
-            }
+            val result = transactionRepository.totalExpense(period)
+            _totalExpense.value = result ?: 0.0
         }
     }
 
     private fun getIncome(period: TimePeriod) {
         viewModelScope.launch {
-            val result = incomeRepository.totalIncome(period)
-            if (result.isSuccess()) {
-                _totalIncome.value = result.data ?: 0.0
-            }
+            val result = transactionRepository.totalIncome(period)
+            _totalIncome.value = result ?: 0.0
         }
     }
 }
