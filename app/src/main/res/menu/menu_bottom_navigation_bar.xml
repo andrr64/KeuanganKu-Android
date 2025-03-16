@@ -6,7 +6,7 @@
         android:title="Home" />
     <item
         android:id="@+id/walletMenuId"
-        android:icon="@drawable/ic_expense_24"
+        android:icon="@drawable/ic_wallet_24"
         android:title="Wallet" />
     <item
         android:id="@+id/analysisMenuId"

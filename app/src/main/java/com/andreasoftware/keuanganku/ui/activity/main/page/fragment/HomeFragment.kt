@@ -33,12 +33,14 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.d("HomeFragment", "onCreateView called")
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onDestroy() {
         super.onDestroy()
+        Log.d("HomeFragment", "onDestroy called")
         _binding = null
     }
 

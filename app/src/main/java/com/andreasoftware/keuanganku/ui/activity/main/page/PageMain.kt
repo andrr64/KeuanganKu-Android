@@ -20,39 +20,40 @@ import dagger.hilt.android.AndroidEntryPoint
 class PageMain : Fragment() {
     private var _binding: PageMainBinding? = null
     private lateinit var drawerLayout: DrawerLayout
-    private val binding get() = _binding!!
+    private val binding get() = _binding!!  // Gunakan safe binding untuk menghindari null pointer
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = PageMainBinding.inflate(inflater, container, false)
-        drawerLayout = binding.drawerLayout
+        drawerLayout = binding.drawerLayout  // Inisialisasi drawer layout
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupViewPager()
-        setupBottomNavigation()
-        setupDrawer()
+        setupViewPager()      // Setup ViewPager2
+        setupBottomNavigation()  // Setup Bottom Navigation
+        setupDrawer()         // Setup Drawer Menu
         Log.d("MainPage.kt", "Created...")
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null
+        _binding = null  // Hindari memory leak dengan menghapus binding saat fragment dihancurkan
         Log.d("MainPage.kt", "Destroyed..")
     }
 
     private fun setupViewPager() {
-        binding.viewPager.adapter = PageMainViewPagerAdapter(requireActivity())
+        binding.viewPager.adapter = PageMainViewPagerAdapter(requireActivity())  // Set adapter ViewPager
         binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                binding.bottomNavbar.menu[position].isChecked = true
+                binding.bottomNavbar.menu[position].isChecked = true  // Sinkronisasi bottom navigation dengan ViewPager
             }
         })
+        binding.viewPager.offscreenPageLimit = 4  // Simpan semua halaman agar tidak di-destroy saat berpindah
     }
 
     private fun setupBottomNavigation() {
@@ -65,20 +66,20 @@ class PageMain : Fragment() {
                 MENU_TOPAY -> 3
                 else -> return@setOnItemSelectedListener false
             }
-            binding.viewPager.currentItem = position
+            binding.viewPager.setCurrentItem(position, false) // Pindah halaman tanpa animasi
             true
         }
     }
 
     private fun setupDrawer() {
         binding.appBar.appBarDrawerButton.setOnClickListener {
-            drawerLayout.openDrawer(GravityCompat.START)
+            drawerLayout.openDrawer(GravityCompat.START)  // Buka navigation drawer saat tombol ditekan
         }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        _binding = null
+        _binding = null  // Pastikan binding dilepas untuk menghindari memory leak
     }
 
     companion object {
