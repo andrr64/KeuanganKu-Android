@@ -38,4 +38,11 @@
     <string name="let_s_go" translatable="false">Let\'s go</string>
     <string name="transactions">Transactions</string>
     <string name="recent_transactions">Recent Transactions</string>
+    <string name="description">Description</string>
+    <string name="rating_desc_1">Nah, this expense is not useful. I am stupid.</string>
+    <string name="rating_desc_2">Meh, kinda regret it... but okay, I guess.</string>
+    <string name="rating_desc_3">Not bad, not great. Just vibes.</string>
+    <string name="rating_desc_4">Worth it! My money well spent.</string>
+    <string name="rating_desc_5">No regrets! This should be done.</string>
+    <string name="rating_desc_corrupt">Nah bro, this data is corrupt</string>
 </resources>
