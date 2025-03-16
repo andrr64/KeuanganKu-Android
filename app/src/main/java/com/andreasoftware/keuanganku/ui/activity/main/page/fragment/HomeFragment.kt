@@ -159,7 +159,12 @@ class HomeFragment : Fragment() {
         }
         viewModel.recentTransactions.observe(viewLifecycleOwner) { transactions ->
             if (transactions != null) {
-                transactionAdapter.updateTransactions(transactions)
+                if (transactions.isEmpty()){
+                    binding.recentTransactionEmptyTextview.visibility = View.VISIBLE
+                } else {
+                    binding.recentTransactionEmptyTextview.visibility = View.GONE
+                    transactionAdapter.updateTransactions(transactions)
+                }
             }
         }
 
