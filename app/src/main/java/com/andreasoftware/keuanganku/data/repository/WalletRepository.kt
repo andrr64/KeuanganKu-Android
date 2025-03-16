@@ -48,7 +48,7 @@ class WalletRepository
                         date = System.currentTimeMillis(),
                         createdAt = System.currentTimeMillis(),
                         updatedAt = System.currentTimeMillis(),
-                        transactionTypeId = TransactionType.INCOME.value
+                        transactionTypeId = TransactionType.INCOME.value,
                     )
                     transactionDao.insert(newIncome)
                 }

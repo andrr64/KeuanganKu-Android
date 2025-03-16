@@ -9,11 +9,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.andreasoftware.keuanganku.R
 import com.andreasoftware.keuanganku.common.enm.TimePeriod
 import com.andreasoftware.keuanganku.databinding.FragmentHomeBinding
 import com.andreasoftware.keuanganku.ui.activity.main.MainActivity
 import com.andreasoftware.keuanganku.ui.common.AppSnackBar
+import com.andreasoftware.keuanganku.ui.adapter.TransactionItemAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -23,6 +25,7 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private val viewModel: HomeFragmentViewModel by viewModels()
+    private lateinit var transactionAdapter: TransactionItemAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,9 +50,18 @@ class HomeFragment : Fragment() {
         ///TODO: use string resource instead
         binding.spinnerSortTransactionsBy.spinnerLayout.hint = "Sort By"
 
+        setupRecyclerView()
         setupListener()
         setupPeriodSpinner()
         setupObserver()
+    }
+
+    private fun setupRecyclerView() {
+        transactionAdapter = TransactionItemAdapter(emptyList()) // Inisialisasi dengan list kosong
+        binding.recyclerViewOfRecentTransactions.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = transactionAdapter
+        }
     }
 
     private fun setupListener() {
@@ -128,6 +140,9 @@ class HomeFragment : Fragment() {
                     AppSnackBar.error(binding.root, "Anda belum memiliki dompet!")
                 }
             }
+        }
+        viewModel.recentTransactionsX.observe(viewLifecycleOwner){ transactions ->
+            transactionAdapter.updateTransactions(transactions)
         }
     }
 

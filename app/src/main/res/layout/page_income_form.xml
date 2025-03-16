@@ -64,29 +64,18 @@
                     android:layout_height="wrap_content"
                     android:inputType="numberDecimal" />
             </com.google.android.material.textfield.TextInputLayout>
-
-            <LinearLayout
+            <include
+                layout="@layout/component_form_spinner"
+                android:id="@+id/dropdownSpinnerCategory"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:orientation="horizontal">
-
-                <include
-                    android:id="@+id/dropdownSpinnerCategory"
-                    layout="@layout/component_form_spinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:layout_weight="1" />
-
-                <include
-                    android:id="@+id/dropdownSpinnerWallet"
-                    layout="@layout/component_form_spinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-            </LinearLayout>
-
+                android:layout_height="wrap_content"/>
+            <include
+                layout="@layout/component_form_spinner"
+                android:id="@+id/dropdownSpinnerWallet"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
             <Button
                 android:id="@+id/submitButton"
                 android:layout_width="match_parent"

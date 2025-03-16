@@ -8,6 +8,7 @@ import androidx.room.PrimaryKey
 )
 data class TransactionModel (
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
+    val title: String = "Beta test",
     val description: String?,
     val amount: Double,
     val walletId: Long,

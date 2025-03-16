@@ -22,8 +22,8 @@ class TransactionRepository
     private val db: AppDatabase,
     private val transactionDao: TransactionDao
 ) {
-    val countExpense = transactionDao.countExpense()
-    val countIncome = transactionDao.countIncome()
+    val countExpense = transactionDao.countExpenseLiveData()
+    val countIncome = transactionDao.countIncomeLiveData()
 
     suspend fun insertIncome(transaction: TransactionModel): DataOperationResult {
         return try {
@@ -59,6 +59,19 @@ class TransactionRepository
             DataOperationResult.error(IncomeDAOException.CREATE_ERROR.code, e.localizedMessage ?: "Unknown error")
         }
     }
+
+    suspend fun once_getRecentTransactions(timePeriod: TimePeriod, limit: Int): DataOperationResult2<Any> {
+        try {
+            val (start, end) = getLongTimeByPeriod(timePeriod)
+            val result = transactionDao.getRecentTransactions(start, end, limit)
+            return DataOperationResult2.success(result)
+        } catch (e: Exception){
+            return DataOperationResult2.error(errorCode = ExpenseDAOException.READ_ERROR.code, errorMessage = e.localizedMessage ?: "Unknown error")
+        }
+    }
+
+    fun getRecentTransactions(timePeriod: TimePeriod, limit: Int) = transactionDao.getRecentTransactionsLiveData(getLongTimeByPeriod(timePeriod).first, getLongTimeByPeriod(timePeriod).second, limit)
+
 
     suspend fun totalExpense(
         timePeriod: TimePeriod,

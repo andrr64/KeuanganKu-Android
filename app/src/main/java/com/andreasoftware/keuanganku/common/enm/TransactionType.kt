@@ -2,5 +2,15 @@ package com.andreasoftware.keuanganku.common.enm
 
 enum class TransactionType(val value: Int ) {
     INCOME(1),
-    EXPENSE(2)
+    EXPENSE(2);
+
+    companion object  {
+        fun getDisplayName(value: Int): String {
+            return when (value) {
+                INCOME.value -> "Pemasukan"
+                EXPENSE.value -> "Pengeluaran"
+                else -> "Unknown"
+            }
+        }
+    }
 }
