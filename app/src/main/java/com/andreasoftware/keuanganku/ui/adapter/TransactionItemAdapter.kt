@@ -1,8 +1,9 @@
-package com.andreasoftware.keuanganku.ui.common
+package com.andreasoftware.keuanganku.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.andreasoftware.keuanganku.R
@@ -17,6 +18,7 @@ RecyclerView.Adapter<TransactionItemAdapter.TransactionItemViewHolder>()
         val amount: TextView = itemView.findViewById(R.id.transactionAmountTextview)
         val category: TextView = itemView.findViewById(R.id.transactonCategoryNameTextview)
         val type: TextView = itemView.findViewById(R.id.transactionTypeTextview)
+        val transactionTypeIc: ImageView = itemView.findViewById(R.id.transactionItemIconType)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionItemViewHolder {
@@ -32,7 +34,13 @@ RecyclerView.Adapter<TransactionItemAdapter.TransactionItemViewHolder>()
         holder.title.text = transaction.title
         holder.amount.text = transaction.amount.toString()
         holder.category.text = transaction.categoryId.toString()
-        holder.type.text = TransactionType.getDisplayName(transaction.transactionTypeId)
+        holder.type.text = TransactionType.Companion.getDisplayName(transaction.transactionTypeId)
+
+        if (transaction.transactionTypeId == TransactionType.INCOME.value) {
+            holder.transactionTypeIc.setImageResource(R.drawable.ic_income_type_24)
+        } else {
+            holder.transactionTypeIc.setImageResource(R.drawable.ic_expense_type_24)
+        }
     }
 
     override fun getItemCount(): Int = transactions.size
