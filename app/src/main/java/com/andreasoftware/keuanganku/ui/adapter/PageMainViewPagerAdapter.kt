@@ -1,4 +1,4 @@
-package com.andreasoftware.keuanganku.ui.activity.main.page
+package com.andreasoftware.keuanganku.ui.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -8,7 +8,7 @@ import com.andreasoftware.keuanganku.ui.activity.main.page.fragment.HomeFragment
 import com.andreasoftware.keuanganku.ui.activity.main.page.fragment.ToPayFragment
 import com.andreasoftware.keuanganku.ui.activity.main.page.fragment.WalletFragment
 
-class PageMainVPagerAdapter(fragmentActivity: FragmentActivity) :
+class PageMainViewPagerAdapter(fragmentActivity: FragmentActivity) :
     FragmentStateAdapter(fragmentActivity) {
     override fun createFragment(position: Int): Fragment {
         return when (position) {

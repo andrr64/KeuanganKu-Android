@@ -6,6 +6,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import com.andreasoftware.keuanganku.data.repository.app.SettingRepository
 import com.andreasoftware.keuanganku.databinding.ActivityIntroBinding
+import com.andreasoftware.keuanganku.ui.adapter.IntroActivityViewPagerAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -33,6 +34,6 @@ class IntroActivity : AppCompatActivity() {
     }
 
     private fun setupViewPager() {
-        viewPager.adapter = IntroActivityVPagerADP(this)
+        viewPager.adapter = IntroActivityViewPagerAdapter(this)
     }
 }

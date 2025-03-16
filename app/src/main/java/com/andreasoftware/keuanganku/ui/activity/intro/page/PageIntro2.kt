@@ -19,7 +19,7 @@ class PageIntro2 : Fragment() {
 
     private var _binding: PageIntroPage2Binding? = null
     private val binding get() = _binding!!
-    private val viewModel: PageIntro2VM by viewModels()
+    private val viewModel: PageIntro2ViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

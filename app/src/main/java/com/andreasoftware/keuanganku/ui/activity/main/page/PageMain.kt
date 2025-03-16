@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.andreasoftware.keuanganku.R
 import com.andreasoftware.keuanganku.databinding.PageMainBinding
+import com.andreasoftware.keuanganku.ui.adapter.PageMainViewPagerAdapter
 import com.google.android.material.navigation.NavigationBarView
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -45,7 +46,7 @@ class PageMain : Fragment() {
     }
 
     private fun setupViewPager() {
-        binding.viewPager.adapter = PageMainVPagerAdapter(requireActivity())
+        binding.viewPager.adapter = PageMainViewPagerAdapter(requireActivity())
         binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)

@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class PageIntro2VM @Inject constructor(
+class PageIntro2ViewModel @Inject constructor(
     private val userdataRepository: UserdataRepository
 ) : ViewModel() {
 
