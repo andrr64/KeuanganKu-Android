@@ -10,10 +10,13 @@ import com.andreasoftware.keuanganku.R
 import com.andreasoftware.keuanganku.common.enm.TransactionType
 import com.andreasoftware.keuanganku.data.model.TransactionModel
 import com.andreasoftware.keuanganku.data.repository.CategoryRepository
+import com.andreasoftware.keuanganku.util.CurrencyFormatter
+import java.util.Locale
 
 class TransactionItemAdapter(
     private var transactions: List<TransactionModel>,
-    private val categoryRepository: CategoryRepository // Tambahkan repository sebagai dependensi
+    private val categoryRepository: CategoryRepository,
+    private val locale: Locale = Locale("id", "ID")
 ) : RecyclerView.Adapter<TransactionItemAdapter.TransactionItemViewHolder>() {
 
     class TransactionItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -32,7 +35,7 @@ class TransactionItemAdapter(
     override fun onBindViewHolder(holder: TransactionItemViewHolder, position: Int) {
         val transaction = transactions[position]
         holder.title.text = transaction.title
-        holder.amount.text = transaction.amount.toString()
+        holder.amount.text = CurrencyFormatter.formatCurrency(transaction.amount, locale)
 
         val category = categoryRepository.getCategoryById(transaction.categoryId)
         holder.category.text = category?.name ?: "Unknown"

@@ -22,7 +22,7 @@
         android:cursorVisible="false"
         android:focusable="false"
         android:inputType="none"
-        android:textSize="14sp"
+        android:textSize="13sp"
         tools:ignore="KeyboardInaccessibleWidget" />
 
 </com.google.android.material.textfield.TextInputLayout>

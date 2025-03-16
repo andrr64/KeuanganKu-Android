@@ -18,9 +18,11 @@ import com.andreasoftware.keuanganku.databinding.FragmentHomeBinding
 import com.andreasoftware.keuanganku.ui.activity.main.MainActivity
 import com.andreasoftware.keuanganku.ui.common.AppSnackBar
 import com.andreasoftware.keuanganku.ui.adapter.TransactionItemAdapter
+import com.andreasoftware.keuanganku.util.CurrencyFormatter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import java.util.Locale
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -28,6 +30,7 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: HomeFragmentViewModel by viewModels()
     private lateinit var transactionAdapter: TransactionItemAdapter
+    private val userLocale: Locale = Locale("id", "ID")
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -107,13 +110,13 @@ class HomeFragment : Fragment() {
 
     private fun setupObserver() {
         viewModel.balance.observe(viewLifecycleOwner) { balance ->
-            binding.totalBalanceTextView.text = "IDR $balance"
+            binding.totalBalanceTextView.text = CurrencyFormatter.formatCurrency(balance, userLocale)
         }
         viewModel.totalExpense.observe(viewLifecycleOwner) { expense ->
-            binding.expenseAmount.text = "IDR $expense"
+            binding.expenseAmount.text = CurrencyFormatter.formatCurrency(expense, userLocale)
         }
         viewModel.totalIncome.observe(viewLifecycleOwner) { income ->
-            binding.incomeAmount.text = "IDR $income"
+            binding.incomeAmount.text = CurrencyFormatter.formatCurrency(income, userLocale)
         }
         lifecycleScope.launch {
             viewModel.expensePeriod.collectLatest {
