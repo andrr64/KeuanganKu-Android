@@ -40,6 +40,7 @@ class WalletRepository
                 db.withTransaction {
                     val insertedId = walletDao.insert(wallet) // Tangkap ID yang dikembalikan
                     val newIncome = TransactionModel(
+                        title = "Create new wallet '${wallet.name}'",
                         description = "$WALLET_INIT_DESCRIPTION_PREFIX${wallet.name}$WALLET_INIT_DESCRIPTION_SUFFIX",
                         amount = wallet.balance,
                         walletId = insertedId,

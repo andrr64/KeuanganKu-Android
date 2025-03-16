@@ -26,6 +26,15 @@ class PageExpenseFormViewModel
 
     val categories: LiveData<List<CategoryModel>> = categoryRepository.expenseCategories
     val wallets: LiveData<List<WalletModel>> = walletRepository.allWallet
+    private val _rating: MutableLiveData<Int> = MutableLiveData(1)
+    val rating: LiveData<Int> get() = _rating
+
+    fun setRating(rating: Int){
+        _rating.value = rating
+    }
+    fun getRating(): Int?{
+        return _rating.value
+    }
 
     private val _selectedCategory = MutableLiveData<CategoryModel?>()
     val selectedCategory: LiveData<CategoryModel?> get() = _selectedCategory

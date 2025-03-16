@@ -169,9 +169,11 @@ class PageIncomeForm : Fragment() {
         val amountString = binding.amountEditText.text.toString()
         val selectedCategory = viewModel.selectedCategory.value ?: return null
         val amount = amountString.toDouble()
+        val description = binding.descriptionEditText.text.toString()
 
         return TransactionModel(
-            description = title,
+            title = title,
+            description = description,
             amount = amount,
             categoryId = selectedCategory.id,
             rating = 5,

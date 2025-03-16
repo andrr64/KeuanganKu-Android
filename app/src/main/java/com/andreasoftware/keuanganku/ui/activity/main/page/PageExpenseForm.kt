@@ -18,6 +18,7 @@ import com.andreasoftware.keuanganku.databinding.PageExpenseFormBinding
 import com.andreasoftware.keuanganku.ui.common.AppSnackBar
 import com.andreasoftware.keuanganku.ui.exceptionhandler.HandleExceptionWithModal
 import com.andreasoftware.keuanganku.ui.exceptionhandler.HandleExceptionWithSnackbar
+import com.andreasoftware.keuanganku.util.RatingDescription
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -72,6 +73,15 @@ class PageExpenseForm : Fragment() {
     private fun setupObservers() {
         viewModel.categories.observe(viewLifecycleOwner, ::observeCategories)
         viewModel.wallets.observe(viewLifecycleOwner, ::observeWallets)
+        binding.transactionRatingbarLayout.ratingBar.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
+            if (fromUser) {
+                viewModel.setRating(rating.toInt())
+            }
+        }
+
+        viewModel.rating.observe(viewLifecycleOwner) { ratingValue ->
+            binding.transactionFormRatingBarDescription.text = RatingDescription.getDescription(requireContext(), ratingValue)
+        }
     }
 
     private fun observeCategories(categories: List<CategoryModel>?) {
@@ -113,7 +123,7 @@ class PageExpenseForm : Fragment() {
         val expense = createExpenseModel() ?: return
         viewModel.insertExpense(expense) { result ->
             if (result.isError()) {
-                HandleExceptionWithModal.info(requireContext(), "Error", "Error aje")
+                HandleExceptionWithModal.info(requireContext(), "Error", result.errorMessage.toString())
             } else {
                 AppSnackBar.success(binding.root, "Expense added successfully")
                 findNavController().navigateUp()
@@ -150,7 +160,6 @@ class PageExpenseForm : Fragment() {
             return false
         }
 
-        ///TODO: use string resource
         if (viewModel.selectedCategory.value == null) {
             HandleExceptionWithSnackbar.show(binding.root, "Cannot empty")
             return false
@@ -160,15 +169,17 @@ class PageExpenseForm : Fragment() {
 
     private fun createExpenseModel(): TransactionModel? {
         val title = binding.titleEditText.text.toString()
+        val description = binding.descriptionEditText.text.toString()
         val amountString = binding.amountEditText.text.toString()
         val selectedCategory = viewModel.selectedCategory.value ?: return null
         val amount = amountString.toDouble()
 
         return TransactionModel(
-            description = title,
+            title = title,
+            description = description,
             amount = amount,
             categoryId = selectedCategory.id,
-            rating = 5,
+            rating = viewModel.rating.value!!,
             date = System.currentTimeMillis(),
             createdAt = System.currentTimeMillis(),
             updatedAt = System.currentTimeMillis(),
