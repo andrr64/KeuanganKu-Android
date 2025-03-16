@@ -28,6 +28,7 @@ class InspectionActivity : AppCompatActivity() {
             val hasUsername = checkData()
             val nextActivity =
                 if (hasUsername) MainActivity::class.java else IntroActivity::class.java
+            delay(1000)
             startActivity(Intent(this@InspectionActivity, nextActivity))
             finish()
         }
