@@ -9,10 +9,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.andreasoftware.keuanganku.R
 import com.andreasoftware.keuanganku.common.enm.TransactionType
 import com.andreasoftware.keuanganku.data.model.TransactionModel
+import com.andreasoftware.keuanganku.data.repository.CategoryRepository
 
-class TransactionItemAdapter(private var transactions: List<TransactionModel>):
-RecyclerView.Adapter<TransactionItemAdapter.TransactionItemViewHolder>()
-{
+class TransactionItemAdapter(
+    private var transactions: List<TransactionModel>,
+    private val categoryRepository: CategoryRepository // Tambahkan repository sebagai dependensi
+) : RecyclerView.Adapter<TransactionItemAdapter.TransactionItemViewHolder>() {
+
     class TransactionItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val title: TextView = itemView.findViewById(R.id.transactionTitleTextview)
         val amount: TextView = itemView.findViewById(R.id.transactionAmountTextview)
@@ -26,15 +29,15 @@ RecyclerView.Adapter<TransactionItemAdapter.TransactionItemViewHolder>()
         return TransactionItemViewHolder(view)
     }
 
-    override fun onBindViewHolder(
-        holder: TransactionItemViewHolder,
-        position: Int
-    ) {
+    override fun onBindViewHolder(holder: TransactionItemViewHolder, position: Int) {
         val transaction = transactions[position]
         holder.title.text = transaction.title
         holder.amount.text = transaction.amount.toString()
-        holder.category.text = transaction.categoryId.toString()
-        holder.type.text = TransactionType.Companion.getDisplayName(transaction.transactionTypeId)
+
+        val category = categoryRepository.getCategoryById(transaction.categoryId)
+        holder.category.text = category?.name ?: "Unknown"
+
+        holder.type.text = TransactionType.getDisplayName(transaction.transactionTypeId)
 
         if (transaction.transactionTypeId == TransactionType.INCOME.value) {
             holder.transactionTypeIc.setImageResource(R.drawable.ic_income_type_24)

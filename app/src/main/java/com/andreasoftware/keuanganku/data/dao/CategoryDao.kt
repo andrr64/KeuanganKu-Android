@@ -15,7 +15,7 @@ interface CategoryDao {
     @Insert
     suspend fun insert(category: CategoryModel)
 
-    @Query("SELECT * FROM categories WHERE transactionTypeId = :categoryId AND id != 1")
+    @Query("SELECT * FROM categories WHERE transactionTypeId = :categoryId")
     fun getIncomeCategories(categoryId: Int = TransactionType.INCOME.value): LiveData<List<CategoryModel>>
 
     @Query("SELECT * FROM categories WHERE transactionTypeId = :categoryId")

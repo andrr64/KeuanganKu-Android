@@ -1,6 +1,7 @@
 package com.andreasoftware.keuanganku.ui.activity.main.page.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andreasoftware.keuanganku.R
+import com.andreasoftware.keuanganku.common.enm.SortTransaction
 import com.andreasoftware.keuanganku.common.enm.TimePeriod
 import com.andreasoftware.keuanganku.databinding.FragmentHomeBinding
 import com.andreasoftware.keuanganku.ui.activity.main.MainActivity
@@ -57,7 +59,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        transactionAdapter = TransactionItemAdapter(emptyList()) // Inisialisasi dengan list kosong
+        transactionAdapter = TransactionItemAdapter(emptyList(), viewModel.getCategoryRepository()) // Inisialisasi dengan list kosong
         binding.recyclerViewOfRecentTransactions.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = transactionAdapter
@@ -72,7 +74,12 @@ class HomeFragment : Fragment() {
 
     private fun setupPeriodSpinner() {
         val periods = TimePeriod.entries.map { it.displayName }
+        val sortTransaction = SortTransaction.entries.map { it.displayName }
+        val adapterSort = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, sortTransaction)
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, periods)
+        Log.d("SortTransaction", "Items: $sortTransaction")
+
+        binding.spinnerSortTransactionsBy.spinner.setAdapter(adapterSort)
         binding.spinnerExpensePeriod.spinner.setAdapter(adapter)
         binding.spinnerIncomePeriod.spinner.setAdapter(adapter)
         binding.spinnerRecentTransactionsPeriod.spinner.setAdapter(adapter)
@@ -80,6 +87,7 @@ class HomeFragment : Fragment() {
         binding.spinnerExpensePeriod.spinner.setText(viewModel.expensePeriod.value.displayName,false)
         binding.spinnerIncomePeriod.spinner.setText(viewModel.incomePeriod.value.displayName, false)
         binding.spinnerRecentTransactionsPeriod.spinner.setText(viewModel.incomePeriod.value.displayName, false)
+        binding.spinnerSortTransactionsBy.spinner.setText(viewModel.sortTransaction.value.displayName, false)
 
         binding.spinnerExpensePeriod.spinner.setOnItemClickListener { _, _, position, _ ->
             viewModel.setExpensePeriod(TimePeriod.entries[position])
@@ -89,6 +97,9 @@ class HomeFragment : Fragment() {
         }
         binding.spinnerRecentTransactionsPeriod.spinner.setOnItemClickListener { _, _, position, _ ->
             viewModel.setTransactionPeriod(TimePeriod.entries[position])
+        }
+        binding.spinnerSortTransactionsBy.spinner.setOnItemClickListener { _, _, position, _ ->
+            viewModel.setSortTransaction(SortTransaction.entries[position])
         }
     }
 
@@ -106,6 +117,11 @@ class HomeFragment : Fragment() {
             viewModel.expensePeriod.collectLatest {
                 binding.expensePeriod.text = it.displayName
                 binding.spinnerExpensePeriod.spinner.setText(it.displayName, false)
+            }
+        }
+        lifecycleScope.launch {
+            viewModel.sortTransaction.collectLatest {
+                binding.spinnerSortTransactionsBy.spinner.setText(it.displayName, false)
             }
         }
         lifecycleScope.launch {
@@ -141,9 +157,12 @@ class HomeFragment : Fragment() {
                 }
             }
         }
-        viewModel.recentTransactionsX.observe(viewLifecycleOwner){ transactions ->
-            transactionAdapter.updateTransactions(transactions)
+        viewModel.recentTransactions.observe(viewLifecycleOwner) { transactions ->
+            if (transactions != null) {
+                transactionAdapter.updateTransactions(transactions)
+            }
         }
+
     }
 
     private fun navigateTo(actionId: Int) {

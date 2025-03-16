@@ -1,8 +1,10 @@
 package com.andreasoftware.keuanganku.data.repository
 
+import androidx.lifecycle.LiveData
 import androidx.room.withTransaction
 import com.andreasoftware.keuanganku.common.cls.DataOperationResult
 import com.andreasoftware.keuanganku.common.cls.DataOperationResult2
+import com.andreasoftware.keuanganku.common.enm.SortTransaction
 import com.andreasoftware.keuanganku.common.enm.TimePeriod
 import com.andreasoftware.keuanganku.common.util.getLongTimeByPeriod
 import com.andreasoftware.keuanganku.data.dao.TransactionDao
@@ -24,6 +26,7 @@ class TransactionRepository
 ) {
     val countExpense = transactionDao.countExpenseLiveData()
     val countIncome = transactionDao.countIncomeLiveData()
+    val countTransaction = transactionDao.countExpenseLiveData()
 
     suspend fun insertIncome(transaction: TransactionModel): DataOperationResult {
         return try {
@@ -60,18 +63,16 @@ class TransactionRepository
         }
     }
 
-    suspend fun once_getRecentTransactions(timePeriod: TimePeriod, limit: Int): DataOperationResult2<Any> {
-        try {
-            val (start, end) = getLongTimeByPeriod(timePeriod)
-            val result = transactionDao.getRecentTransactions(start, end, limit)
-            return DataOperationResult2.success(result)
-        } catch (e: Exception){
-            return DataOperationResult2.error(errorCode = ExpenseDAOException.READ_ERROR.code, errorMessage = e.localizedMessage ?: "Unknown error")
+    suspend fun getRecentTransactions(timePeriod: TimePeriod, limit: Int, sortBy: SortTransaction = SortTransaction.DATE_Z_A):List<TransactionModel> {
+        val (start, end) = getLongTimeByPeriod(timePeriod)
+
+        return when (sortBy) {
+            SortTransaction.DATE_A_Z -> transactionDao.getTransactionsDateAscending(start, end, limit)
+            SortTransaction.DATE_Z_A -> transactionDao.getTransactionsDateDescending(start, end, limit)
+            SortTransaction.AMOUNT_A_Z -> transactionDao.getTransactionsAmountAscending(start, end, limit)
+            SortTransaction.AMOUNT_Z_A -> transactionDao.getTransactionsAmountDescending(start, end, limit)
         }
     }
-
-    fun getRecentTransactions(timePeriod: TimePeriod, limit: Int) = transactionDao.getRecentTransactionsLiveData(getLongTimeByPeriod(timePeriod).first, getLongTimeByPeriod(timePeriod).second, limit)
-
 
     suspend fun totalExpense(
         timePeriod: TimePeriod,
