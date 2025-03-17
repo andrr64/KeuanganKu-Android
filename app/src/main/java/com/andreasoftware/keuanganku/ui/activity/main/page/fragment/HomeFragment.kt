@@ -64,7 +64,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        transactionAdapter = TransactionItemAdapter(emptyList(), viewModel.getCategoryRepository()) // Inisialisasi dengan list kosong
+        transactionAdapter = TransactionItemAdapter(emptyList(), viewModel.getCategoryRepository(), userLocale) // Inisialisasi dengan list kosong
         binding.recyclerViewOfRecentTransactions.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = transactionAdapter
@@ -164,12 +164,8 @@ class HomeFragment : Fragment() {
         }
         viewModel.recentTransactions.observe(viewLifecycleOwner) { transactions ->
             if (transactions != null) {
-                if (transactions.isEmpty()){
-                    binding.recentTransactionEmptyTextview.visibility = View.VISIBLE
-                } else {
-                    binding.recentTransactionEmptyTextview.visibility = View.GONE
-                    transactionAdapter.updateTransactions(transactions)
-                }
+                transactionAdapter.updateTransactions(transactions)
+                binding.recentTransactionEmptyTextview.visibility = if (transactions.isEmpty()) View.VISIBLE else View.GONE
             }
         }
 
