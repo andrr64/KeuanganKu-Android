@@ -1,4 +1,4 @@
-package com.andreasoftware.keuanganku.common.enm
+package com.andreasoftware.keuanganku.common
 
 enum class TransactionType(val value: Int ) {
     INCOME(1),

@@ -1,6 +1,6 @@
 package com.andreasoftware.keuanganku.data.repository.app
 
-import com.andreasoftware.keuanganku.common.cls.DataOperationResult
+import com.andreasoftware.keuanganku.common.DataOperationResult
 import com.andreasoftware.keuanganku.data.dao.app.UserdataDS
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

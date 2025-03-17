@@ -1,4 +1,4 @@
-package com.andreasoftware.keuanganku.common.cls
+package com.andreasoftware.keuanganku.common
 
 class DataOperationResult2<T>(
     internal val success: Boolean,

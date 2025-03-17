@@ -5,7 +5,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import com.andreasoftware.keuanganku.common.ISO8601String
-import com.andreasoftware.keuanganku.common.enm.TransactionType
+import com.andreasoftware.keuanganku.common.TransactionType
 import com.andreasoftware.keuanganku.data.model.TransactionModel
 
 @Dao

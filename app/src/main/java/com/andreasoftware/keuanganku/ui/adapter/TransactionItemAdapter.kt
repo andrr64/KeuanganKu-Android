@@ -7,7 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.andreasoftware.keuanganku.R
-import com.andreasoftware.keuanganku.common.enm.TransactionType
+import com.andreasoftware.keuanganku.common.TransactionType
 import com.andreasoftware.keuanganku.data.model.TransactionModel
 import com.andreasoftware.keuanganku.data.repository.CategoryRepository
 import com.andreasoftware.keuanganku.util.CurrencyFormatter

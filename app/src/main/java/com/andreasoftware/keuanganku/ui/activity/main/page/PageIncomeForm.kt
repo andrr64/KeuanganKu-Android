@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.andreasoftware.keuanganku.R
-import com.andreasoftware.keuanganku.common.enm.TransactionType
+import com.andreasoftware.keuanganku.common.TransactionType
 import com.andreasoftware.keuanganku.data.model.CategoryModel
 import com.andreasoftware.keuanganku.data.model.TransactionModel
 import com.andreasoftware.keuanganku.data.model.WalletModel

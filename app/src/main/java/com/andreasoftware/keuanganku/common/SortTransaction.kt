@@ -1,4 +1,4 @@
-package com.andreasoftware.keuanganku.common.enm
+package com.andreasoftware.keuanganku.common
 
 enum class SortTransaction(val displayName: String) {
     DATE_A_Z("Oldest"),

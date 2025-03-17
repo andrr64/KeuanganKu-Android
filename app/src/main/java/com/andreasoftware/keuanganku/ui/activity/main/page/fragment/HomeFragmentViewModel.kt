@@ -7,8 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.andreasoftware.keuanganku.common.enm.SortTransaction
-import com.andreasoftware.keuanganku.common.enm.TimePeriod
+import com.andreasoftware.keuanganku.common.SortTransaction
+import com.andreasoftware.keuanganku.common.TimePeriod
 import com.andreasoftware.keuanganku.data.model.TransactionModel
 import com.andreasoftware.keuanganku.data.repository.CategoryRepository
 import com.andreasoftware.keuanganku.data.repository.TransactionRepository

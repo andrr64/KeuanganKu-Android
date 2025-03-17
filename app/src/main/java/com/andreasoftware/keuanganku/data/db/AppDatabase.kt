@@ -6,7 +6,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.andreasoftware.keuanganku.common.enm.TransactionType
+import com.andreasoftware.keuanganku.common.TransactionType
 import com.andreasoftware.keuanganku.data.dao.CategoryDao
 import com.andreasoftware.keuanganku.data.dao.TransactionDao
 import com.andreasoftware.keuanganku.data.dao.WalletDao
