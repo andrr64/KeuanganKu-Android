@@ -9,6 +9,7 @@ import androidx.core.view.GravityCompat
 import androidx.core.view.get
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import com.andreasoftware.keuanganku.R
 import com.andreasoftware.keuanganku.databinding.PageMainBinding
@@ -36,6 +37,7 @@ class PageMain : Fragment() {
         setupViewPager()      // Setup ViewPager2
         setupBottomNavigation()  // Setup Bottom Navigation
         setupDrawer()         // Setup Drawer Menu
+
         Log.d("MainPage.kt", "Created...")
     }
 
@@ -46,7 +48,8 @@ class PageMain : Fragment() {
     }
 
     private fun setupViewPager() {
-        binding.viewPager.adapter = PageMainViewPagerAdapter(requireActivity())  // Set adapter ViewPager
+        binding.viewPager.adapter = PageMainViewPagerAdapter(requireActivity())
+        binding.viewPager.setPageTransformer(MarginPageTransformer(10))
         binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)

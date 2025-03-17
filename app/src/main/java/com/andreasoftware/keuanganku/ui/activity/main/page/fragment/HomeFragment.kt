@@ -71,9 +71,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupListener() {
-        binding.buttonAddWallet.button.setOnClickListener {
-            MainActivityNavigator.navigateFromMainToWalletForm(requireActivity())
-        }
+
     }
 
     private fun setupPeriodSpinner() {

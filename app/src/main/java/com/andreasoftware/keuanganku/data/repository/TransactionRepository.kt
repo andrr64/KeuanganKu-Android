@@ -1,12 +1,12 @@
 package com.andreasoftware.keuanganku.data.repository
 
-import androidx.lifecycle.LiveData
+import android.util.Log
 import androidx.room.withTransaction
 import com.andreasoftware.keuanganku.common.cls.DataOperationResult
 import com.andreasoftware.keuanganku.common.cls.DataOperationResult2
 import com.andreasoftware.keuanganku.common.enm.SortTransaction
 import com.andreasoftware.keuanganku.common.enm.TimePeriod
-import com.andreasoftware.keuanganku.common.util.getLongTimeByPeriod
+import com.andreasoftware.keuanganku.util.getLongTimeByPeriod
 import com.andreasoftware.keuanganku.data.dao.TransactionDao
 import com.andreasoftware.keuanganku.data.dao.WalletDao
 import com.andreasoftware.keuanganku.data.db.AppDatabase
@@ -65,6 +65,7 @@ class TransactionRepository
 
     suspend fun getRecentTransactions(timePeriod: TimePeriod, limit: Int, sortBy: SortTransaction = SortTransaction.DATE_Z_A):List<TransactionModel> {
         val (start, end) = getLongTimeByPeriod(timePeriod)
+        Log.d("TransactionRepository", "Start: $start, End: $end")
 
         return when (sortBy) {
             SortTransaction.DATE_A_Z -> transactionDao.getTransactionsDateAscending(start, end, limit)
