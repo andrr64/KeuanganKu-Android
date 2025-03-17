@@ -16,7 +16,7 @@ import java.util.Locale
 class TransactionItemAdapter(
     private var transactions: List<TransactionModel>,
     private val categoryRepository: CategoryRepository,
-    private val locale: Locale = Locale("id", "ID")
+    private val locale: Locale
 ) : RecyclerView.Adapter<TransactionItemAdapter.TransactionItemViewHolder>() {
 
     class TransactionItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

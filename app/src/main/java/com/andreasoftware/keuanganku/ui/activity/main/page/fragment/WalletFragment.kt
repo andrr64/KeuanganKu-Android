@@ -5,14 +5,54 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.andreasoftware.keuanganku.R
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.andreasoftware.keuanganku.databinding.FragmentWalletBinding
+import com.andreasoftware.keuanganku.ui.adapter.WalletItemAdapter
+import dagger.hilt.android.AndroidEntryPoint
+import java.util.Locale
 
+@AndroidEntryPoint
 class WalletFragment : Fragment() {
+    private var _binding: FragmentWalletBinding? = null // Corrected type here
+    private val binding get() = _binding!!
+    private lateinit var walletItemsAdapter: WalletItemAdapter
+    private val viewModel: WalletFragmentViewModel by viewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_wallet, container, false)
+        _binding = FragmentWalletBinding.inflate(inflater, container, false)
+        return binding.root // Corrected return statement
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setupAdapter()
+        setupObserver()
+    }
+
+    fun setupAdapter(){
+        ///TODO: change locale
+        walletItemsAdapter = WalletItemAdapter(emptyList(), Locale("id", "ID"), onItemClick = { wallet ->
+            ///TODO: handle when item clicked
+        })
+        binding.walletsRecyclerView.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = walletItemsAdapter
+        }
+    }
+
+    fun setupObserver(){
+        viewModel.wallets.observe(viewLifecycleOwner) { wallets ->
+            walletItemsAdapter.updateWallet(wallets)
+        }
     }
 }
