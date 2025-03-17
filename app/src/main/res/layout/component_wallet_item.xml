@@ -24,7 +24,7 @@
             <TextView
                 android:id="@+id/walletItemNameTextview"
                 android:layout_width="wrap_content"
-                android:fontFamily="@font/inter_extralight"
+                android:fontFamily="@font/inter_light"
                 android:layout_height="wrap_content"
                 android:text="asubahubada"
                 android:textColor="@color/white" />

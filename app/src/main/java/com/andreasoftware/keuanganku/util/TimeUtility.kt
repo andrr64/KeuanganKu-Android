@@ -2,23 +2,24 @@ package com.andreasoftware.keuanganku.util
 
 import android.annotation.SuppressLint
 import android.icu.text.SimpleDateFormat
+import android.icu.util.Calendar
+import android.icu.util.TimeZone
 import com.andreasoftware.keuanganku.common.enm.TimePeriod
-import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
 object TimeUtility {
     @SuppressLint("ConstantLocale")
-    private  val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+    private val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US).apply {
+        timeZone = TimeZone.getTimeZone("UTC")
+    }
 
     fun getCurrentISO8601(): String {
-        val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
         return format.format(Date())
     }
 
     fun getTimePeriodISO8601(timePeriod: TimePeriod): Pair<String, String> {
-        val calendar = Calendar.getInstance()
-        val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+        val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
 
         val start: String
         val end: String
@@ -26,6 +27,7 @@ object TimeUtility {
         when (timePeriod) {
             TimePeriod.WEEK -> {
                 calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY)
+                setStartOfDay(calendar)
                 start = format.format(calendar.time)
 
                 calendar.add(Calendar.WEEK_OF_YEAR, 1)
@@ -35,6 +37,7 @@ object TimeUtility {
 
             TimePeriod.MONTH -> {
                 calendar.set(Calendar.DAY_OF_MONTH, 1)
+                setStartOfDay(calendar)
                 start = format.format(calendar.time)
 
                 calendar.add(Calendar.MONTH, 1)
@@ -44,6 +47,7 @@ object TimeUtility {
 
             TimePeriod.YEAR -> {
                 calendar.set(Calendar.DAY_OF_YEAR, 1)
+                setStartOfDay(calendar)
                 start = format.format(calendar.time)
 
                 calendar.add(Calendar.YEAR, 1)
@@ -53,5 +57,12 @@ object TimeUtility {
         }
 
         return Pair(start, end)
+    }
+
+    private fun setStartOfDay(calendar: Calendar) {
+        calendar.set(Calendar.HOUR_OF_DAY, 0)
+        calendar.set(Calendar.MINUTE, 0)
+        calendar.set(Calendar.SECOND, 0)
+        calendar.set(Calendar.MILLISECOND, 0)
     }
 }

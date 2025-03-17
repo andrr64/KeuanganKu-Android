@@ -177,9 +177,6 @@ class PageIncomeForm : Fragment() {
             amount = amount,
             categoryId = selectedCategory.id,
             rating = 5,
-            date = System.currentTimeMillis(),
-            createdAt = System.currentTimeMillis(),
-            updatedAt = System.currentTimeMillis(),
             walletId = viewModel.selectedWallet.value?.id ?: 0,
             transactionTypeId = TransactionType.INCOME.value
         )

@@ -46,9 +46,6 @@ class WalletRepository
                         walletId = insertedId,
                         categoryId = WALLET_INIT_CATEGORY_ID,
                         rating = WALLET_INIT_RATING,
-                        date = System.currentTimeMillis(),
-                        createdAt = System.currentTimeMillis(),
-                        updatedAt = System.currentTimeMillis(),
                         transactionTypeId = TransactionType.INCOME.value,
                     )
                     transactionDao.insert(newIncome)

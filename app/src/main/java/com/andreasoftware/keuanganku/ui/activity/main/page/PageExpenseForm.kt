@@ -180,9 +180,6 @@ class PageExpenseForm : Fragment() {
             amount = amount,
             categoryId = selectedCategory.id,
             rating = viewModel.rating.value!!,
-            date = System.currentTimeMillis(),
-            createdAt = System.currentTimeMillis(),
-            updatedAt = System.currentTimeMillis(),
             walletId = viewModel.selectedWallet.value?.id ?: 0,
             transactionTypeId = TransactionType.EXPENSE.value
         )
