@@ -22,10 +22,4 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
         Log.d("MainActivity.kt", "onDestroy called")
     }
-
-    companion object {
-        val ACTION_MAIN_TO_WALLET_FORM = R.id.action_main_fragment_to_walletForm
-        val ACTION_MAIN_TO_EXPENSE_FORM = R.id.action_main_fragment_to_expenseForm
-        val ACTION_MAIN_TO_INCOME_FORM = R.id.action_main_fragment_to_incomeForm
-    }
 }
