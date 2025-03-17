@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import com.andreasoftware.keuanganku.common.ISO8601String
 import com.andreasoftware.keuanganku.common.enm.TransactionType
 import com.andreasoftware.keuanganku.data.model.TransactionModel
 
@@ -24,45 +25,45 @@ interface TransactionDao {
     @Query("SELECT SUM(amount) FROM transactions WHERE transactionTypeId = :expense AND date >= :startDate AND date <= :endDate")
     suspend fun totalExpense(
         expense: Int = TransactionType.EXPENSE.value,
-        startDate: Long,
-        endDate: Long
+        startDate: ISO8601String,
+        endDate: ISO8601String
     ): Double?
 
     @Query("SELECT SUM(amount) FROM transactions WHERE transactionTypeId = :income AND date >= :startDate AND date <= :endDate")
     suspend fun totalIncome(
         income: Int = TransactionType.INCOME.value,
-        startDate: Long,
-        endDate: Long
+        startDate: ISO8601String,  // Ubah dari Long ke String (ISO 8601)
+        endDate: ISO8601String
     ): Double?
 
-    @Query("SELECT * FROM transactions WHERE date >= :start AND date <= :end ORDER BY date DESC LIMIT :limit")
-    suspend fun getRecentTransactions(start: Long, end: Long, limit: Int): List<TransactionModel>
+    @Query("SELECT * FROM transactions WHERE date >= :startDate AND date <= :endDate ORDER BY date DESC LIMIT :limit")
+    suspend fun getRecentTransactions(startDate: ISO8601String, endDate: ISO8601String, limit: Int): List<TransactionModel>
 
-    @Query("SELECT * FROM transactions WHERE date >= :start AND date <= :end ORDER BY date ASC LIMIT :limit")
+    @Query("SELECT * FROM transactions WHERE date >= :startDate AND date <= :endDate ORDER BY date ASC LIMIT :limit")
     suspend fun getTransactionsDateAscending(
-        start: Long,
-        end: Long,
+        startDate: ISO8601String,
+        endDate: ISO8601String,
         limit: Int
     ): List<TransactionModel>
 
-    @Query("SELECT * FROM transactions WHERE date >= :start AND date <= :end ORDER BY date DESC LIMIT :limit")
+    @Query("SELECT * FROM transactions WHERE date >= :startDate AND date <= :endDate ORDER BY date DESC LIMIT :limit")
     suspend fun getTransactionsDateDescending(
-        start: Long,
-        end: Long,
+        startDate: ISO8601String,
+        endDate: ISO8601String,
         limit: Int
     ): List<TransactionModel>
 
-    @Query("SELECT * FROM transactions WHERE date >= :start AND date <= :end ORDER BY amount ASC LIMIT :limit")
+    @Query("SELECT * FROM transactions WHERE date >= :startDate AND date <= :endDate ORDER BY amount ASC LIMIT :limit")
     suspend fun getTransactionsAmountAscending(
-        start: Long,
-        end: Long,
+        startDate: ISO8601String,
+        endDate: ISO8601String,
         limit: Int
     ): List<TransactionModel>
 
-    @Query("SELECT * FROM transactions WHERE date >= :start AND date <= :end ORDER BY amount DESC LIMIT :limit")
+    @Query("SELECT * FROM transactions WHERE date >= :startDate AND date <= :endDate ORDER BY amount DESC LIMIT :limit")
     suspend fun getTransactionsAmountDescending(
-        start: Long,
-        end: Long,
+        startDate: ISO8601String,
+        endDate: ISO8601String,
         limit: Int
     ): List<TransactionModel>
 }

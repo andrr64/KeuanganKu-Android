@@ -6,13 +6,13 @@ import com.andreasoftware.keuanganku.common.cls.DataOperationResult
 import com.andreasoftware.keuanganku.common.cls.DataOperationResult2
 import com.andreasoftware.keuanganku.common.enm.SortTransaction
 import com.andreasoftware.keuanganku.common.enm.TimePeriod
-import com.andreasoftware.keuanganku.util.getLongTimeByPeriod
 import com.andreasoftware.keuanganku.data.dao.TransactionDao
 import com.andreasoftware.keuanganku.data.dao.WalletDao
 import com.andreasoftware.keuanganku.data.db.AppDatabase
 import com.andreasoftware.keuanganku.data.exception.ExpenseDAOException
 import com.andreasoftware.keuanganku.data.exception.IncomeDAOException
 import com.andreasoftware.keuanganku.data.model.TransactionModel
+import com.andreasoftware.keuanganku.util.TimeUtility
 import java.util.Date
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -64,7 +64,7 @@ class TransactionRepository
     }
 
     suspend fun getRecentTransactions(timePeriod: TimePeriod, limit: Int, sortBy: SortTransaction = SortTransaction.DATE_Z_A):List<TransactionModel> {
-        val (start, end) = getLongTimeByPeriod(timePeriod)
+        val (start, end) = TimeUtility.getTimePeriodISO8601(timePeriod)
         Log.d("TransactionRepository", "Start: $start, End: $end")
 
         return when (sortBy) {
@@ -80,7 +80,7 @@ class TransactionRepository
         startDate: Date? = null,
         endDate: Date? = null
     ): DataOperationResult2<Any> {
-        val (start, end) = getLongTimeByPeriod(timePeriod, startDate, endDate)
+        val (start, end) = TimeUtility.getTimePeriodISO8601(timePeriod)
         try {
             val result = transactionDao.totalExpense(startDate = start, endDate = end)
             return DataOperationResult2.success(result?: 0.0)
@@ -93,7 +93,7 @@ class TransactionRepository
         timePeriod: TimePeriod,
         startDate: Date? = null,
         endDate: Date? = null): DataOperationResult2<Any> {
-        val (start, end) = getLongTimeByPeriod(timePeriod, startDate, endDate)
+        val (start, end) = TimeUtility.getTimePeriodISO8601(timePeriod)
         try {
             val result = transactionDao.totalIncome(startDate = start, endDate = end)
             return DataOperationResult2.success(result ?: 0.0)

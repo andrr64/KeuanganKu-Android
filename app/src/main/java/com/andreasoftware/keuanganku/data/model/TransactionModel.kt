@@ -2,6 +2,8 @@ package com.andreasoftware.keuanganku.data.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.andreasoftware.keuanganku.common.ISO8601String
+import com.andreasoftware.keuanganku.util.TimeUtility
 
 @Entity(
     tableName = "transactions",
@@ -15,7 +17,7 @@ data class TransactionModel (
     val categoryId: Long,
     val transactionTypeId: Int,
     val rating: Int,
-    val date: Long,
-    val createdAt: Long,
-    val updatedAt: Long
+    val date: ISO8601String = TimeUtility.getCurrentISO8601(),
+    val createdAt: ISO8601String = TimeUtility.getCurrentISO8601(),
+    val updatedAt: ISO8601String = TimeUtility.getCurrentISO8601()
 )
