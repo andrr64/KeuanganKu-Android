@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andreasoftware.keuanganku.databinding.FragmentWalletBinding
+import com.andreasoftware.keuanganku.ui.activity.main.MainActivityNavigator
 import com.andreasoftware.keuanganku.ui.adapter.WalletItemAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Locale
@@ -37,6 +38,7 @@ class WalletFragment : Fragment() {
 
         setupAdapter()
         setupObserver()
+        setupListener()
     }
 
     fun setupAdapter(){
@@ -53,6 +55,12 @@ class WalletFragment : Fragment() {
     fun setupObserver(){
         viewModel.wallets.observe(viewLifecycleOwner) { wallets ->
             walletItemsAdapter.updateWallet(wallets)
+        }
+    }
+
+    fun setupListener(){
+        binding.buttonAddWallet.button.setOnClickListener {
+            MainActivityNavigator.navigateFromMainToWalletForm(requireActivity())
         }
     }
 }

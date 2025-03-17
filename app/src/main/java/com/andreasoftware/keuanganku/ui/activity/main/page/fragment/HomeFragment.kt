@@ -9,13 +9,12 @@ import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andreasoftware.keuanganku.R
 import com.andreasoftware.keuanganku.common.enm.SortTransaction
 import com.andreasoftware.keuanganku.common.enm.TimePeriod
 import com.andreasoftware.keuanganku.databinding.FragmentHomeBinding
-import com.andreasoftware.keuanganku.ui.activity.main.MainActivity
+import com.andreasoftware.keuanganku.ui.activity.main.MainActivityNavigator
 import com.andreasoftware.keuanganku.ui.common.AppSnackBar
 import com.andreasoftware.keuanganku.ui.adapter.TransactionItemAdapter
 import com.andreasoftware.keuanganku.util.CurrencyFormatter
@@ -73,7 +72,7 @@ class HomeFragment : Fragment() {
 
     private fun setupListener() {
         binding.buttonAddWallet.button.setOnClickListener {
-            navigateTo(MainActivity.ACTION_MAIN_TO_WALLET_FORM)
+            MainActivityNavigator.navigateFromMainToWalletForm(requireActivity())
         }
     }
 
@@ -148,10 +147,10 @@ class HomeFragment : Fragment() {
         viewModel.walletCount.observe(viewLifecycleOwner) { walletCount ->
             if (walletCount != null && walletCount > 0) {
                 binding.buttonAddIncome.button.setOnClickListener {
-                    navigateTo(MainActivity.ACTION_MAIN_TO_INCOME_FORM)
+                    MainActivityNavigator.navigateFromMainToIncomeForm(requireActivity())
                 }
                 binding.buttonAddExpense.button.setOnClickListener {
-                    navigateTo(MainActivity.ACTION_MAIN_TO_EXPENSE_FORM)
+                    MainActivityNavigator.navigateFromMainToExpenseForm(requireActivity())
                 }
             } else {
                 binding.buttonAddIncome.button.setOnClickListener {
@@ -169,12 +168,5 @@ class HomeFragment : Fragment() {
             }
         }
 
-    }
-
-    private fun navigateTo(actionId: Int) {
-        val navHostFragment =
-            activity?.supportFragmentManager?.findFragmentById(R.id.root_nav_host_fragment) as? NavHostFragment
-        val navController = navHostFragment?.navController
-        navController?.navigate(actionId)
     }
 }
