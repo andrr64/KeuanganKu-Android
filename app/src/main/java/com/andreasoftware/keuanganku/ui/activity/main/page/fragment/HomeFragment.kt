@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.andreasoftware.keuanganku.R
 import com.andreasoftware.keuanganku.common.SortTransaction
 import com.andreasoftware.keuanganku.common.TimePeriod
+import com.andreasoftware.keuanganku.data.model.TransactionModel
 import com.andreasoftware.keuanganku.databinding.FragmentHomeBinding
 import com.andreasoftware.keuanganku.ui.activity.main.MainActivityNavigator
 import com.andreasoftware.keuanganku.ui.common.AppSnackBar
@@ -62,8 +63,16 @@ class HomeFragment : Fragment() {
         setupObserver()
     }
 
+    fun onTransactionClicked(tx: TransactionModel) {
+
+    }
+
     private fun setupRecyclerView() {
-        transactionAdapter = TransactionItemAdapter(emptyList(), viewModel.getCategoryRepository(), userLocale) // Inisialisasi dengan list kosong
+        transactionAdapter = TransactionItemAdapter(emptyList(), viewModel.getCategoryRepository(), userLocale, onItemClick = {transaction ->
+            ///TODO: handle when transaction clicked
+            onTransactionClicked(transaction)
+            Log.d("HomeFragment", "Transaction clicked: $transaction")
+        }) // Inisialisasi dengan list kosong
         binding.recyclerViewOfRecentTransactions.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = transactionAdapter

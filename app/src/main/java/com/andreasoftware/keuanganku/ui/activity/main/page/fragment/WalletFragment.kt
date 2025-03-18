@@ -1,6 +1,7 @@
 package com.andreasoftware.keuanganku.ui.activity.main.page.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,7 +36,6 @@ class WalletFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         setupAdapter()
         setupObserver()
         setupListener()
@@ -44,7 +44,8 @@ class WalletFragment : Fragment() {
     fun setupAdapter(){
         ///TODO: change locale
         walletItemsAdapter = WalletItemAdapter(emptyList(), Locale("id", "ID"), onItemClick = { wallet ->
-            ///TODO: handle when item clicked
+            MainActivityNavigator.navigateFromMainToDetailWallet(requireActivity(), wallet)
+            Log.d("WalletFragment", "Wallet clicked: $wallet")
         })
         binding.walletsRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)

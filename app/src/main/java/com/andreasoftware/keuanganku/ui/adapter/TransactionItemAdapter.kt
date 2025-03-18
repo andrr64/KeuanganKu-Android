@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.andreasoftware.keuanganku.R
 import com.andreasoftware.keuanganku.common.TransactionType
@@ -16,7 +17,8 @@ import java.util.Locale
 class TransactionItemAdapter(
     private var transactions: List<TransactionModel>,
     private val categoryRepository: CategoryRepository,
-    private val locale: Locale
+    private val locale: Locale,
+    private val onItemClick: (TransactionModel) -> Unit
 ) : RecyclerView.Adapter<TransactionItemAdapter.TransactionItemViewHolder>() {
 
     class TransactionItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -25,6 +27,7 @@ class TransactionItemAdapter(
         val category: TextView = itemView.findViewById(R.id.transactonCategoryNameTextview)
         val type: TextView = itemView.findViewById(R.id.transactionTypeTextview)
         val transactionTypeIc: ImageView = itemView.findViewById(R.id.transactionItemIconType)
+        val parent: CardView = itemView.findViewById(R.id.componentTransactionItem)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionItemViewHolder {
@@ -34,13 +37,13 @@ class TransactionItemAdapter(
 
     override fun onBindViewHolder(holder: TransactionItemViewHolder, position: Int) {
         val transaction = transactions[position]
+        val category = categoryRepository.getCategoryById(transaction.categoryId)
+
         holder.title.text = transaction.title
         holder.amount.text = CurrencyFormatter.formatCurrency(transaction.amount, locale)
-
-        val category = categoryRepository.getCategoryById(transaction.categoryId)
         holder.category.text = category?.name ?: "Unknown"
-
         holder.type.text = TransactionType.getDisplayName(transaction.transactionTypeId)
+        holder.parent.setOnClickListener { onItemClick(transaction) }
 
         if (transaction.transactionTypeId == TransactionType.INCOME.value) {
             holder.transactionTypeIc.setImageResource(R.drawable.ic_income_type_24)
