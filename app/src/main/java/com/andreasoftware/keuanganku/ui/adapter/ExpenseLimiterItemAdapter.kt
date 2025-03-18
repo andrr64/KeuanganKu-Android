@@ -12,6 +12,7 @@ import com.andreasoftware.keuanganku.R
 import com.andreasoftware.keuanganku.common.TimePeriod
 import com.andreasoftware.keuanganku.data.model.ExpenseLimiterModel
 import com.andreasoftware.keuanganku.data.repository.CategoryRepository
+import com.andreasoftware.keuanganku.ui.util.BarColor
 import com.andreasoftware.keuanganku.util.CurrencyFormatter
 import com.andreasoftware.keuanganku.util.NumericFormater
 import java.util.Locale
@@ -48,13 +49,16 @@ class ExpenseLimiterItemAdapter(
 
         holder.spentAmount.text = CurrencyFormatter.formatCurrency(spentAmount, locale)
         ///TODO: handle
-        holder.spendingPercentage.text = NumericFormater.toPercentage(spendingPercentage * 100)
+
+        val percentage100 = spendingPercentage * 100f
+        holder.spendingPercentage.text = NumericFormater.toPercentage(percentage100)
         holder.budgetLimit.text = CurrencyFormatter.formatCurrency(data.limitAmount, locale)
         holder.parent.setOnClickListener { onItemClick(data) }
 
         val params = holder.percentageBar.layoutParams as ConstraintLayout.LayoutParams
         params.matchConstraintPercentWidth = spendingPercentage.toFloat()
         holder.percentageBar.layoutParams = params
+        holder.percentageBar.setBackgroundColor(BarColor.getColorFromPercentage(percentage100))
     }
 
     override fun getItemCount(): Int = expenseLimiters.size
