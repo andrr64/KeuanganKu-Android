@@ -17,6 +17,7 @@ object MainActivityNavigator {
     val ACTION_MAIN_TO_EXPENSE_FORM = R.id.action_main_fragment_to_expenseForm
     val ACTION_MAIN_TO_INCOME_FORM = R.id.action_main_fragment_to_incomeForm
     val ACTION_MAIN_TO_DETAIL_WALLET = R.id.action_main_fragment_to_walletDetail
+    val Action_MAIN_TO_EXPENSE_LIMITER_FORM = R.id.action_main_fragment_to_expenseLimiterForm
 
     fun navigateFromMainToWalletForm(activity: FragmentActivity?) {
         navigateTo(activity, ACTION_MAIN_TO_WALLET_FORM)
@@ -28,6 +29,10 @@ object MainActivityNavigator {
 
     fun navigateFromMainToIncomeForm(activity: FragmentActivity?) {
         navigateTo(activity, ACTION_MAIN_TO_INCOME_FORM)
+    }
+
+    fun navigateFromMainToExpenseLimiterForm(activity: FragmentActivity?) {
+        navigateTo(activity, Action_MAIN_TO_EXPENSE_LIMITER_FORM)
     }
 
     fun navigateFromMainToDetailWallet(activity: FragmentActivity?, wallet: WalletModel){

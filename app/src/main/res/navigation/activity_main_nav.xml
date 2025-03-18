@@ -26,6 +26,10 @@
         <action
             android:id="@+id/action_main_fragment_to_walletDetail"
             app:destination="@id/pageWalletDetail" />
+
+        <action
+            android:id="@+id/action_main_fragment_to_expenseLimiterForm"
+            app:destination="@id/pageExpenseLimiterForm" />
     </fragment>
 
     <fragment
@@ -51,4 +55,10 @@
         android:name="com.andreasoftware.keuanganku.ui.activity.main.page.PageDetailWallet"
         tools:layout="@layout/page_detail_wallet"
         android:label="page_detail_wallet" />
+
+    <fragment
+        android:id="@+id/pageExpenseLimiterForm"
+        android:name="com.andreasoftware.keuanganku.ui.activity.main.page.PageExpenseLimiterForm"
+        tools:layout="@layout/page_expense_limiter_form"
+        android:label="page_expense_limiter_form" />
 </navigation>
