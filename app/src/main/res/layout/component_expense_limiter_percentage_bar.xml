@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/dark_purple"
+    android:layout_height="match_parent">
+
+    <!-- Bar Background -->
+    <View
+        android:id="@+id/bar_background"
+        android:layout_width="0dp"
+        android:layout_height="7.5dp"
+        android:background="@color/white_transparent_25"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="0" />
+
+    <!-- Bar Persentase -->
+    <View
+        android:id="@+id/bar_percentage"
+        android:layout_width="0dp"
+        android:layout_height="7.5dp"
+        android:background="@android:color/white"
+        app:layout_constraintStart_toStartOf="@id/bar_background"
+        app:layout_constraintTop_toTopOf="@id/bar_background"
+        app:layout_constraintBottom_toBottomOf="@id/bar_background" />
+</androidx.constraintlayout.widget.ConstraintLayout>

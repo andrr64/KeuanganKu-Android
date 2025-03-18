@@ -9,17 +9,18 @@
     android:layout_marginBottom="10dp"
     app:cardUseCompatPadding="false"
     android:layout_height="wrap_content">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:padding="20dp">
 
         <LinearLayout
-            android:gravity="center"
+            android:gravity="bottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_marginBottom="15dp"
             android:weightSum="2">
 
             <LinearLayout
@@ -35,22 +36,19 @@
                     android:fontFamily="@font/inter_light"
                     android:textColor="@color/white"
                     android:layout_marginBottom="5dp"
-                    android:id="@+id/tv_date_range"
-                    android:text="This Week"/>
+                    android:id="@+id/tv_date_range"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
-                    android:id="@+id/tv_category"
-                    android:text="Transport"/>
+                    android:id="@+id/tv_category"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
-                    android:id="@+id/tv_spent_amount"
-                    android:text="IDR 60,000.00"/>
+                    android:id="@+id/tv_spent_amount" />
 
             </LinearLayout>
 
@@ -66,21 +64,24 @@
                     android:textColor="@color/white"
                     android:textAlignment="textEnd"
                     android:id="@+id/tv_spending_percentage"
-                    android:textSize="20sp"
-                    android:text="58%"/>
+                    android:textSize="22.5sp"/>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
                     android:textAlignment="textEnd"
-                    android:id="@+id/tv_budget_limit"
-                    android:text="IDR 120,000.00"/>
+                    android:id="@+id/tv_budget_limit"/>
 
             </LinearLayout>
 
+
         </LinearLayout>
 
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/inc_percentage_bar"
+            layout="@layout/component_expense_limiter_percentage_bar"/>
     </LinearLayout>
-
 </androidx.cardview.widget.CardView>
