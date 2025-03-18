@@ -61,7 +61,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="20dp"
-                    android:id="@+id/emptyText"/>
+                    android:id="@+id/tv_emptyWallet"/>
 
                 <include
                     android:id="@+id/buttonAddWallet"
@@ -115,6 +115,13 @@
                     android:id="@+id/expenseLimiterRecyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
+
+                <include
+                    layout="@layout/component_textview_empty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="20dp"
+                    android:id="@+id/tv_emptyExpenseLimiter"/>
 
                 <include
                     android:id="@+id/buttonAddSpendingLimiter"
