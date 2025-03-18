@@ -10,7 +10,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 @Entity(
-    tableName = "transactions",
+    tableName = "expense_limiters",
     foreignKeys = [
         ForeignKey(
             entity = WalletModel::class,
@@ -25,16 +25,12 @@ import kotlinx.parcelize.Parcelize
         )
     ]
 )
-data class TransactionModel (
+data class ExpenseLimiterModel(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
-    val title: String,
-    val description: String?,
-    val amount: Double,
     val walletId: Long,
     val categoryId: Long,
-    val transactionTypeId: Int,
-    val rating: Int,
-    val date: ISO8601String = TimeUtility.getCurrentISO8601(),
+    val everyXDay: Int,
+    val enumTimePeriodValue: Int?,
     val createdAt: ISO8601String = TimeUtility.getCurrentISO8601(),
     val updatedAt: ISO8601String = TimeUtility.getCurrentISO8601()
 ): Parcelable

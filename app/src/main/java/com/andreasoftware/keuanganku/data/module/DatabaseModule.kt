@@ -2,6 +2,7 @@ package com.andreasoftware.keuanganku.data.module
 
 import android.content.Context
 import com.andreasoftware.keuanganku.data.dao.CategoryDao
+import com.andreasoftware.keuanganku.data.dao.ExpenseLimiterDao
 import com.andreasoftware.keuanganku.data.dao.TransactionDao
 import com.andreasoftware.keuanganku.data.dao.WalletDao
 import com.andreasoftware.keuanganku.data.db.AppDatabase
@@ -34,5 +35,10 @@ object DatabaseModule {
     @Provides
     fun provideWalletDao(appDatabase: AppDatabase): WalletDao {
         return appDatabase.walletDao()
+    }
+
+    @Provides
+    fun provideExpenseLimiterDao(appDatabase: AppDatabase): ExpenseLimiterDao {
+        return appDatabase.expenseLimiterDao()
     }
 }

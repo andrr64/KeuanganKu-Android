@@ -8,9 +8,11 @@ import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.andreasoftware.keuanganku.common.TransactionType
 import com.andreasoftware.keuanganku.data.dao.CategoryDao
+import com.andreasoftware.keuanganku.data.dao.ExpenseLimiterDao
 import com.andreasoftware.keuanganku.data.dao.TransactionDao
 import com.andreasoftware.keuanganku.data.dao.WalletDao
 import com.andreasoftware.keuanganku.data.model.CategoryModel
+import com.andreasoftware.keuanganku.data.model.ExpenseLimiterModel
 import com.andreasoftware.keuanganku.data.model.TransactionModel
 import com.andreasoftware.keuanganku.data.model.WalletModel
 import kotlinx.coroutines.CoroutineScope
@@ -22,7 +24,8 @@ import kotlinx.coroutines.withContext
     entities = [
         WalletModel::class,
         TransactionModel::class,
-        CategoryModel::class
+        CategoryModel::class,
+        ExpenseLimiterModel::class
     ],
     version = 1,
     exportSchema = false
@@ -31,6 +34,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun transactionDao(): TransactionDao
     abstract fun walletDao(): WalletDao
     abstract fun categoryDao(): CategoryDao
+    abstract fun expenseLimiterDao(): ExpenseLimiterDao
 
     companion object {
         @Volatile
