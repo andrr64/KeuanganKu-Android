@@ -13,7 +13,7 @@
         android:padding="20dp">
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/userinfoCard"
+            android:id="@+id/cardWallet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
@@ -55,8 +55,69 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
+
+                <include
+                    layout="@layout/component_textview_empty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="20dp"
+                    android:id="@+id/emptyText"/>
+
                 <include
                     android:id="@+id/buttonAddWallet"
+                    android:layout_marginTop="10dp"
+                    layout="@layout/component_button_add"
+                    android:layout_width="128dp"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardExpenseLimiter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            app:cardBackgroundColor="@color/dark_purple"
+            app:cardCornerRadius="15dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:padding="20dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_wallet_24"
+                        app:tint="@color/white"
+                        android:visibility="gone"
+                        android:layout_marginEnd="5dp"/>
+
+                    <TextView
+                        android:fontFamily="@font/inter"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Spending Limiter"/>
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/expenseLimiterRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <include
+                    android:id="@+id/buttonAddSpendingLimiter"
                     android:layout_marginTop="10dp"
                     layout="@layout/component_button_add"
                     android:layout_width="128dp"

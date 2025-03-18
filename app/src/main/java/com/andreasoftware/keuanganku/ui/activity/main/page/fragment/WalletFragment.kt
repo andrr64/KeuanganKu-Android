@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.andreasoftware.keuanganku.R
 import com.andreasoftware.keuanganku.databinding.FragmentWalletBinding
 import com.andreasoftware.keuanganku.ui.activity.main.MainActivityNavigator
 import com.andreasoftware.keuanganku.ui.adapter.WalletItemAdapter
@@ -26,6 +27,7 @@ class WalletFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentWalletBinding.inflate(inflater, container, false)
+        binding.emptyText.textview.setTextColor(resources.getColor(R.color.white))
         return binding.root // Corrected return statement
     }
 
@@ -56,6 +58,7 @@ class WalletFragment : Fragment() {
     fun setupObserver(){
         viewModel.wallets.observe(viewLifecycleOwner) { wallets ->
             walletItemsAdapter.updateWallet(wallets)
+            binding.emptyText.root.visibility = if (wallets.isEmpty()) View.VISIBLE else View.GONE
         }
     }
 

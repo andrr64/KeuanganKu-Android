@@ -4,7 +4,7 @@
     android:id="@+id/button"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:backgroundTint="#0fffffff"
+    android:backgroundTint="@color/white_transparent_25"
     android:fontFamily="@font/inter"
     android:soundEffectsEnabled="false"
     android:text="Add"
