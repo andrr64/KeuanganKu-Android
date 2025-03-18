@@ -7,8 +7,8 @@ enum class TransactionType(val value: Int ) {
     companion object  {
         fun getDisplayName(value: Int): String {
             return when (value) {
-                INCOME.value -> "Pemasukan"
-                EXPENSE.value -> "Pengeluaran"
+                INCOME.value -> "Income"
+                EXPENSE.value -> "Expense"
                 else -> "Unknown"
             }
         }

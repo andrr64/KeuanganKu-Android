@@ -5,6 +5,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import com.andreasoftware.keuanganku.common.ISO8601String
+import com.andreasoftware.keuanganku.common.TimePeriodEnumValue
 import com.andreasoftware.keuanganku.util.TimeUtility
 import kotlinx.parcelize.Parcelize
 
@@ -29,8 +30,8 @@ data class ExpenseLimiterModel(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     val walletId: Long,
     val categoryId: Long,
-    val everyXDay: Int,
-    val enumTimePeriodValue: Int?,
+    val enumTimePeriodValue: TimePeriodEnumValue?,
+    val limitAmount: Double,
     val createdAt: ISO8601String = TimeUtility.getCurrentISO8601(),
     val updatedAt: ISO8601String = TimeUtility.getCurrentISO8601()
 ): Parcelable

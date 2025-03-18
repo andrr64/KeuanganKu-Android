@@ -83,7 +83,7 @@ class TransactionRepository
         val (start, end) = TimeUtility.getTimePeriodISO8601(timePeriod)
         try {
             val result = transactionDao.totalExpense(startDate = start, endDate = end)
-            return DataOperationResult2.success(result?: 0.0)
+            return DataOperationResult2.successWithData(result?: 0.0)
         } catch (e: Exception){
             return DataOperationResult2.error(errorCode = ExpenseDAOException.READ_ERROR.code, errorMessage = e.localizedMessage ?: "Unknown error")
         }
@@ -96,7 +96,7 @@ class TransactionRepository
         val (start, end) = TimeUtility.getTimePeriodISO8601(timePeriod)
         try {
             val result = transactionDao.totalIncome(startDate = start, endDate = end)
-            return DataOperationResult2.success(result ?: 0.0)
+            return DataOperationResult2.successWithData(result ?: 0.0)
         } catch (e: Exception) {
             return DataOperationResult2.error(errorCode = IncomeDAOException.READ_ERROR.code, errorMessage = e.localizedMessage
                 ?: "Unknown error")
