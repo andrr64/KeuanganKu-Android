@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -14,8 +15,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:contentDescription="Drawer Icon"
-            android:src="@drawable/ic_menu" />
+            android:src="@drawable/ic_menu_24"
+            app:tint="@color/dark_purple" />
 
         <TextView
             android:id="@+id/appBarTitle"
