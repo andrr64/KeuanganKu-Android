@@ -1,9 +1,9 @@
 package com.andreasoftware.keuanganku.common
 
-enum class TimePeriod(val value: TimePeriodEnumValue, val displayName: String) {
-    WEEK(1, "This Week"),
-    MONTH(2, "This Month"),
-    YEAR(3, "This Year");
+enum class TimePeriod(val value: TimePeriodEnumValue, val displayName: String, val xLyDisName: String) {
+    WEEK(1, "This Week", "Weekly"),
+    MONTH(2, "This Month", "Monthly"),
+    YEAR(3, "This Year", "Yearly");
 
     companion object {
         fun getByDisplayName(displayName: String): TimePeriod? {

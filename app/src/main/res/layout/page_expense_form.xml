@@ -58,14 +58,14 @@
 
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/descriptionInputLayout"
+                    android:id="@+id/til_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:hint="@string/description">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/descriptionEditText"
+                        android:id="@+id/et_description"
                         android:gravity="start"
                         android:layout_width="match_parent"
                         android:lines="3"
@@ -86,14 +86,14 @@
                         android:inputType="numberDecimal" />
                 </com.google.android.material.textfield.TextInputLayout>
                 <include
-                    android:id="@+id/dropdownSpinnerCategory"
+                    android:id="@+id/inc_dropdownSpinnerCategory"
                     layout="@layout/component_form_spinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"/>
 
                 <include
-                    android:id="@+id/dropdownSpinnerWallet"
+                    android:id="@+id/inc_dropdownSpinnerWallet"
                     layout="@layout/component_form_spinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

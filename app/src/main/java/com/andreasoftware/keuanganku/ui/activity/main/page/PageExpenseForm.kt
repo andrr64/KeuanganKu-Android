@@ -60,10 +60,10 @@ class PageExpenseForm : Fragment() {
     }
 
     private fun setupDropdownHints() {
-        binding.dropdownSpinnerCategory.dropdownTextInputLayout.hint =
+        binding.incDropdownSpinnerCategory.dropdownTextInputLayout.hint =
             getString(R.string.select_category)
         ///TODO: use string resource
-        binding.dropdownSpinnerWallet.dropdownTextInputLayout.hint = "Select Wallet"
+        binding.incDropdownSpinnerWallet.dropdownTextInputLayout.hint = "Select Wallet"
     }
 
     private fun setupClickListeners() {
@@ -94,7 +94,7 @@ class PageExpenseForm : Fragment() {
 
     private fun setupWalletDropdown(wallets: List<WalletModel>) {
         val adapter = createArrayAdapter(wallets.map { it.name })
-        val autoCompleteTextView = binding.dropdownSpinnerWallet.dropdownAutoCompleteTextView
+        val autoCompleteTextView = binding.incDropdownSpinnerWallet.dropdownAutoCompleteTextView
         autoCompleteTextView.setAdapter(adapter)
         autoCompleteTextView.setText(wallets[0].name, false)
         viewModel.setSelectedWallet(wallets[0])
@@ -105,7 +105,7 @@ class PageExpenseForm : Fragment() {
 
     private fun setupCategoryDropdown(categories: List<CategoryModel>) {
         val adapter = createArrayAdapter(categories.map { it.name })
-        val autoCompleteTextView = binding.dropdownSpinnerCategory.dropdownAutoCompleteTextView
+        val autoCompleteTextView = binding.incDropdownSpinnerCategory.dropdownAutoCompleteTextView
         autoCompleteTextView.setAdapter(adapter)
         autoCompleteTextView.setText(categories[0].name, false)
         viewModel.setSelectedCategory(categories[0])
@@ -169,7 +169,7 @@ class PageExpenseForm : Fragment() {
 
     private fun createExpenseModel(): TransactionModel? {
         val title = binding.titleEditText.text.toString()
-        val description = binding.descriptionEditText.text.toString()
+        val description = binding.etDescription.text.toString()
         val amountString = binding.amountEditText.text.toString()
         val selectedCategory = viewModel.selectedCategory.value ?: return null
         val amount = amountString.toDouble()
