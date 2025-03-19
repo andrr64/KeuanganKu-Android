@@ -3,7 +3,6 @@ plugins {
     alias(libs.plugins.kotlin.android)
     id("com.google.devtools.ksp")
     id("com.google.dagger.hilt.android")
-    id("kotlin-kapt")
     id("kotlin-parcelize")
 }
 
@@ -59,19 +58,16 @@ dependencies {
 
     // Jetpack Room Database
     implementation("androidx.room:room-runtime:$room_version")
-    annotationProcessor("androidx.room:room-compiler:$room_version")
     ksp("androidx.room:room-compiler:$room_version")
     implementation("androidx.room:room-ktx:$room_version")
-
-    // MPChart
-//    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+    ksp("androidx.room:room-compiler:$room_version")
 
     // Viewpager2
     implementation("androidx.viewpager2:viewpager2:1.1.0")
 
     // dagger.hilt
     implementation("com.google.dagger:hilt-android:2.55")
-    kapt("com.google.dagger:hilt-android-compiler:2.55")
+    ksp("com.google.dagger:hilt-android-compiler:2.55")
 
 
     // Data Store
