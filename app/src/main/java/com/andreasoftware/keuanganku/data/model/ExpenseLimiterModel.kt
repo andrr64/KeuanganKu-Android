@@ -3,6 +3,7 @@ package com.andreasoftware.keuanganku.data.model
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.andreasoftware.keuanganku.common.ISO8601String
 import com.andreasoftware.keuanganku.common.TimePeriodEnumValue
@@ -25,6 +26,10 @@ import kotlinx.parcelize.Parcelize
             parentColumns = ["id"],
             childColumns = ["categoryId"]
         )
+    ],
+    indices = [
+        Index("walletId"),
+        Index("categoryId")
     ]
 )
 data class ExpenseLimiterModel(
