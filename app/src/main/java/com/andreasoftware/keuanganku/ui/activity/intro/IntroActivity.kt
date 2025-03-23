@@ -1,7 +1,9 @@
 package com.andreasoftware.keuanganku.ui.activity.intro
 
 import android.os.Bundle
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import com.andreasoftware.keuanganku.data.repository.app.SettingRepository
@@ -21,6 +23,10 @@ class IntroActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        val controller = WindowCompat.getInsetsController(window, window.decorView)
+        controller.isAppearanceLightStatusBars = true  // Ikon status bar gelap
+        controller.isAppearanceLightNavigationBars = true  // Ikon navigasi gelap
 
         binding = ActivityIntroBinding.inflate(layoutInflater)
         viewPager = binding.viewPager

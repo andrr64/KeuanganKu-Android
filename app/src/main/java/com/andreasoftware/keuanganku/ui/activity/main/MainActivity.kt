@@ -18,7 +18,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(activityBinding.root)
         enableEdgeToEdge()
         val controller = WindowCompat.getInsetsController(window, window.decorView)
-
         controller.isAppearanceLightStatusBars = true  // Ikon status bar gelap
         controller.isAppearanceLightNavigationBars = true  // Ikon navigasi gelap
     }
