@@ -6,6 +6,7 @@ import com.andreasoftware.keuanganku.common.DataOperationResult
 import com.andreasoftware.keuanganku.common.DataOperationResult2
 import com.andreasoftware.keuanganku.common.SortTransaction
 import com.andreasoftware.keuanganku.common.TimePeriod
+import com.andreasoftware.keuanganku.data.dao.ExpenseLimiterDao
 import com.andreasoftware.keuanganku.data.dao.TransactionDao
 import com.andreasoftware.keuanganku.data.dao.WalletDao
 import com.andreasoftware.keuanganku.data.db.AppDatabase
@@ -22,7 +23,7 @@ class TransactionRepository
 @Inject constructor(
     private val walletDao: WalletDao,
     private val db: AppDatabase,
-    private val transactionDao: TransactionDao
+    private val transactionDao: TransactionDao,
 ) {
     val countExpense = transactionDao.countExpenseLiveData()
     val countIncome = transactionDao.countIncomeLiveData()
@@ -32,6 +33,7 @@ class TransactionRepository
         return try {
             db.withTransaction {
                 transactionDao.insert(transaction)
+                walletDao.addBalance(transaction.walletId, transaction.amount)
             }
             DataOperationResult.success()
         } catch (e: Exception) {
@@ -57,7 +59,6 @@ class TransactionRepository
                         "Insufficient balance"
                     )
                 }
-
                 transactionDao.insert(transaction)
                 walletDao.subtractBalance(transaction.walletId, transaction.amount)
             }
