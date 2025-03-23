@@ -30,7 +30,7 @@ import kotlinx.parcelize.Parcelize
         Index("categoryId")
     ]
 )
-data class TransactionModel (
+data class TransactionModel(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     val title: String,
     val description: String?,
@@ -42,4 +42,4 @@ data class TransactionModel (
     val date: ISO8601String = TimeUtility.getCurrentISO8601(),
     val createdAt: ISO8601String = TimeUtility.getCurrentISO8601(),
     val updatedAt: ISO8601String = TimeUtility.getCurrentISO8601()
-): Parcelable
+) : Parcelable

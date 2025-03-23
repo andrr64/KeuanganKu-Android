@@ -1,7 +1,7 @@
 package com.andreasoftware.keuanganku.ui.activity.main.page
 
-import android.util.Log
 import android.text.InputType
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
@@ -26,22 +26,31 @@ class PageIncomeForm : KSubPage<PageIncomeFormBinding, PageIncomeFormViewModel>(
     override val viewModel: PageIncomeFormViewModel by viewModels()
     override val title: String = ""
 
-    override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?): PageIncomeFormBinding {
+    override fun inflateBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): PageIncomeFormBinding {
         return PageIncomeFormBinding.inflate(inflater, container, false)
     }
 
     override fun setupComponent() {
         super.setupComponent()
         Log.d("IncomeFormPage", "Created!")
-        binding.incDropdownSpinnerCategory.dropdownTextInputLayout.hint = getString(R.string.select_category)
+        binding.incDropdownSpinnerCategory.dropdownTextInputLayout.hint =
+            getString(R.string.select_category)
         binding.incDropdownSpinnerWallet.dropdownTextInputLayout.hint = "Select Wallet"
-        binding.amountEditText.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
+        binding.amountEditText.inputType =
+            InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
     }
 
     override fun setupListener() {
         super.setupListener()
         binding.submitButton.setOnClickListener { eventOnSubmitButtonClicked() }
-        binding.buttonAddCategory.setOnClickListener { CategoryFormBSFragment.show(parentFragmentManager) }
+        binding.buttonAddCategory.setOnClickListener {
+            CategoryFormBSFragment.show(
+                parentFragmentManager
+            )
+        }
     }
 
     override fun setupObserver() {

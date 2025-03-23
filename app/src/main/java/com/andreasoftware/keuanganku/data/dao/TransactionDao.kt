@@ -37,7 +37,11 @@ interface TransactionDao {
     ): Double?
 
     @Query("SELECT * FROM transactions WHERE date >= :startDate AND date <= :endDate ORDER BY date DESC LIMIT :limit")
-    suspend fun getRecentTransactions(startDate: ISO8601String, endDate: ISO8601String, limit: Int): List<TransactionModel>
+    suspend fun getRecentTransactions(
+        startDate: ISO8601String,
+        endDate: ISO8601String,
+        limit: Int
+    ): List<TransactionModel>
 
     @Query("SELECT * FROM transactions WHERE date >= :startDate AND date <= :endDate ORDER BY date ASC LIMIT :limit")
     suspend fun getTransactionsDateAscending(

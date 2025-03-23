@@ -33,7 +33,12 @@ class WalletFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentWalletBinding.inflate(inflater, container, false)
-        binding.tvEmptyExpenseLimiter.textview.setTextColor(getColor(requireContext(), R.color.white))
+        binding.tvEmptyExpenseLimiter.textview.setTextColor(
+            getColor(
+                requireContext(),
+                R.color.white
+            )
+        )
         binding.tvEmptyWallet.textview.setTextColor(getColor(requireContext(), R.color.white))
         return binding.root // Corrected return statement
     }
@@ -50,14 +55,19 @@ class WalletFragment : Fragment() {
         setupListener()
     }
 
-    fun setupAdapter(){
+    fun setupAdapter() {
         ///TODO: change locale
         ///TODO: handle on click listener
-        walletItemsAdapter = WalletItemAdapter(emptyList(), Locale("id", "ID"), onItemClick = { wallet ->
-            MainActivityNavigator.navigateFromMainToDetailWallet(requireActivity(), wallet)
-            Log.d("WalletFragment", "Wallet clicked: $wallet")
-        })
-        expenseLimiterAdapter = ExpenseLimiterItemAdapter(emptyList(),viewModel.categoryRepository, Locale("id", "ID"), onItemClick = { limiter ->})
+        walletItemsAdapter =
+            WalletItemAdapter(emptyList(), Locale("id", "ID"), onItemClick = { wallet ->
+                MainActivityNavigator.navigateFromMainToDetailWallet(requireActivity(), wallet)
+                Log.d("WalletFragment", "Wallet clicked: $wallet")
+            })
+        expenseLimiterAdapter = ExpenseLimiterItemAdapter(
+            emptyList(),
+            viewModel.categoryRepository,
+            Locale("id", "ID"),
+            onItemClick = { limiter -> })
 
         binding.walletsRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
@@ -69,26 +79,33 @@ class WalletFragment : Fragment() {
         }
     }
 
-    fun setupObserver(){
+    fun setupObserver() {
         viewModel.wallets.observe(viewLifecycleOwner) { wallets ->
             walletItemsAdapter.updateWallet(wallets)
-            binding.tvEmptyWallet.textview.visibility = if (wallets.isEmpty()) View.VISIBLE else View.GONE
+            binding.tvEmptyWallet.textview.visibility =
+                if (wallets.isEmpty()) View.VISIBLE else View.GONE
         }
         viewModel.expenseLimiters.observe(viewLifecycleOwner) {
             expenseLimiterAdapter.updateExpenseLimiters(it)
-            binding.tvEmptyExpenseLimiter.textview.visibility = if (it.isEmpty()) View.VISIBLE else View.GONE
+            binding.tvEmptyExpenseLimiter.textview.visibility =
+                if (it.isEmpty()) View.VISIBLE else View.GONE
         }
     }
 
-    fun setupListener(){
+    fun setupListener() {
         binding.buttonAddWallet.button.setOnClickListener {
             WalletFormBSFragment(
-                onSuccessfulOperation = { AppSnackBar.success(binding.root, "Wallet added successfully")},
-                onFailedOperation = { AppSnackBar.error(binding.root, "Failed to add wallet")}
+                onSuccessfulOperation = {
+                    AppSnackBar.success(
+                        binding.root,
+                        "Wallet added successfully"
+                    )
+                },
+                onFailedOperation = { AppSnackBar.error(binding.root, "Failed to add wallet") }
             ).show(childFragmentManager, "WalletBottomSheetDialogFragment")
         }
         binding.buttonAddSpendingLimiter.button.setOnClickListener {
-            if (viewModel.wallets.value!!.isEmpty()){
+            if (viewModel.wallets.value!!.isEmpty()) {
                 AppSnackBar.error(binding.root, "Please add wallet first")
             } else {
                 MainActivityNavigator.navigateFromMainToExpenseLimiterForm(requireActivity())

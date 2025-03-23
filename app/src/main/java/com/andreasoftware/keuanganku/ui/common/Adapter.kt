@@ -12,7 +12,8 @@ object Adapter {
         autoCompleteTextView: AutoCompleteTextView,
         onItemSelected: (T) -> Unit
     ) {
-        val adapter = ArrayAdapter(context, android.R.layout.simple_dropdown_item_1line, displayText)
+        val adapter =
+            ArrayAdapter(context, android.R.layout.simple_dropdown_item_1line, displayText)
         autoCompleteTextView.setAdapter(adapter)
 
         if (items.isNotEmpty()) {

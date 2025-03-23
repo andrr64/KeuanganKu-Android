@@ -1,7 +1,6 @@
 package com.andreasoftware.keuanganku.ui.adapter
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +12,6 @@ import com.andreasoftware.keuanganku.R
 import com.andreasoftware.keuanganku.common.TimePeriod
 import com.andreasoftware.keuanganku.data.model.ExpenseLimiterModel
 import com.andreasoftware.keuanganku.data.repository.CategoryRepository
-import com.andreasoftware.keuanganku.data.repository.ExpenseLimiterRepository
 import com.andreasoftware.keuanganku.ui.util.BarColor
 import com.andreasoftware.keuanganku.util.CurrencyFormatter
 import com.andreasoftware.keuanganku.util.NumericFormater
@@ -24,12 +22,13 @@ class ExpenseLimiterItemAdapter(
     private val categoryRepository: CategoryRepository,
     private val locale: Locale,
     private val onItemClick: (ExpenseLimiterModel) -> Unit
-): RecyclerView.Adapter<ExpenseLimiterItemAdapter.ExpenseLimiterItemViewHolder>() {
+) : RecyclerView.Adapter<ExpenseLimiterItemAdapter.ExpenseLimiterItemViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): ExpenseLimiterItemViewHolder {
-        val layout = LayoutInflater.from(parent.context).inflate(R.layout.component_expense_limiter_item, parent, false)
+        val layout = LayoutInflater.from(parent.context)
+            .inflate(R.layout.component_expense_limiter_item, parent, false)
         return ExpenseLimiterItemViewHolder(layout)
     }
 
@@ -42,9 +41,10 @@ class ExpenseLimiterItemAdapter(
         val category = categoryRepository.getCategoryById(data.categoryId)
         val budgetLimitAmount = data.limitAmount
         val spentAmount = 60000.0
-        var spendingPercentage = NumericFormater.to100ScaleFromAperBNotZero(spentAmount, budgetLimitAmount)
+        var spendingPercentage =
+            NumericFormater.to100ScaleFromAperBNotZero(spentAmount, budgetLimitAmount)
 
-        holder.title.text = TimePeriod.getDisplayNameByValue(data.enumTimePeriodValue?: 0)
+        holder.title.text = TimePeriod.getDisplayNameByValue(data.enumTimePeriodValue ?: 0)
         holder.category.text = category?.name ?: "Unknown"
         holder.spentAmount.text = CurrencyFormatter.formatCurrency(spentAmount, locale)
 
@@ -53,11 +53,16 @@ class ExpenseLimiterItemAdapter(
         holder.parent.setOnClickListener { onItemClick(data) }
 
         val params = holder.percentageBar.layoutParams as ConstraintLayout.LayoutParams
-        params.matchConstraintPercentWidth = (if (spendingPercentage > 0 && spendingPercentage <= 100) (spendingPercentage/100) else (
-            if (spendingPercentage > 100) 1 else 0
-        )  ) .toFloat()
+        params.matchConstraintPercentWidth =
+            (if (spendingPercentage > 0 && spendingPercentage <= 100) (spendingPercentage / 100) else (
+                    if (spendingPercentage > 100) 1 else 0
+                    )).toFloat()
         holder.percentageBar.layoutParams = params
-        holder.percentageBar.setBackgroundColor(BarColor.getColorFromPercentageScale1(spendingPercentage))
+        holder.percentageBar.setBackgroundColor(
+            BarColor.getColorFromPercentageScale1(
+                spendingPercentage
+            )
+        )
     }
 
     override fun getItemCount(): Int = expenseLimiters.size
@@ -68,7 +73,7 @@ class ExpenseLimiterItemAdapter(
         notifyDataSetChanged()
     }
 
-    class ExpenseLimiterItemViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
+    class ExpenseLimiterItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val title: TextView = itemView.findViewById(R.id.tv_date_range)
         val category: TextView = itemView.findViewById(R.id.tv_category)
         val spentAmount: TextView = itemView.findViewById(R.id.tv_spent_amount)

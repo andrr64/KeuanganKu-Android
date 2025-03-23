@@ -16,8 +16,9 @@ class CategoryFormBSViewModel
     private val categoryRepository: CategoryRepository
 ) : ViewModel() {
 
-    fun insert(categoryName: String){
-        val newCategory = CategoryModel(name = categoryName, transactionTypeId = TransactionType.EXPENSE.value)
+    fun insert(categoryName: String) {
+        val newCategory =
+            CategoryModel(name = categoryName, transactionTypeId = TransactionType.EXPENSE.value)
         viewModelScope.launch(Dispatchers.IO) {
             categoryRepository.insert(newCategory)
         }

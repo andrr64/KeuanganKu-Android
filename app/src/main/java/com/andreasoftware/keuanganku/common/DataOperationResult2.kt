@@ -14,8 +14,10 @@ class DataOperationResult2<T>(
     fun errCode(): Long? = errorCode
 
     companion object {
-        fun <T> successWithData(data: T): DataOperationResult2<T> = DataOperationResult2(true, data = data)
-        fun justSuccess(): DataOperationResult2<Any> = DataOperationResult2(true, data= null)
+        fun <T> successWithData(data: T): DataOperationResult2<T> =
+            DataOperationResult2(true, data = data)
+
+        fun justSuccess(): DataOperationResult2<Any> = DataOperationResult2(true, data = null)
         fun error(errorCode: Long, errorMessage: String): DataOperationResult2<Any> =
             DataOperationResult2(false, errorCode, errorMessage)
     }

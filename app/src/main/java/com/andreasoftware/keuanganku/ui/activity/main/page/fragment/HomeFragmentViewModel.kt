@@ -122,7 +122,10 @@ class HomeFragmentViewModel
                 _totalExpense.value = (result.data ?: 0.0) as Double
                 Log.d("HomeFragmentViewModel", "Total expense updated: ${_totalExpense.value}")
             } else {
-                Log.e("HomeFragmentViewModel", "Failed to update total expense: ${result.errorMessage}")
+                Log.e(
+                    "HomeFragmentViewModel",
+                    "Failed to update total expense: ${result.errorMessage}"
+                )
             }
         }
     }
@@ -135,7 +138,10 @@ class HomeFragmentViewModel
                 _totalIncome.value = (result.data ?: 0.0) as Double
                 Log.d("HomeFragmentViewModel", "Total income updated: ${_totalIncome.value}")
             } else {
-                Log.e("HomeFragmentViewModel", "Failed to update total income: ${result.errorMessage}")
+                Log.e(
+                    "HomeFragmentViewModel",
+                    "Failed to update total income: ${result.errorMessage}"
+                )
             }
         }
     }

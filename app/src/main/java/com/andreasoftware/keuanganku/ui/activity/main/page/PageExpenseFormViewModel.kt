@@ -29,10 +29,11 @@ class PageExpenseFormViewModel
     private val _rating: MutableLiveData<Int> = MutableLiveData(1)
     val rating: LiveData<Int> get() = _rating
 
-    fun setRating(rating: Int){
+    fun setRating(rating: Int) {
         _rating.value = rating
     }
-    fun getRating(): Int?{
+
+    fun getRating(): Int? {
         return _rating.value
     }
 

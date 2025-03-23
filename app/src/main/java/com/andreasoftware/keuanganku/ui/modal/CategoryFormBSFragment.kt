@@ -13,7 +13,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CategoryFormBSFragment: BottomSheetDialogFragment() {
+class CategoryFormBSFragment : BottomSheetDialogFragment() {
 
     private val viewModel: CategoryFormBSViewModel by viewModels()
 

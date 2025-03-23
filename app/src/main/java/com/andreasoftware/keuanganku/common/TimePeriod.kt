@@ -1,6 +1,10 @@
 package com.andreasoftware.keuanganku.common
 
-enum class TimePeriod(val value: TimePeriodEnumValue, val displayName: String, val xLyDisName: String) {
+enum class TimePeriod(
+    val value: TimePeriodEnumValue,
+    val displayName: String,
+    val xLyDisName: String
+) {
     WEEK(1, "This Week", "Weekly"),
     MONTH(2, "This Month", "Monthly"),
     YEAR(3, "This Year", "Yearly");
@@ -10,8 +14,9 @@ enum class TimePeriod(val value: TimePeriodEnumValue, val displayName: String, v
             return TimePeriod.entries.find { it.displayName == displayName }
         }
 
-        fun getDisplayNameByValue(value: Short): String{
-            return TimePeriod.entries.find { it.value == value }?.displayName ?: "Unknown Time Period"
+        fun getDisplayNameByValue(value: Short): String {
+            return TimePeriod.entries.find { it.value == value }?.displayName
+                ?: "Unknown Time Period"
         }
     }
 }

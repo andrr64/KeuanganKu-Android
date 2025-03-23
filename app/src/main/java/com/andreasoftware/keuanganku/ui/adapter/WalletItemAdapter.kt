@@ -17,12 +17,13 @@ class WalletItemAdapter(
     private var wallets: List<WalletModel>,
     private val locale: Locale,
     private val onItemClick: (WalletModel) -> Unit
-): RecyclerView.Adapter<WalletItemAdapter.WalletItemViewHolder>() {
+) : RecyclerView.Adapter<WalletItemAdapter.WalletItemViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): WalletItemViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.component_wallet_item, parent, false)
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.component_wallet_item, parent, false)
         return WalletItemViewHolder(view)
     }
 
@@ -46,7 +47,7 @@ class WalletItemAdapter(
         notifyDataSetChanged()
     }
 
-    class WalletItemViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    class WalletItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val name: TextView = itemView.findViewById(R.id.walletItemNameTextview)
         val balance: TextView = itemView.findViewById(R.id.walletItemBalanceTextview)
         val parent: CardView = itemView.findViewById(R.id.componentWalletItem)

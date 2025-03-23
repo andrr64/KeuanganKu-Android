@@ -42,25 +42,25 @@ data class ExpenseLimiterModel(
     val limitAmount: Double,
     val createdAt: ISO8601String = TimeUtility.getCurrentISO8601(),
     val updatedAt: ISO8601String = TimeUtility.getCurrentISO8601()
-): Parcelable {
+) : Parcelable {
     companion object {
-            fun generateFromUI(
-                titleEditText: TextInputEditText,
-                descriptionEditText: TextInputEditText?,
-                walletModel: WalletModel,
-                categoryModel: CategoryModel,
-                timePeriodValue: TimePeriodEnumValue?,
-                limitAmount: Double
-            ): ExpenseLimiterModel {
-                return ExpenseLimiterModel(
-                    title = titleEditText.text.toString(),
-                    description = descriptionEditText?.text?.toString(),
-                    walletId = walletModel.id,
-                    categoryId = categoryModel.id,
-                    enumTimePeriodValue = timePeriodValue,
-                    limitAmount = limitAmount
-                )
-            }
+        fun generateFromUI(
+            titleEditText: TextInputEditText,
+            descriptionEditText: TextInputEditText?,
+            walletModel: WalletModel,
+            categoryModel: CategoryModel,
+            timePeriodValue: TimePeriodEnumValue?,
+            limitAmount: Double
+        ): ExpenseLimiterModel {
+            return ExpenseLimiterModel(
+                title = titleEditText.text.toString(),
+                description = descriptionEditText?.text?.toString(),
+                walletId = walletModel.id,
+                categoryId = categoryModel.id,
+                enumTimePeriodValue = timePeriodValue,
+                limitAmount = limitAmount
+            )
+        }
     }
 }
 

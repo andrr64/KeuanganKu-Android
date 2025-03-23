@@ -1,7 +1,6 @@
 package com.andreasoftware.keuanganku.data.repository
 
 import androidx.room.withTransaction
-import com.andreasoftware.keuanganku.common.DataOperationResult2
 import com.andreasoftware.keuanganku.common.SealedDataOperationResult
 import com.andreasoftware.keuanganku.data.dao.CategoryDao
 import com.andreasoftware.keuanganku.data.dao.ExpenseLimiterDao

@@ -51,17 +51,40 @@ abstract class AppDatabase : RoomDatabase() {
                     val transactionExpenseTypeId = TransactionType.EXPENSE.value
                     val transactionIncomeTypeId = TransactionType.INCOME.value
 
-                    val expenseCount = withContext(Dispatchers.IO) { categoryDao.getCategoryCountByType(transactionExpenseTypeId) }
-                    val incomeCount = withContext(Dispatchers.IO) { categoryDao.getCategoryCountByType(TransactionType.INCOME.value) }
+                    val expenseCount = withContext(Dispatchers.IO) {
+                        categoryDao.getCategoryCountByType(transactionExpenseTypeId)
+                    }
+                    val incomeCount = withContext(Dispatchers.IO) {
+                        categoryDao.getCategoryCountByType(TransactionType.INCOME.value)
+                    }
 
                     if (incomeCount == 0) {
                         val incomeCategories = listOf(
-                            CategoryModel(name = "Wallet Initialization", id = 1,  transactionTypeId = transactionIncomeTypeId),
-                            CategoryModel(name = "Salary", transactionTypeId = transactionIncomeTypeId),
-                            CategoryModel(name = "Freelance", transactionTypeId = transactionIncomeTypeId),
-                            CategoryModel(name = "Investment", transactionTypeId = transactionIncomeTypeId),
-                            CategoryModel(name = "Gift", transactionTypeId = transactionIncomeTypeId),
-                            CategoryModel(name = "Rental Income", transactionTypeId = transactionIncomeTypeId)
+                            CategoryModel(
+                                name = "Wallet Initialization",
+                                id = 1,
+                                transactionTypeId = transactionIncomeTypeId
+                            ),
+                            CategoryModel(
+                                name = "Salary",
+                                transactionTypeId = transactionIncomeTypeId
+                            ),
+                            CategoryModel(
+                                name = "Freelance",
+                                transactionTypeId = transactionIncomeTypeId
+                            ),
+                            CategoryModel(
+                                name = "Investment",
+                                transactionTypeId = transactionIncomeTypeId
+                            ),
+                            CategoryModel(
+                                name = "Gift",
+                                transactionTypeId = transactionIncomeTypeId
+                            ),
+                            CategoryModel(
+                                name = "Rental Income",
+                                transactionTypeId = transactionIncomeTypeId
+                            )
                         )
                         incomeCategories.forEach { categoryDao.insert(it) }
                         Log.d("DatabaseInit", "Kategori pemasukan ditambahkan")
@@ -69,15 +92,30 @@ abstract class AppDatabase : RoomDatabase() {
 
                     if (expenseCount == 0) {
                         val expenseCategories = listOf(
-                            CategoryModel(name = "Food", transactionTypeId = transactionExpenseTypeId),
-                            CategoryModel(name = "Transport", transactionTypeId = transactionExpenseTypeId),
-                            CategoryModel(name = "Utilities", transactionTypeId = transactionExpenseTypeId),
-                            CategoryModel(name = "Entertainment", transactionTypeId = transactionExpenseTypeId),
-                            CategoryModel(name = "Shopping", transactionTypeId = transactionExpenseTypeId)
+                            CategoryModel(
+                                name = "Food",
+                                transactionTypeId = transactionExpenseTypeId
+                            ),
+                            CategoryModel(
+                                name = "Transport",
+                                transactionTypeId = transactionExpenseTypeId
+                            ),
+                            CategoryModel(
+                                name = "Utilities",
+                                transactionTypeId = transactionExpenseTypeId
+                            ),
+                            CategoryModel(
+                                name = "Entertainment",
+                                transactionTypeId = transactionExpenseTypeId
+                            ),
+                            CategoryModel(
+                                name = "Shopping",
+                                transactionTypeId = transactionExpenseTypeId
+                            )
                         )
                         expenseCategories.forEach { categoryDao.insert(it) }
                     }
-                }  catch (e: Exception){
+                } catch (e: Exception) {
                     ///TODO: handle exception
                     Log.e("DatabaseInit", "Error initializing database", e)
                 }

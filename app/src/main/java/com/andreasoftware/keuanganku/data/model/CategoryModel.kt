@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 import com.andreasoftware.keuanganku.common.ISO8601String
 import com.andreasoftware.keuanganku.util.TimeUtility
 
-@Entity (
+@Entity(
     tableName = "categories"
 )
 data class CategoryModel(

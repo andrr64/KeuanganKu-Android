@@ -25,13 +25,14 @@ class PageCategoryForm : KSubPage<PageCategoryFormBinding, PageCategoryFormViewM
     override fun setupComponent() {
         super.setupComponent()
         binding.etName.setText("")
-        binding.incDropdownTransactionType.dropdownTextInputLayout.hint = "What type of transaction is this category?"
+        binding.incDropdownTransactionType.dropdownTextInputLayout.hint =
+            "What type of transaction is this category?"
         Adapter.setupDropdownAdapter<TransactionType>(
             requireContext(),
             items = TransactionType.entries,
             displayText = TransactionType.entries.map { it -> TransactionType.getDisplayName(it.value) },
             autoCompleteTextView = binding.incDropdownTransactionType.dropdownAutoCompleteTextView,
-            onItemSelected = {value -> viewModel.setTransactionType(value)}
+            onItemSelected = { value -> viewModel.setTransactionType(value) }
         )
     }
 
@@ -51,8 +52,9 @@ class PageCategoryForm : KSubPage<PageCategoryFormBinding, PageCategoryFormViewM
                     AppSnackBar.success(binding.root, "Data berhasil disimpan")
                     findNavController().navigateUp()
                 }
+
                 is SealedDataOperationResult.Error -> {
-                    HandleExceptionWithSnackbar.show(binding.root, it.errorMessage?: "")
+                    HandleExceptionWithSnackbar.show(binding.root, it.errorMessage ?: "")
                 }
             }
         }

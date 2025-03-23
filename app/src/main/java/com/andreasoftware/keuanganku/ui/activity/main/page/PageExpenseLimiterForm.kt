@@ -17,20 +17,23 @@ import com.andreasoftware.keuanganku.ui.modal.CategoryFormBSFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class PageExpenseLimiterForm : KSubPage<PageExpenseLimiterFormBinding, PageExpenseLimiterFormViewModel>() {
+class PageExpenseLimiterForm :
+    KSubPage<PageExpenseLimiterFormBinding, PageExpenseLimiterFormViewModel>() {
     override val viewModel: PageExpenseLimiterFormViewModel by viewModels()
 
     override fun inflateBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ): PageExpenseLimiterFormBinding = PageExpenseLimiterFormBinding.inflate(inflater, container, false)
+    ): PageExpenseLimiterFormBinding =
+        PageExpenseLimiterFormBinding.inflate(inflater, container, false)
 
     override fun setupComponent() {
         super.setupComponent()
         binding.incDropdownSpinnerCategory.dropdownTextInputLayout.hint = "Category"
         binding.incDropdownPeriod.dropdownTextInputLayout.hint = "Period"
         binding.incDropdownSpinnerWallet.dropdownTextInputLayout.hint = "Wallet"
-        binding.etLimitAmount.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
+        binding.etLimitAmount.inputType =
+            InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
     }
 
     override fun setupListener() {
@@ -61,7 +64,11 @@ class PageExpenseLimiterForm : KSubPage<PageExpenseLimiterFormBinding, PageExpen
                 Toast.makeText(requireContext(), "Invalid limit amount", Toast.LENGTH_SHORT).show()
             }
         }
-        binding.buttonAddCategory.setOnClickListener { CategoryFormBSFragment.show(parentFragmentManager) }
+        binding.buttonAddCategory.setOnClickListener {
+            CategoryFormBSFragment.show(
+                parentFragmentManager
+            )
+        }
     }
 
     override fun setupObserver() {
@@ -72,6 +79,7 @@ class PageExpenseLimiterForm : KSubPage<PageExpenseLimiterFormBinding, PageExpen
                     AppSnackBar.success(binding.root, "Expense limiter added successfully")
                     findNavController().navigateUp()
                 }
+
                 is SealedDataOperationResult.Error -> {
                     AppSnackBar.error(binding.root, result.errorMessage ?: "An error occurred")
                 }

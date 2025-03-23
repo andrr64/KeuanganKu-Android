@@ -16,8 +16,8 @@ import com.andreasoftware.keuanganku.common.TimePeriod
 import com.andreasoftware.keuanganku.data.model.TransactionModel
 import com.andreasoftware.keuanganku.databinding.FragmentHomeBinding
 import com.andreasoftware.keuanganku.ui.activity.main.MainActivityNavigator
-import com.andreasoftware.keuanganku.ui.common.AppSnackBar
 import com.andreasoftware.keuanganku.ui.adapter.TransactionItemAdapter
+import com.andreasoftware.keuanganku.ui.common.AppSnackBar
 import com.andreasoftware.keuanganku.util.CurrencyFormatter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -68,11 +68,15 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        transactionAdapter = TransactionItemAdapter(emptyList(), viewModel.getCategoryRepository(), userLocale, onItemClick = {transaction ->
-            ///TODO: handle when transaction clicked
-            onTransactionClicked(transaction)
-            Log.d("HomeFragment", "Transaction clicked: $transaction")
-        }) // Inisialisasi dengan list kosong
+        transactionAdapter = TransactionItemAdapter(
+            emptyList(),
+            viewModel.getCategoryRepository(),
+            userLocale,
+            onItemClick = { transaction ->
+                ///TODO: handle when transaction clicked
+                onTransactionClicked(transaction)
+                Log.d("HomeFragment", "Transaction clicked: $transaction")
+            }) // Inisialisasi dengan list kosong
         binding.recyclerViewOfRecentTransactions.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = transactionAdapter
@@ -86,8 +90,13 @@ class HomeFragment : Fragment() {
     private fun setupPeriodSpinner() {
         val periods = TimePeriod.entries.map { it.displayName }
         val sortTransaction = SortTransaction.entries.map { it.displayName }
-        val adapterSort = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, sortTransaction)
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, periods)
+        val adapterSort = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_dropdown_item_1line,
+            sortTransaction
+        )
+        val adapter =
+            ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, periods)
         Log.d("SortTransaction", "Items: $sortTransaction")
 
         binding.spinnerSortTransactionsBy.spinner.setAdapter(adapterSort)
@@ -95,10 +104,19 @@ class HomeFragment : Fragment() {
         binding.spinnerIncomePeriod.spinner.setAdapter(adapter)
         binding.spinnerRecentTransactionsPeriod.spinner.setAdapter(adapter)
 
-        binding.spinnerExpensePeriod.spinner.setText(viewModel.expensePeriod.value.displayName,false)
+        binding.spinnerExpensePeriod.spinner.setText(
+            viewModel.expensePeriod.value.displayName,
+            false
+        )
         binding.spinnerIncomePeriod.spinner.setText(viewModel.incomePeriod.value.displayName, false)
-        binding.spinnerRecentTransactionsPeriod.spinner.setText(viewModel.incomePeriod.value.displayName, false)
-        binding.spinnerSortTransactionsBy.spinner.setText(viewModel.sortTransaction.value.displayName, false)
+        binding.spinnerRecentTransactionsPeriod.spinner.setText(
+            viewModel.incomePeriod.value.displayName,
+            false
+        )
+        binding.spinnerSortTransactionsBy.spinner.setText(
+            viewModel.sortTransaction.value.displayName,
+            false
+        )
 
         binding.spinnerExpensePeriod.spinner.setOnItemClickListener { _, _, position, _ ->
             viewModel.setExpensePeriod(TimePeriod.entries[position])
@@ -116,7 +134,8 @@ class HomeFragment : Fragment() {
 
     private fun setupObserver() {
         viewModel.balance.observe(viewLifecycleOwner) { balance ->
-            binding.totalBalanceTextView.text = CurrencyFormatter.formatCurrency(balance, userLocale)
+            binding.totalBalanceTextView.text =
+                CurrencyFormatter.formatCurrency(balance, userLocale)
         }
         viewModel.totalExpense.observe(viewLifecycleOwner) { expense ->
             binding.expenseAmount.text = CurrencyFormatter.formatCurrency(expense, userLocale)
@@ -171,7 +190,8 @@ class HomeFragment : Fragment() {
         viewModel.recentTransactions.observe(viewLifecycleOwner) { transactions ->
             if (transactions != null) {
                 transactionAdapter.updateTransactions(transactions)
-                binding.recentTransactionEmptyTextview.visibility = if (transactions.isEmpty()) View.VISIBLE else View.GONE
+                binding.recentTransactionEmptyTextview.visibility =
+                    if (transactions.isEmpty()) View.VISIBLE else View.GONE
             }
         }
 

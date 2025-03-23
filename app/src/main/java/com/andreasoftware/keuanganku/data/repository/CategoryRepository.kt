@@ -2,11 +2,9 @@ package com.andreasoftware.keuanganku.data.repository
 
 import android.util.Log
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
 import com.andreasoftware.keuanganku.common.SealedDataOperationResult
 import com.andreasoftware.keuanganku.data.dao.CategoryDao
 import com.andreasoftware.keuanganku.data.model.CategoryModel
-import java.lang.Exception
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -25,12 +23,12 @@ class CategoryRepository
         incomeCategories.observeForever { updateHashMap() }
     }
 
-    suspend fun insert(newCategory: CategoryModel): SealedDataOperationResult<Any>{
+    suspend fun insert(newCategory: CategoryModel): SealedDataOperationResult<Any> {
         try {
             categoryDao.insert(newCategory)
             Log.d("CategoryRepository", "Category inserted successfully")
             return SealedDataOperationResult<Any>.Success(null)
-        } catch (e: Exception){
+        } catch (e: Exception) {
             Log.d("CategoryRepository", "Error inserting category: ${e.message}")
             return SealedDataOperationResult.Error(null, e.message)
         }

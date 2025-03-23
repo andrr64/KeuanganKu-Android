@@ -1,4 +1,5 @@
 package com.andreasoftware.keuanganku.ui.activity.main
+
 import android.os.Bundle
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.fragment.NavHostFragment
@@ -31,7 +32,7 @@ object MainActivityNavigator {
         navigateTo(activity, Action_MAIN_TO_EXPENSE_LIMITER_FORM)
     }
 
-    fun navigateFromMainToDetailWallet(activity: FragmentActivity?, wallet: WalletModel){
+    fun navigateFromMainToDetailWallet(activity: FragmentActivity?, wallet: WalletModel) {
         val bundle = Bundle().apply {
             putParcelable("wallet", wallet) // Mengirim objek TransactionModel
         }

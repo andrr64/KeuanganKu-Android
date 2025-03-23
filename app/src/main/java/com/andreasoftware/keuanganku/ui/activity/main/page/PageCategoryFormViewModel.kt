@@ -32,7 +32,7 @@ class PageCategoryFormViewModel
                 transactionTypeId = transactionType.value!!.value
             )
             val result = categoryRepository.insert(newCategory)
-            withContext(Dispatchers.Main){
+            withContext(Dispatchers.Main) {
                 insertResult.value = result
             }
         }

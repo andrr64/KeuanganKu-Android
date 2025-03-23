@@ -53,10 +53,12 @@ class PageMain : Fragment() {
         binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                binding.bottomNavbar.menu[position].isChecked = true  // Sinkronisasi bottom navigation dengan ViewPager
+                binding.bottomNavbar.menu[position].isChecked =
+                    true  // Sinkronisasi bottom navigation dengan ViewPager
             }
         })
-        binding.viewPager.offscreenPageLimit = 4  // Simpan semua halaman agar tidak di-destroy saat berpindah
+        binding.viewPager.offscreenPageLimit =
+            4  // Simpan semua halaman agar tidak di-destroy saat berpindah
     }
 
     private fun setupBottomNavigation() {

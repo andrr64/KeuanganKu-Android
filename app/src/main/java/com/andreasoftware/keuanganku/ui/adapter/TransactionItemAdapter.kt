@@ -31,7 +31,8 @@ class TransactionItemAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionItemViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.component_transaction_item, parent, false)
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.component_transaction_item, parent, false)
         return TransactionItemViewHolder(view)
     }
 

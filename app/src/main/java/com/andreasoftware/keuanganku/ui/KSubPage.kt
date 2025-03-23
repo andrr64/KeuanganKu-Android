@@ -6,10 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.viewbinding.ViewBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.findNavController
+import androidx.viewbinding.ViewBinding
 import com.andreasoftware.keuanganku.R
 
 abstract class KSubPage<VB : ViewBinding, VM : ViewModel> : Fragment() {

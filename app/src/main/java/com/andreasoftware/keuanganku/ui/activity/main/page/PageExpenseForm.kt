@@ -51,7 +51,8 @@ class PageExpenseForm : KSubPage<PageExpenseFormBinding, PageExpenseFormViewMode
         viewModel.categories.observe(viewLifecycleOwner, ::observeCategories)
         viewModel.wallets.observe(viewLifecycleOwner, ::observeWallets)
         viewModel.rating.observe(viewLifecycleOwner) { ratingValue ->
-            binding.transactionFormRatingBarDescription.text = RatingDescription.getDescription(requireContext(), ratingValue)
+            binding.transactionFormRatingBarDescription.text =
+                RatingDescription.getDescription(requireContext(), ratingValue)
         }
     }
 
@@ -100,7 +101,11 @@ class PageExpenseForm : KSubPage<PageExpenseFormBinding, PageExpenseFormViewMode
         val expense = createExpenseModel() ?: return
         viewModel.insertExpense(expense) { result ->
             if (result.isError()) {
-                HandleExceptionWithModal.info(requireContext(), "Error", result.errorMessage.toString())
+                HandleExceptionWithModal.info(
+                    requireContext(),
+                    "Error",
+                    result.errorMessage.toString()
+                )
             } else {
                 AppSnackBar.success(binding.root, "Expense added successfully")
                 findNavController().navigateUp()
