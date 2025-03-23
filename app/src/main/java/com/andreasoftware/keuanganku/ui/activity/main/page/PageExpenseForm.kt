@@ -19,6 +19,7 @@ import com.andreasoftware.keuanganku.ui.activity.main.MainActivityNavigator
 import com.andreasoftware.keuanganku.ui.common.AppSnackBar
 import com.andreasoftware.keuanganku.ui.exceptionhandler.HandleExceptionWithModal
 import com.andreasoftware.keuanganku.ui.exceptionhandler.HandleExceptionWithSnackbar
+import com.andreasoftware.keuanganku.ui.modal.CategoryBottomSheetDialogFragment
 import com.andreasoftware.keuanganku.util.RatingDescription
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -51,9 +52,7 @@ class PageExpenseForm : Fragment() {
     }
 
     private fun initializeUI() {
-        binding.buttonAddCategory.setOnClickListener {
-            MainActivityNavigator.navigateTo(requireActivity(), R.id.action_expense_form_to_category_form)
-        }
+
         setupDropdownHints()
         setupAppBar()
         setupClickListeners()
@@ -72,6 +71,10 @@ class PageExpenseForm : Fragment() {
 
     private fun setupClickListeners() {
         binding.submitButton.setOnClickListener { eventOnSubmitButtonClicked() }
+        binding.buttonAddCategory.setOnClickListener {
+            val bottomSheetFragment = CategoryBottomSheetDialogFragment() // Buat instance baru
+            bottomSheetFragment.show(parentFragmentManager, bottomSheetFragment.tag)
+        }
     }
 
     private fun setupObservers() {
