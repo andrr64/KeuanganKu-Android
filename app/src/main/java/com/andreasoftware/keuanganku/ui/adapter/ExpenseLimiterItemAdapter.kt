@@ -1,6 +1,7 @@
 package com.andreasoftware.keuanganku.ui.adapter
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import com.andreasoftware.keuanganku.R
 import com.andreasoftware.keuanganku.common.TimePeriod
 import com.andreasoftware.keuanganku.data.model.ExpenseLimiterModel
 import com.andreasoftware.keuanganku.data.repository.CategoryRepository
+import com.andreasoftware.keuanganku.data.repository.ExpenseLimiterRepository
 import com.andreasoftware.keuanganku.ui.util.BarColor
 import com.andreasoftware.keuanganku.util.CurrencyFormatter
 import com.andreasoftware.keuanganku.util.NumericFormater
@@ -40,25 +42,22 @@ class ExpenseLimiterItemAdapter(
         val category = categoryRepository.getCategoryById(data.categoryId)
         val budgetLimitAmount = data.limitAmount
         val spentAmount = 60000.0
-        var spendingPercentage = (spentAmount / budgetLimitAmount) * 100
-
-        spendingPercentage = if (spendingPercentage > 1.0) 1.0 else spendingPercentage
+        var spendingPercentage = NumericFormater.to100ScaleFromAperBNotZero(spentAmount, budgetLimitAmount)
 
         holder.title.text = TimePeriod.getDisplayNameByValue(data.enumTimePeriodValue?: 0)
         holder.category.text = category?.name ?: "Unknown"
-
         holder.spentAmount.text = CurrencyFormatter.formatCurrency(spentAmount, locale)
-        ///TODO: handle
 
-        val percentage100 = spendingPercentage * 100f
-        holder.spendingPercentage.text = NumericFormater.toPercentage(percentage100)
+        holder.spendingPercentage.text = NumericFormater.toPercentage(spendingPercentage)
         holder.budgetLimit.text = CurrencyFormatter.formatCurrency(data.limitAmount, locale)
         holder.parent.setOnClickListener { onItemClick(data) }
 
         val params = holder.percentageBar.layoutParams as ConstraintLayout.LayoutParams
-        params.matchConstraintPercentWidth = spendingPercentage.toFloat()
+        params.matchConstraintPercentWidth = (if (spendingPercentage > 0 && spendingPercentage <= 100) (spendingPercentage/100) else (
+            if (spendingPercentage > 100) 1 else 0
+        )  ) .toFloat()
         holder.percentageBar.layoutParams = params
-        holder.percentageBar.setBackgroundColor(BarColor.getColorFromPercentage(percentage100))
+        holder.percentageBar.setBackgroundColor(BarColor.getColorFromPercentageScale1(spendingPercentage))
     }
 
     override fun getItemCount(): Int = expenseLimiters.size

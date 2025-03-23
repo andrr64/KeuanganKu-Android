@@ -17,7 +17,7 @@ abstract class KSubPage<VB : ViewBinding, VM : ViewModel> : Fragment() {
     protected val binding get() = _binding!!
     protected abstract val viewModel: VM
 
-    abstract val title: String
+    open val title: String = ""
     abstract fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?): VB
 
     open fun setupObserver() {} // Opsional

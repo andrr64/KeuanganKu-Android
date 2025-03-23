@@ -36,7 +36,11 @@
         android:id="@+id/pageExpenseForm"
         android:name="com.andreasoftware.keuanganku.ui.activity.main.page.PageExpenseForm"
         android:label="fragment_expense_form"
-        tools:layout="@layout/page_expense_form" />
+        tools:layout="@layout/page_expense_form">
+        <action
+            android:id="@+id/action_expense_form_to_category_form"
+            app:destination="@id/pageCategoryForm" />
+    </fragment>
 
     <fragment
         android:id="@+id/pageIncomeForm"
@@ -61,4 +65,10 @@
         android:name="com.andreasoftware.keuanganku.ui.activity.main.page.PageExpenseLimiterForm"
         tools:layout="@layout/page_expense_limiter_form"
         android:label="page_expense_limiter_form" />
+
+    <fragment
+        android:id="@+id/pageCategoryForm"
+        android:name="com.andreasoftware.keuanganku.ui.activity.main.page.PageCategoryForm"
+        tools:layout="@layout/page_category_form"
+        android:label="page_category_form"/>
 </navigation>

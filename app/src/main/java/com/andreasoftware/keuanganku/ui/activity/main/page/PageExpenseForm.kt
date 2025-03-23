@@ -15,6 +15,7 @@ import com.andreasoftware.keuanganku.data.model.CategoryModel
 import com.andreasoftware.keuanganku.data.model.TransactionModel
 import com.andreasoftware.keuanganku.data.model.WalletModel
 import com.andreasoftware.keuanganku.databinding.PageExpenseFormBinding
+import com.andreasoftware.keuanganku.ui.activity.main.MainActivityNavigator
 import com.andreasoftware.keuanganku.ui.common.AppSnackBar
 import com.andreasoftware.keuanganku.ui.exceptionhandler.HandleExceptionWithModal
 import com.andreasoftware.keuanganku.ui.exceptionhandler.HandleExceptionWithSnackbar
@@ -50,6 +51,9 @@ class PageExpenseForm : Fragment() {
     }
 
     private fun initializeUI() {
+        binding.buttonAddCategory.setOnClickListener {
+            MainActivityNavigator.navigateTo(requireActivity(), R.id.action_expense_form_to_category_form)
+        }
         setupDropdownHints()
         setupAppBar()
         setupClickListeners()

@@ -23,7 +23,6 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class PageExpenseLimiterForm : KSubPage<PageExpenseLimiterFormBinding, PageExpenseLimiterFormViewModel>() {
-    override val title: String get() = "Expense Limiter"
     override val viewModel: PageExpenseLimiterFormViewModel by viewModels()
 
     override fun inflateBinding(

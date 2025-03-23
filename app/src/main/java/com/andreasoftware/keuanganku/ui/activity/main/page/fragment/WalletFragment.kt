@@ -56,7 +56,7 @@ class WalletFragment : Fragment() {
             MainActivityNavigator.navigateFromMainToDetailWallet(requireActivity(), wallet)
             Log.d("WalletFragment", "Wallet clicked: $wallet")
         })
-        expenseLimiterAdapter = ExpenseLimiterItemAdapter(emptyList(),viewModel.categoryRepository,  Locale("id", "ID"), onItemClick = { limiter ->})
+        expenseLimiterAdapter = ExpenseLimiterItemAdapter(emptyList(),viewModel.categoryRepository, Locale("id", "ID"), onItemClick = { limiter ->})
 
         binding.walletsRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
