@@ -10,8 +10,8 @@ import java.util.Locale
 
 object TimeUtility {
     @SuppressLint("ConstantLocale")
-    private val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US).apply {
-        timeZone = TimeZone.getTimeZone("UTC")
+    private val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", Locale.US).apply {
+        timeZone = TimeZone.getDefault() // Menggunakan zona waktu lokal
     }
 
     fun getCurrentISO8601(): String {
@@ -19,7 +19,7 @@ object TimeUtility {
     }
 
     fun getTimePeriodISO8601(timePeriod: TimePeriod): Pair<String, String> {
-        val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+        val calendar = Calendar.getInstance(TimeZone.getDefault())
 
         val start: String
         val end: String
