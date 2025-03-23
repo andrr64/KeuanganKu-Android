@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import com.andreasoftware.keuanganku.R
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -30,5 +31,12 @@ class CategoryBottomSheetDialogFragment: BottomSheetDialogFragment() {
             viewModel.insert(editTextCategoryName.text.toString())
         }
         return view
+    }
+
+    companion object {
+        fun show(fragmentManager: FragmentManager) {
+            val bottomSheetFragment = CategoryBottomSheetDialogFragment()
+            bottomSheetFragment.show(fragmentManager, bottomSheetFragment.tag)
+        }
     }
 }

@@ -68,8 +68,7 @@ class PageExpenseForm : Fragment() {
         binding.appBar.appBarBackButton.setOnClickListener { navigateUp() }
         binding.submitButton.setOnClickListener { eventOnSubmitButtonClicked() }
         binding.buttonAddCategory.setOnClickListener {
-            val bottomSheetFragment = CategoryBottomSheetDialogFragment()
-            bottomSheetFragment.show(parentFragmentManager, bottomSheetFragment.tag)
+            CategoryBottomSheetDialogFragment.show(parentFragmentManager)
         }
     }
 
@@ -81,7 +80,6 @@ class PageExpenseForm : Fragment() {
                 viewModel.setRating(rating.toInt())
             }
         }
-
         viewModel.rating.observe(viewLifecycleOwner) { ratingValue ->
             binding.transactionFormRatingBarDescription.text = RatingDescription.getDescription(requireContext(), ratingValue)
         }
