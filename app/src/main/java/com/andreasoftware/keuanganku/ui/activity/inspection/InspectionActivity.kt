@@ -26,9 +26,7 @@ class InspectionActivity : AppCompatActivity() {
 
         CoroutineScope(Dispatchers.Main).launch {
             val hasUsername = checkData()
-            val nextActivity =
-                if (hasUsername) MainActivity::class.java else IntroActivity::class.java
-            delay(1000)
+            val nextActivity = if (hasUsername) MainActivity::class.java else IntroActivity::class.java
             startActivity(Intent(this@InspectionActivity, nextActivity))
             finish()
         }

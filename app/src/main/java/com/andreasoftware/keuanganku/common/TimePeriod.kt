@@ -18,5 +18,9 @@ enum class TimePeriod(
             return TimePeriod.entries.find { it.value == value }?.displayName
                 ?: "Unknown Time Period"
         }
+
+        fun getEnumByValue(value: Short): TimePeriod? {
+            return TimePeriod.entries.find { it.value == value }
+        }
     }
 }
