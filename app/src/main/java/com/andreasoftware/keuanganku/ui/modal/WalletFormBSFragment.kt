@@ -8,12 +8,16 @@ import android.widget.Button
 import androidx.fragment.app.viewModels
 import com.andreasoftware.keuanganku.R
 import com.andreasoftware.keuanganku.data.model.WalletModel
+import com.andreasoftware.keuanganku.ui.common.AppSnackBar
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.textfield.TextInputEditText
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class WalletFormBSFragment: BottomSheetDialogFragment() {
+class WalletFormBSFragment(
+    private val onSuccessfulOperation: () -> Unit,
+    private val onFailedOperation: () -> Unit
+): BottomSheetDialogFragment() {
 
     private val viewModel: WalletFormBSViewModel by viewModels()
 
@@ -31,8 +35,11 @@ class WalletFormBSFragment: BottomSheetDialogFragment() {
             val newWallet = WalletModel(name = etWalletName.text.toString(), balance = etInitialAmount.text.toString().toDouble())
             viewModel.insertWallet(newWallet) {
                 if (it.isSuccess()) {
-                    dismiss()
+                    onSuccessfulOperation()
+                } else {
+                    onFailedOperation()
                 }
+                dismiss()
             }
         }
 

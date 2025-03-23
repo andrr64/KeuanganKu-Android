@@ -82,7 +82,10 @@ class WalletFragment : Fragment() {
 
     fun setupListener(){
         binding.buttonAddWallet.button.setOnClickListener {
-            WalletFormBSFragment().show(childFragmentManager, "WalletBottomSheetDialogFragment")
+            WalletFormBSFragment(
+                onSuccessfulOperation = { AppSnackBar.success(binding.root, "Wallet added successfully")},
+                onFailedOperation = { AppSnackBar.error(binding.root, "Failed to add wallet")}
+            ).show(childFragmentManager, "WalletBottomSheetDialogFragment")
         }
         binding.buttonAddSpendingLimiter.button.setOnClickListener {
             if (viewModel.wallets.value!!.isEmpty()){

@@ -5,22 +5,16 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.andreasoftware.keuanganku.common.DataOperationResult2
 import com.andreasoftware.keuanganku.common.SealedDataOperationResult
 import com.andreasoftware.keuanganku.common.TimePeriod
-import com.andreasoftware.keuanganku.data.model.CategoryModel
 import com.andreasoftware.keuanganku.data.model.ExpenseLimiterModel
-import com.andreasoftware.keuanganku.data.model.WalletModel
 import com.andreasoftware.keuanganku.databinding.PageExpenseLimiterFormBinding
 import com.andreasoftware.keuanganku.ui.KSubPage
 import com.andreasoftware.keuanganku.ui.common.Adapter
 import com.andreasoftware.keuanganku.ui.common.AppSnackBar
-import com.andreasoftware.keuanganku.ui.modal.CategoryBottomSheetDialogFragment
+import com.andreasoftware.keuanganku.ui.modal.CategoryFormBSFragment
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class PageExpenseLimiterForm : KSubPage<PageExpenseLimiterFormBinding, PageExpenseLimiterFormViewModel>() {
@@ -67,7 +61,7 @@ class PageExpenseLimiterForm : KSubPage<PageExpenseLimiterFormBinding, PageExpen
                 Toast.makeText(requireContext(), "Invalid limit amount", Toast.LENGTH_SHORT).show()
             }
         }
-        binding.buttonAddCategory.setOnClickListener { CategoryBottomSheetDialogFragment.show(parentFragmentManager) }
+        binding.buttonAddCategory.setOnClickListener { CategoryFormBSFragment.show(parentFragmentManager) }
     }
 
     override fun setupObserver() {

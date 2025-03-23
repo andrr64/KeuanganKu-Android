@@ -1,7 +1,6 @@
 package com.andreasoftware.keuanganku.ui.modal
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,9 +13,9 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CategoryBottomSheetDialogFragment: BottomSheetDialogFragment() {
+class CategoryFormBSFragment: BottomSheetDialogFragment() {
 
-    private val viewModel: CategoryBottomSheetDialogViewModel by viewModels()
+    private val viewModel: CategoryFormBSViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,7 +34,7 @@ class CategoryBottomSheetDialogFragment: BottomSheetDialogFragment() {
 
     companion object {
         fun show(fragmentManager: FragmentManager) {
-            val bottomSheetFragment = CategoryBottomSheetDialogFragment()
+            val bottomSheetFragment = CategoryFormBSFragment()
             bottomSheetFragment.show(fragmentManager, bottomSheetFragment.tag)
         }
     }

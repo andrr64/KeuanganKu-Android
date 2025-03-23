@@ -17,7 +17,7 @@ import com.andreasoftware.keuanganku.ui.common.Adapter
 import com.andreasoftware.keuanganku.ui.common.AppSnackBar
 import com.andreasoftware.keuanganku.ui.exceptionhandler.HandleExceptionWithModal
 import com.andreasoftware.keuanganku.ui.exceptionhandler.HandleExceptionWithSnackbar
-import com.andreasoftware.keuanganku.ui.modal.CategoryBottomSheetDialogFragment
+import com.andreasoftware.keuanganku.ui.modal.CategoryFormBSFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -41,7 +41,7 @@ class PageIncomeForm : KSubPage<PageIncomeFormBinding, PageIncomeFormViewModel>(
     override fun setupListener() {
         super.setupListener()
         binding.submitButton.setOnClickListener { eventOnSubmitButtonClicked() }
-        binding.buttonAddCategory.setOnClickListener { CategoryBottomSheetDialogFragment.show(parentFragmentManager) }
+        binding.buttonAddCategory.setOnClickListener { CategoryFormBSFragment.show(parentFragmentManager) }
     }
 
     override fun setupObserver() {

@@ -13,15 +13,11 @@ object MainActivityNavigator {
         navController?.navigate(actionId, bundle)
     }
 
-    val ACTION_MAIN_TO_WALLET_FORM = R.id.action_main_fragment_to_walletForm
     val ACTION_MAIN_TO_EXPENSE_FORM = R.id.action_main_fragment_to_expenseForm
     val ACTION_MAIN_TO_INCOME_FORM = R.id.action_main_fragment_to_incomeForm
     val ACTION_MAIN_TO_DETAIL_WALLET = R.id.action_main_fragment_to_walletDetail
     val Action_MAIN_TO_EXPENSE_LIMITER_FORM = R.id.action_main_fragment_to_expenseLimiterForm
 
-    fun navigateFromMainToWalletForm(activity: FragmentActivity?) {
-        navigateTo(activity, ACTION_MAIN_TO_WALLET_FORM)
-    }
 
     fun navigateFromMainToExpenseForm(activity: FragmentActivity?) {
         navigateTo(activity, ACTION_MAIN_TO_EXPENSE_FORM)

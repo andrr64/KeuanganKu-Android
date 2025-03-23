@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class CategoryBottomSheetDialogViewModel
+class CategoryFormBSViewModel
 @Inject constructor(
     private val categoryRepository: CategoryRepository
 ) : ViewModel() {

@@ -15,7 +15,7 @@ import com.andreasoftware.keuanganku.ui.KSubPage
 import com.andreasoftware.keuanganku.ui.common.AppSnackBar
 import com.andreasoftware.keuanganku.ui.exceptionhandler.HandleExceptionWithModal
 import com.andreasoftware.keuanganku.ui.exceptionhandler.HandleExceptionWithSnackbar
-import com.andreasoftware.keuanganku.ui.modal.CategoryBottomSheetDialogFragment
+import com.andreasoftware.keuanganku.ui.modal.CategoryFormBSFragment
 import com.andreasoftware.keuanganku.util.RatingDescription
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -37,7 +37,7 @@ class PageExpenseForm : KSubPage<PageExpenseFormBinding, PageExpenseFormViewMode
         super.setupListener()
         binding.submitButton.setOnClickListener { eventOnSubmitButtonClicked() }
         binding.buttonAddCategory.setOnClickListener {
-            CategoryBottomSheetDialogFragment.show(parentFragmentManager)
+            CategoryFormBSFragment.show(parentFragmentManager)
         }
         binding.transactionRatingbarLayout.ratingBar.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
             if (fromUser) {
