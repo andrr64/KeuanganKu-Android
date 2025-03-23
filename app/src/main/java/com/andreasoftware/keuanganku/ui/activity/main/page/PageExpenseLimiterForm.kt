@@ -17,6 +17,7 @@ import com.andreasoftware.keuanganku.databinding.PageExpenseLimiterFormBinding
 import com.andreasoftware.keuanganku.ui.KSubPage
 import com.andreasoftware.keuanganku.ui.common.Adapter
 import com.andreasoftware.keuanganku.ui.common.AppSnackBar
+import com.andreasoftware.keuanganku.ui.modal.CategoryBottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -66,6 +67,7 @@ class PageExpenseLimiterForm : KSubPage<PageExpenseLimiterFormBinding, PageExpen
                 Toast.makeText(requireContext(), "Invalid limit amount", Toast.LENGTH_SHORT).show()
             }
         }
+        binding.buttonAddCategory.setOnClickListener { CategoryBottomSheetDialogFragment.show(parentFragmentManager) }
     }
 
     override fun setupObserver() {

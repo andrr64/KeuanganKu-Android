@@ -68,7 +68,7 @@ class PageIncomeForm : Fragment() {
 
     private fun setupClickListeners() {
         binding.submitButton.setOnClickListener { eventOnSubmitButtonClicked() }
-        CategoryBottomSheetDialogFragment.show(parentFragmentManager)
+        binding.buttonAddCategory.setOnClickListener { CategoryBottomSheetDialogFragment.show(parentFragmentManager) }
     }
 
     private fun setupObservers() {
