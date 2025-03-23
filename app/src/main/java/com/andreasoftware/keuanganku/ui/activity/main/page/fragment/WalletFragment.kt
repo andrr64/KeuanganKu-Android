@@ -15,6 +15,7 @@ import com.andreasoftware.keuanganku.ui.activity.main.MainActivityNavigator
 import com.andreasoftware.keuanganku.ui.adapter.ExpenseLimiterItemAdapter
 import com.andreasoftware.keuanganku.ui.adapter.WalletItemAdapter
 import com.andreasoftware.keuanganku.ui.common.AppSnackBar
+import com.andreasoftware.keuanganku.ui.modal.WalletFormBSFragment
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Locale
 
@@ -81,7 +82,7 @@ class WalletFragment : Fragment() {
 
     fun setupListener(){
         binding.buttonAddWallet.button.setOnClickListener {
-            MainActivityNavigator.navigateFromMainToWalletForm(requireActivity())
+            WalletFormBSFragment().show(childFragmentManager, "WalletBottomSheetDialogFragment")
         }
         binding.buttonAddSpendingLimiter.button.setOnClickListener {
             if (viewModel.wallets.value!!.isEmpty()){

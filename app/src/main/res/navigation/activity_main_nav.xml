@@ -20,10 +20,6 @@
             app:destination="@+id/pageIncomeForm" />
 
         <action
-            android:id="@+id/action_main_fragment_to_walletForm"
-            app:destination="@id/walletFormPage" />
-
-        <action
             android:id="@+id/action_main_fragment_to_walletDetail"
             app:destination="@id/pageWalletDetail" />
 
@@ -47,12 +43,6 @@
         android:name="com.andreasoftware.keuanganku.ui.activity.main.page.PageIncomeForm"
         android:label="page_income_form"
         tools:layout="@layout/page_income_form" />
-
-    <fragment
-        android:id="@+id/walletFormPage"
-        android:name="com.andreasoftware.keuanganku.ui.activity.main.page.PageWalletForm"
-        android:label="page_income_form"
-        tools:layout="@layout/page_wallet_form" />
 
     <fragment
         android:id="@+id/pageWalletDetail"
