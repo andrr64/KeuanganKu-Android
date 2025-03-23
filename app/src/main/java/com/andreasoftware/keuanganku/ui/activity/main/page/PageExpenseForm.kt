@@ -1,12 +1,8 @@
 package com.andreasoftware.keuanganku.ui.activity.main.page
 
-import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.andreasoftware.keuanganku.R
@@ -15,7 +11,7 @@ import com.andreasoftware.keuanganku.data.model.CategoryModel
 import com.andreasoftware.keuanganku.data.model.TransactionModel
 import com.andreasoftware.keuanganku.data.model.WalletModel
 import com.andreasoftware.keuanganku.databinding.PageExpenseFormBinding
-import com.andreasoftware.keuanganku.ui.activity.main.MainActivityNavigator
+import com.andreasoftware.keuanganku.ui.KSubPage
 import com.andreasoftware.keuanganku.ui.common.AppSnackBar
 import com.andreasoftware.keuanganku.ui.exceptionhandler.HandleExceptionWithModal
 import com.andreasoftware.keuanganku.ui.exceptionhandler.HandleExceptionWithSnackbar
@@ -24,65 +20,45 @@ import com.andreasoftware.keuanganku.util.RatingDescription
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class PageExpenseForm : Fragment() {
+class PageExpenseForm : KSubPage<PageExpenseFormBinding, PageExpenseFormViewModel>() {
 
-    private var _binding: PageExpenseFormBinding? = null
-    private val binding get() = _binding!!
-    private val viewModel: PageExpenseFormViewModel by viewModels()
+    override val viewModel: PageExpenseFormViewModel by viewModels()
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = PageExpenseFormBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+    override fun inflateBinding(
+        inflater: LayoutInflater, container: ViewGroup?
+    ): PageExpenseFormBinding = PageExpenseFormBinding.inflate(inflater, container, false)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        initializeUI()
-        setupObservers()
-        Log.d("ExpenseFormPage", "Created!")
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        Log.d("ExpenseFormPage", "Destroyed!")
-        _binding = null
-    }
-
-    private fun initializeUI() {
+    override fun setupComponent() {
+        super.setupComponent()
         setupDropdownHints()
-        setupClickListeners()
     }
 
-
-    private fun setupDropdownHints() {
-        binding.incDropdownSpinnerCategory.dropdownTextInputLayout.hint =
-            getString(R.string.select_category)
-        ///TODO: use string resource
-        binding.incDropdownSpinnerWallet.dropdownTextInputLayout.hint = "Select Wallet"
-    }
-
-    private fun setupClickListeners() {
-        binding.appBar.appBarBackButton.setOnClickListener { navigateUp() }
+    override fun setupListener() {
+        super.setupListener()
         binding.submitButton.setOnClickListener { eventOnSubmitButtonClicked() }
         binding.buttonAddCategory.setOnClickListener {
             CategoryBottomSheetDialogFragment.show(parentFragmentManager)
         }
-    }
-
-    private fun setupObservers() {
-        viewModel.categories.observe(viewLifecycleOwner, ::observeCategories)
-        viewModel.wallets.observe(viewLifecycleOwner, ::observeWallets)
         binding.transactionRatingbarLayout.ratingBar.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
             if (fromUser) {
                 viewModel.setRating(rating.toInt())
             }
         }
+    }
+
+    override fun setupObserver() {
+        super.setupObserver()
+        viewModel.categories.observe(viewLifecycleOwner, ::observeCategories)
+        viewModel.wallets.observe(viewLifecycleOwner, ::observeWallets)
         viewModel.rating.observe(viewLifecycleOwner) { ratingValue ->
             binding.transactionFormRatingBarDescription.text = RatingDescription.getDescription(requireContext(), ratingValue)
         }
+    }
+
+    private fun setupDropdownHints() {
+        binding.incDropdownSpinnerCategory.dropdownTextInputLayout.hint =
+            getString(R.string.select_category)
+        binding.incDropdownSpinnerWallet.dropdownTextInputLayout.hint = "Select Wallet"
     }
 
     private fun observeCategories(categories: List<CategoryModel>?) {
@@ -140,13 +116,11 @@ class PageExpenseForm : Fragment() {
         binding.titleInputLayout.error = null
         binding.amountInputLayout.error = null
 
-        ///TODO: use string resource
         if (title.isEmpty()) {
             binding.titleInputLayout.error = "Title cannot be empty"
             isValid = false
         }
 
-        ///TODO: use string resource
         if (amountString.isEmpty()) {
             binding.amountInputLayout.error = "Amount cannot be empty"
             isValid = false
@@ -184,9 +158,5 @@ class PageExpenseForm : Fragment() {
             walletId = viewModel.selectedWallet.value?.id ?: 0,
             transactionTypeId = TransactionType.EXPENSE.value
         )
-    }
-
-    private fun navigateUp() {
-        findNavController().navigateUp()
     }
 }
