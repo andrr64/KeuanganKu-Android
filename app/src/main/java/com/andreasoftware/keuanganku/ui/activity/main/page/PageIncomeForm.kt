@@ -18,6 +18,7 @@ import com.andreasoftware.keuanganku.databinding.PageIncomeFormBinding
 import com.andreasoftware.keuanganku.ui.common.AppSnackBar
 import com.andreasoftware.keuanganku.ui.exceptionhandler.HandleExceptionWithModal
 import com.andreasoftware.keuanganku.ui.exceptionhandler.HandleExceptionWithSnackbar
+import com.andreasoftware.keuanganku.ui.modal.CategoryBottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -67,6 +68,10 @@ class PageIncomeForm : Fragment() {
 
     private fun setupClickListeners() {
         binding.submitButton.setOnClickListener { eventOnSubmitButtonClicked() }
+        binding.buttonAddCategory.setOnClickListener {
+            val bottomSheetFragment = CategoryBottomSheetDialogFragment()
+            bottomSheetFragment.show(parentFragmentManager, bottomSheetFragment.tag)
+        }
     }
 
     private fun setupObservers() {

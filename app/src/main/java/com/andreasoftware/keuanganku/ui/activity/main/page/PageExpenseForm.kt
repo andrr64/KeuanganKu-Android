@@ -52,15 +52,10 @@ class PageExpenseForm : Fragment() {
     }
 
     private fun initializeUI() {
-
         setupDropdownHints()
-        setupAppBar()
         setupClickListeners()
     }
 
-    private fun setupAppBar() {
-        binding.appBar.appBarBackButton.setOnClickListener { navigateUp() }
-    }
 
     private fun setupDropdownHints() {
         binding.incDropdownSpinnerCategory.dropdownTextInputLayout.hint =
@@ -70,9 +65,10 @@ class PageExpenseForm : Fragment() {
     }
 
     private fun setupClickListeners() {
+        binding.appBar.appBarBackButton.setOnClickListener { navigateUp() }
         binding.submitButton.setOnClickListener { eventOnSubmitButtonClicked() }
         binding.buttonAddCategory.setOnClickListener {
-            val bottomSheetFragment = CategoryBottomSheetDialogFragment() // Buat instance baru
+            val bottomSheetFragment = CategoryBottomSheetDialogFragment()
             bottomSheetFragment.show(parentFragmentManager, bottomSheetFragment.tag)
         }
     }
