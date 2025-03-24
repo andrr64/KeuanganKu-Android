@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.andreasoftware.keuanganku.R
+import com.andreasoftware.keuanganku.common.SealedDataOperationResult
 import com.andreasoftware.keuanganku.common.TransactionType
 import com.andreasoftware.keuanganku.data.model.CategoryModel
 import com.andreasoftware.keuanganku.data.model.TransactionModel
@@ -57,11 +58,26 @@ class PageIncomeForm : KSubPage<PageIncomeFormBinding, PageIncomeFormViewModel>(
         super.setupObserver()
         viewModel.categories.observe(viewLifecycleOwner, ::observeCategories)
         viewModel.wallets.observe(viewLifecycleOwner, ::observeWallets)
+        viewModel.insertResult.observe(viewLifecycleOwner) {
+            when (it) {
+                is SealedDataOperationResult.Success -> {
+                    AppSnackBar.success(binding.root, "Income added successfully")
+                    findNavController().navigateUp()
+                }
+
+                is SealedDataOperationResult.Error -> {
+                    HandleExceptionWithModal.info(
+                        requireContext(),
+                        "Error",
+                        it.errorMessage.toString()
+                    )
+                }
+            }
+        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        Log.d("IncomeFormPage", "Destroyed!")
     }
 
     private fun observeCategories(categories: List<CategoryModel>?) {
@@ -91,18 +107,7 @@ class PageIncomeForm : KSubPage<PageIncomeFormBinding, PageIncomeFormViewModel>(
     private fun eventOnSubmitButtonClicked() {
         if (!validateInput()) return
         val income = createIncomeModel() ?: return
-        viewModel.insertIncome(income) { result ->
-            if (result.isError()) {
-                HandleExceptionWithModal.info(
-                    requireContext(),
-                    "Error",
-                    result.errorMessage.toString()
-                )
-            } else {
-                AppSnackBar.success(binding.root, "Income added successfully")
-                findNavController().navigateUp()
-            }
-        }
+        viewModel.insertIncome(income)
     }
 
     private fun validateInput(): Boolean {

@@ -3,7 +3,6 @@ package com.andreasoftware.keuanganku.data.repository
 import com.andreasoftware.keuanganku.common.TimePeriod
 import android.util.Log
 import androidx.room.withTransaction
-import com.andreasoftware.keuanganku.common.DataOperationResult
 import com.andreasoftware.keuanganku.common.DataOperationResult2
 import com.andreasoftware.keuanganku.common.SealedDataOperationResult
 import com.andreasoftware.keuanganku.common.SortTransaction
@@ -31,22 +30,19 @@ class TransactionRepository
     val countIncome = transactionDao.countIncomeLiveData()
     val countTransaction = transactionDao.countExpenseLiveData()
 
-    suspend fun insertIncome(transaction: TransactionModel): DataOperationResult {
+    suspend fun insertIncome(transaction: TransactionModel): SealedDataOperationResult<Unit> {
         return try {
             db.withTransaction {
                 transactionDao.insert(transaction)
                 walletDao.addBalance(transaction.walletId, transaction.amount)
             }
-            DataOperationResult.success()
+            SealedDataOperationResult.Success(null)
         } catch (e: Exception) {
-            DataOperationResult.error(
-                IncomeDAOException.CREATE_ERROR.code,
-                e.localizedMessage ?: "Unknown error"
-            )
+            SealedDataOperationResult.Error(IncomeDAOException.CREATE_ERROR.code, e.toString())
         }
     }
 
-    suspend fun insertExpenseV2(transaction: TransactionModel): SealedDataOperationResult<Unit> {
+    suspend fun insertExpense(transaction: TransactionModel): SealedDataOperationResult<Unit> {
         return try {
             db.withTransaction {
                 val currentBalance = walletDao.getBalance(transaction.walletId)

@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.andreasoftware.keuanganku.common.DataOperationResult
+import com.andreasoftware.keuanganku.common.SealedDataOperationResult
 import com.andreasoftware.keuanganku.data.model.CategoryModel
 import com.andreasoftware.keuanganku.data.model.TransactionModel
 import com.andreasoftware.keuanganku.data.model.WalletModel
@@ -12,6 +13,7 @@ import com.andreasoftware.keuanganku.data.repository.CategoryRepository
 import com.andreasoftware.keuanganku.data.repository.TransactionRepository
 import com.andreasoftware.keuanganku.data.repository.WalletRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -32,6 +34,9 @@ class PageIncomeFormViewModel
     private val _selectedWallet = MutableLiveData<WalletModel?>()
     val selectedWallet: LiveData<WalletModel?> get() = _selectedWallet
 
+    private val _insertResult = MutableLiveData<SealedDataOperationResult<Any>>()
+    val insertResult: LiveData<SealedDataOperationResult<Any>> = _insertResult
+
     fun setSelectedCategory(category: CategoryModel) {
         _selectedCategory.value = category
     }
@@ -40,10 +45,10 @@ class PageIncomeFormViewModel
         _selectedWallet.value = wallet
     }
 
-    fun insertIncome(income: TransactionModel, callback: (DataOperationResult) -> Unit) {
-        viewModelScope.launch {
+    fun insertIncome(income: TransactionModel) {
+        viewModelScope.launch(Dispatchers.IO) {
             val result = transactionRepository.insertIncome(income)
-            callback(result)
+            _insertResult.postValue(result)
         }
     }
 }

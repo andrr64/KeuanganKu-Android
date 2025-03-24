@@ -56,7 +56,7 @@ class PageExpenseFormViewModel
 
     fun insertExpense(expense: TransactionModel) {
         viewModelScope.launch(Dispatchers.IO) {
-            val result = transactionRepository.insertExpenseV2(expense)
+            val result = transactionRepository.insertExpense(expense)
             _insertResult.postValue(result)
         }
     }
