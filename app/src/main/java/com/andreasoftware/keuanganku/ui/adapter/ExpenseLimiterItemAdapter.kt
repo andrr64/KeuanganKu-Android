@@ -36,11 +36,10 @@ class ExpenseLimiterItemAdapter(
         holder: ExpenseLimiterItemViewHolder,
         position: Int
     ) {
-        ///TODO: handle
         val data = expenseLimiters[position]
         val category = categoryRepository.getCategoryById(data.categoryId)
         val budgetLimitAmount = data.limitAmount
-        val spentAmount = 60000.0
+        val spentAmount = data.usedAmount
         var spendingPercentage =
             NumericFormater.to100ScaleFromAperBNotZero(spentAmount, budgetLimitAmount)
 
@@ -54,9 +53,13 @@ class ExpenseLimiterItemAdapter(
 
         val params = holder.percentageBar.layoutParams as ConstraintLayout.LayoutParams
         params.matchConstraintPercentWidth =
-            (if (spendingPercentage > 0 && spendingPercentage <= 100) (spendingPercentage / 100) else (
-                    if (spendingPercentage > 100) 1 else 0
-                    )).toFloat()
+            if (spendingPercentage > 0 && spendingPercentage <= 100) {
+                (spendingPercentage / 100).toFloat()
+            } else if (spendingPercentage > 100) {
+                1f
+            } else {
+                0.001f
+            }
         holder.percentageBar.layoutParams = params
         holder.percentageBar.setBackgroundColor(
             BarColor.getColorFromPercentageScale1(
