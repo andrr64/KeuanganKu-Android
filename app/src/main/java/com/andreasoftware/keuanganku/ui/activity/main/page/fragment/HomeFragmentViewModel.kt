@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import com.andreasoftware.keuanganku.common.SealedDataOperationResult
 import com.andreasoftware.keuanganku.common.SortTransaction
 import com.andreasoftware.keuanganku.common.TimePeriod
 import com.andreasoftware.keuanganku.data.model.TransactionModel
@@ -106,11 +107,15 @@ class HomeFragmentViewModel
                 updateIncome()
             }
         }
-        _countExpense.observeForever {
-            updateExpense()
+        viewModelScope.launch {
+            _countExpense.observeForever {
+                updateExpense()
+            }
         }
-        _countIncome.observeForever {
-            updateIncome()
+        viewModelScope.launch {
+            _countIncome.observeForever {
+                updateIncome()
+            }
         }
     }
 
@@ -118,14 +123,10 @@ class HomeFragmentViewModel
         viewModelScope.launch {
             val period = _expensePeriod.value
             val result = transactionRepository.totalExpense(period)
-            if (result.isSuccess()) {
-                _totalExpense.value = (result.data ?: 0.0) as Double
-                Log.d("HomeFragmentViewModel", "Total expense updated: ${_totalExpense.value}")
+            if (result is SealedDataOperationResult.Success) {
+                _totalExpense.value = (result.data ?: 0.0)
             } else {
-                Log.e(
-                    "HomeFragmentViewModel",
-                    "Failed to update total expense: ${result.errorMessage}"
-                )
+                ///TODO: handle error HomeFragmentViewModel.updateExpense()
             }
         }
     }
@@ -134,14 +135,10 @@ class HomeFragmentViewModel
         viewModelScope.launch {
             val period = _incomePeriod.value
             val result = transactionRepository.totalIncome(period)
-            if (result.isSuccess()) {
-                _totalIncome.value = (result.data ?: 0.0) as Double
-                Log.d("HomeFragmentViewModel", "Total income updated: ${_totalIncome.value}")
+            if (result is SealedDataOperationResult.Success) {
+                _totalIncome.value = (result.data ?: 0.0)
             } else {
-                Log.e(
-                    "HomeFragmentViewModel",
-                    "Failed to update total income: ${result.errorMessage}"
-                )
+                ///TODO: handle error HomeFragmentViewModel.updateIncome()
             }
         }
     }

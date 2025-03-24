@@ -118,32 +118,31 @@ class TransactionRepository
         timePeriod: TimePeriod,
         startDate: Date? = null,
         endDate: Date? = null
-    ): DataOperationResult2<Any> {
-        val (start, end) = TimeUtility.getTimePeriodISO8601(timePeriod)
-        try {
+    ): SealedDataOperationResult<Double> {
+        return try {
+            val (start, end) = TimeUtility.getTimePeriodISO8601(timePeriod)
             val result = transactionDao.totalExpense(startDate = start, endDate = end)
-            return DataOperationResult2.successWithData(result ?: 0.0)
+            SealedDataOperationResult.Success(result ?: 0.0)
         } catch (e: Exception) {
-            return DataOperationResult2.error(
+            SealedDataOperationResult.Error(
                 errorCode = ExpenseDAOException.READ_ERROR.code,
                 errorMessage = e.localizedMessage ?: "Unknown error"
             )
         }
     }
-
     suspend fun totalIncome(
         timePeriod: TimePeriod,
         startDate: Date? = null,
         endDate: Date? = null
-    ): DataOperationResult2<Any> {
-        val (start, end) = TimeUtility.getTimePeriodISO8601(timePeriod)
-        try {
+    ): SealedDataOperationResult<Double> { // Change return type to SealedDataOperationResult<Double>
+        return try {
+            val (start, end) = TimeUtility.getTimePeriodISO8601(timePeriod)
             val result = transactionDao.totalIncome(startDate = start, endDate = end)
-            return DataOperationResult2.successWithData(result ?: 0.0)
+            SealedDataOperationResult.Success(result ?: 0.0)
         } catch (e: Exception) {
-            return DataOperationResult2.error(
-                errorCode = IncomeDAOException.READ_ERROR.code, errorMessage = e.localizedMessage
-                    ?: "Unknown error"
+            SealedDataOperationResult.Error(
+                errorCode = IncomeDAOException.READ_ERROR.code,
+                errorMessage = e.localizedMessage ?: "Unknown error"
             )
         }
     }

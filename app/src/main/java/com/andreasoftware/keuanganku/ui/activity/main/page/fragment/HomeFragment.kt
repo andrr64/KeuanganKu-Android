@@ -76,7 +76,7 @@ class HomeFragment : Fragment() {
                 ///TODO: handle when transaction clicked
                 onTransactionClicked(transaction)
                 Log.d("HomeFragment", "Transaction clicked: $transaction")
-            }) // Inisialisasi dengan list kosong
+            })
         binding.recyclerViewOfRecentTransactions.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = transactionAdapter
