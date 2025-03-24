@@ -6,6 +6,7 @@ import com.andreasoftware.keuanganku.common.DataOperationResult
 import com.andreasoftware.keuanganku.data.model.WalletModel
 import com.andreasoftware.keuanganku.data.repository.WalletRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -13,7 +14,7 @@ import javax.inject.Inject
 class WalletFormBSViewModel
 @Inject constructor(val repository: WalletRepository) : ViewModel() {
     fun insertWallet(wallet: WalletModel, callback: (DataOperationResult) -> Unit) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val result = repository.insertWallet(wallet)
             callback(result)
         }
