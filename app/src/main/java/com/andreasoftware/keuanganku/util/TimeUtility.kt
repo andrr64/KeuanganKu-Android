@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
 import android.icu.util.TimeZone
+import com.andreasoftware.keuanganku.common.ISO8601String
 import com.andreasoftware.keuanganku.common.TimePeriod
 import java.util.Date
 import java.util.Locale
@@ -11,14 +12,16 @@ import java.util.Locale
 object TimeUtility {
     @SuppressLint("ConstantLocale")
     private val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", Locale.US).apply {
-        timeZone = TimeZone.getDefault() // Menggunakan zona waktu lokal
+        timeZone = TimeZone.getDefault()
     }
+
+
 
     fun getCurrentISO8601(): String {
         return format.format(Date())
     }
 
-    fun getTimePeriodISO8601(timePeriod: TimePeriod): Pair<String, String> {
+    fun getTimePeriodISO8601(timePeriod: TimePeriod): Pair<ISO8601String, ISO8601String> {
         val calendar = Calendar.getInstance(TimeZone.getDefault())
 
         val start: String
