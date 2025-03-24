@@ -1,11 +1,12 @@
 package com.andreasoftware.keuanganku.data.repository
 
+import com.andreasoftware.keuanganku.common.TimePeriod
 import android.util.Log
 import androidx.room.withTransaction
 import com.andreasoftware.keuanganku.common.DataOperationResult
 import com.andreasoftware.keuanganku.common.DataOperationResult2
+import com.andreasoftware.keuanganku.common.SealedDataOperationResult
 import com.andreasoftware.keuanganku.common.SortTransaction
-import com.andreasoftware.keuanganku.common.TimePeriod
 import com.andreasoftware.keuanganku.data.dao.ExpenseLimiterDao
 import com.andreasoftware.keuanganku.data.dao.TransactionDao
 import com.andreasoftware.keuanganku.data.dao.WalletDao
@@ -24,6 +25,7 @@ class TransactionRepository
     private val walletDao: WalletDao,
     private val db: AppDatabase,
     private val transactionDao: TransactionDao,
+    private val expenseLimiterDao: ExpenseLimiterDao
 ) {
     val countExpense = transactionDao.countExpenseLiveData()
     val countIncome = transactionDao.countIncomeLiveData()
@@ -44,27 +46,37 @@ class TransactionRepository
         }
     }
 
-    suspend fun insertExpense(transaction: TransactionModel): DataOperationResult {
+    suspend fun insertExpenseV2(transaction: TransactionModel): SealedDataOperationResult<Unit> {
         return try {
             db.withTransaction {
                 val currentBalance = walletDao.getBalance(transaction.walletId)
-                    ?: return@withTransaction DataOperationResult.error(
+                    ?: return@withTransaction SealedDataOperationResult.Error(
                         IncomeDAOException.CREATE_ERROR.code,
                         "Failed to retrieve wallet balance"
                     )
 
                 if (currentBalance < transaction.amount) {
-                    return@withTransaction DataOperationResult.error(
+                    return@withTransaction SealedDataOperationResult.Error(
                         IncomeDAOException.CREATE_ERROR.code,
                         "Insufficient balance"
                     )
                 }
+
+                val timePeriodValue = TimePeriod.getEnumByISO8601String(transaction.date)
+                val categoryId = transaction.categoryId
+                val walletId = transaction.walletId
+                val amount = transaction.amount
+
                 transactionDao.insert(transaction)
                 walletDao.subtractBalance(transaction.walletId, transaction.amount)
+                if (timePeriodValue != null){
+                    Log.d("TransactionRepository", "Time Period Value: $timePeriodValue")
+                    expenseLimiterDao.addUsedAmount(walletId, categoryId, timePeriodValue.value, amount)
+                }
             }
-            DataOperationResult.success()
+            SealedDataOperationResult.Success(Unit)
         } catch (e: Exception) {
-            DataOperationResult.error(
+            SealedDataOperationResult.Error(
                 IncomeDAOException.CREATE_ERROR.code,
                 e.localizedMessage ?: "Unknown error"
             )
