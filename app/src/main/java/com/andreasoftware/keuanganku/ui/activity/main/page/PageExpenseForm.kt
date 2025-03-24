@@ -6,6 +6,7 @@ import android.widget.ArrayAdapter
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.andreasoftware.keuanganku.R
+import com.andreasoftware.keuanganku.common.SealedDataOperationResult
 import com.andreasoftware.keuanganku.common.TransactionType
 import com.andreasoftware.keuanganku.data.model.CategoryModel
 import com.andreasoftware.keuanganku.data.model.TransactionModel
@@ -13,6 +14,7 @@ import com.andreasoftware.keuanganku.data.model.WalletModel
 import com.andreasoftware.keuanganku.databinding.PageExpenseFormBinding
 import com.andreasoftware.keuanganku.ui.KSubPage
 import com.andreasoftware.keuanganku.ui.common.AppSnackBar
+import com.andreasoftware.keuanganku.ui.exceptionhandler.HandleExceptionWithModal
 import com.andreasoftware.keuanganku.ui.exceptionhandler.HandleExceptionWithSnackbar
 import com.andreasoftware.keuanganku.ui.modal.CategoryFormBSFragment
 import com.andreasoftware.keuanganku.util.RatingDescription
@@ -52,6 +54,22 @@ class PageExpenseForm : KSubPage<PageExpenseFormBinding, PageExpenseFormViewMode
         viewModel.rating.observe(viewLifecycleOwner) { ratingValue ->
             binding.transactionFormRatingBarDescription.text =
                 RatingDescription.getDescription(requireContext(), ratingValue)
+        }
+        viewModel.insertResult.observe(viewLifecycleOwner) {
+            when (it) {
+                is SealedDataOperationResult.Success -> {
+                    AppSnackBar.success(binding.root, "Expense limiter added successfully")
+                    findNavController().navigateUp()
+                }
+
+                is SealedDataOperationResult.Error -> {
+                    HandleExceptionWithModal.info(
+                        requireContext(),
+                        "Error",
+                        it.errorMessage.toString()
+                    )
+                }
+            }
         }
     }
 
@@ -98,19 +116,7 @@ class PageExpenseForm : KSubPage<PageExpenseFormBinding, PageExpenseFormViewMode
     private fun eventOnSubmitButtonClicked() {
         if (!validateInput()) return
         val expense = createExpenseModel() ?: return
-        viewModel.insertExpense(expense) { result ->
-            if (false) {
-                ///TODO: handle error
-//                HandleExceptionWithModal.info(
-//                    requireContext(),
-//                    "Error",
-//                    result.errorMessage.toString()
-//                )
-            } else {
-                AppSnackBar.success(binding.root, "Expense added successfully")
-                findNavController().navigateUp()
-            }
-        }
+        viewModel.insertExpense(expense)
     }
 
     private fun validateInput(): Boolean {
