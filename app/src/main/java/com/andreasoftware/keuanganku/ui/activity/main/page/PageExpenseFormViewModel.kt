@@ -1,11 +1,14 @@
 package com.andreasoftware.keuanganku.ui.activity.main.page
 
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.andreasoftware.keuanganku.common.DataOperationResult
+import com.andreasoftware.keuanganku.common.SealedDataOperationResult
 import com.andreasoftware.keuanganku.data.model.CategoryModel
 import com.andreasoftware.keuanganku.data.model.TransactionModel
 import com.andreasoftware.keuanganku.data.model.WalletModel
@@ -53,10 +56,10 @@ class PageExpenseFormViewModel
         _selectedWallet.value = wallet
     }
 
-    fun insertExpense(expense: TransactionModel, callback: (DataOperationResult) -> Unit) {
+    fun insertExpense(expense: TransactionModel, callback: (SealedDataOperationResult<Unit>) -> Unit) {
         viewModelScope.launch {
             Log.d("PageExpenseFormViewModel", "Inserting expense: $expense")
-            val result = transactionRepository.insertExpense(expense)
+            val result = transactionRepository.insertExpenseV2(expense)
             Log.d("PageExpenseFormViewModel", "Insert result: $result")
             callback(result)
         }

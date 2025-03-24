@@ -13,7 +13,6 @@ import com.andreasoftware.keuanganku.data.model.WalletModel
 import com.andreasoftware.keuanganku.databinding.PageExpenseFormBinding
 import com.andreasoftware.keuanganku.ui.KSubPage
 import com.andreasoftware.keuanganku.ui.common.AppSnackBar
-import com.andreasoftware.keuanganku.ui.exceptionhandler.HandleExceptionWithModal
 import com.andreasoftware.keuanganku.ui.exceptionhandler.HandleExceptionWithSnackbar
 import com.andreasoftware.keuanganku.ui.modal.CategoryFormBSFragment
 import com.andreasoftware.keuanganku.util.RatingDescription
@@ -100,12 +99,13 @@ class PageExpenseForm : KSubPage<PageExpenseFormBinding, PageExpenseFormViewMode
         if (!validateInput()) return
         val expense = createExpenseModel() ?: return
         viewModel.insertExpense(expense) { result ->
-            if (result.isError()) {
-                HandleExceptionWithModal.info(
-                    requireContext(),
-                    "Error",
-                    result.errorMessage.toString()
-                )
+            if (false) {
+                ///TODO: handle error
+//                HandleExceptionWithModal.info(
+//                    requireContext(),
+//                    "Error",
+//                    result.errorMessage.toString()
+//                )
             } else {
                 AppSnackBar.success(binding.root, "Expense added successfully")
                 findNavController().navigateUp()
