@@ -27,7 +27,7 @@ class CategoryRepository
         try {
             categoryDao.insert(newCategory)
             Log.d("CategoryRepository", "Category inserted successfully")
-            return SealedDataOperationResult<Any>.Success(null)
+            return SealedDataOperationResult.Success(null)
         } catch (e: Exception) {
             Log.d("CategoryRepository", "Error inserting category: ${e.message}")
             return SealedDataOperationResult.Error(null, e.message)

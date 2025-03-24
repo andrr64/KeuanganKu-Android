@@ -38,7 +38,7 @@ class PageExpenseForm : KSubPage<PageExpenseFormBinding, PageExpenseFormViewMode
         super.setupListener()
         binding.submitButton.setOnClickListener { eventOnSubmitButtonClicked() }
         binding.buttonAddCategory.setOnClickListener {
-            CategoryFormBSFragment.show(parentFragmentManager)
+            CategoryFormBSFragment.show(parentFragmentManager, binding.root)
         }
         binding.transactionRatingbarLayout.ratingBar.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
             if (fromUser) {

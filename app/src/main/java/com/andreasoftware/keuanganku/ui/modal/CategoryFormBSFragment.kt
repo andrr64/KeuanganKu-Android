@@ -9,14 +9,15 @@ import android.widget.EditText
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import com.andreasoftware.keuanganku.R
+import com.andreasoftware.keuanganku.common.SealedDataOperationResult
+import com.andreasoftware.keuanganku.ui.common.AppSnackBar
+import com.andreasoftware.keuanganku.ui.exceptionhandler.HandleExceptionWithSnackbar
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CategoryFormBSFragment : BottomSheetDialogFragment() {
-
+class CategoryFormBSFragment(val parentView: View) : BottomSheetDialogFragment() {
     private val viewModel: CategoryFormBSViewModel by viewModels()
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -27,14 +28,21 @@ class CategoryFormBSFragment : BottomSheetDialogFragment() {
         val editTextCategoryName = view.findViewById<EditText>(R.id.et_categoryName)
 
         buttonSubmit.setOnClickListener {
-            viewModel.insert(editTextCategoryName.text.toString())
+            viewModel.insert(editTextCategoryName.text.toString()) { result ->
+                if (result is SealedDataOperationResult.Success) {
+                    AppSnackBar.success(parentView, "Category added successfully")
+                } else {
+                    HandleExceptionWithSnackbar.show(parentView, (result as SealedDataOperationResult.Error).errorMessage!!)
+                }
+                dismiss()
+            }
         }
         return view
     }
 
     companion object {
-        fun show(fragmentManager: FragmentManager) {
-            val bottomSheetFragment = CategoryFormBSFragment()
+        fun show(fragmentManager: FragmentManager, parentView: View) {
+            val bottomSheetFragment = CategoryFormBSFragment(parentView)
             bottomSheetFragment.show(fragmentManager, bottomSheetFragment.tag)
         }
     }

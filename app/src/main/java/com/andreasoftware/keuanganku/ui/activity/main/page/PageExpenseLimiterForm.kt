@@ -65,9 +65,7 @@ class PageExpenseLimiterForm :
             }
         }
         binding.buttonAddCategory.setOnClickListener {
-            CategoryFormBSFragment.show(
-                parentFragmentManager
-            )
+            CategoryFormBSFragment.show(parentFragmentManager, binding.root)
         }
     }
 

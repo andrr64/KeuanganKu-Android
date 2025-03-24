@@ -48,9 +48,7 @@ class PageIncomeForm : KSubPage<PageIncomeFormBinding, PageIncomeFormViewModel>(
         super.setupListener()
         binding.submitButton.setOnClickListener { eventOnSubmitButtonClicked() }
         binding.buttonAddCategory.setOnClickListener {
-            CategoryFormBSFragment.show(
-                parentFragmentManager
-            )
+            CategoryFormBSFragment.show(parentFragmentManager, binding.root)
         }
     }
 
@@ -74,10 +72,6 @@ class PageIncomeForm : KSubPage<PageIncomeFormBinding, PageIncomeFormViewModel>(
                 }
             }
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
     }
 
     private fun observeCategories(categories: List<CategoryModel>?) {

@@ -2,6 +2,7 @@ package com.andreasoftware.keuanganku.ui.modal
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.andreasoftware.keuanganku.common.SealedDataOperationResult
 import com.andreasoftware.keuanganku.common.TransactionType
 import com.andreasoftware.keuanganku.data.model.CategoryModel
 import com.andreasoftware.keuanganku.data.repository.CategoryRepository
@@ -16,11 +17,10 @@ class CategoryFormBSViewModel
     private val categoryRepository: CategoryRepository
 ) : ViewModel() {
 
-    fun insert(categoryName: String) {
-        val newCategory =
-            CategoryModel(name = categoryName, transactionTypeId = TransactionType.EXPENSE.value)
+    fun insert(categoryName: String, callback: (SealedDataOperationResult<Any>) -> Unit) {
+        val newCategory = CategoryModel(name = categoryName, transactionTypeId = TransactionType.EXPENSE.value)
         viewModelScope.launch(Dispatchers.IO) {
-            categoryRepository.insert(newCategory)
+            callback(categoryRepository.insert(newCategory))
         }
     }
 }
