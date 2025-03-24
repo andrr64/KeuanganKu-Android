@@ -4,6 +4,7 @@ import androidx.room.withTransaction
 import com.andreasoftware.keuanganku.common.SealedDataOperationResult
 import com.andreasoftware.keuanganku.data.dao.CategoryDao
 import com.andreasoftware.keuanganku.data.dao.ExpenseLimiterDao
+import com.andreasoftware.keuanganku.data.dao.TransactionDao
 import com.andreasoftware.keuanganku.data.dao.WalletDao
 import com.andreasoftware.keuanganku.data.db.AppDatabase
 import com.andreasoftware.keuanganku.data.model.ExpenseLimiterModel
@@ -16,6 +17,7 @@ class ExpenseLimiterRepository
     private val expenseLimiterDao: ExpenseLimiterDao,
     private val db: AppDatabase,
     private val categoryDao: CategoryDao,
+    private val transactionDao: TransactionDao,
     private val walletDao: WalletDao
 ) {
     val allExpenseLimitersLiveData = expenseLimiterDao.getAllExpenseLimitersLiveData()

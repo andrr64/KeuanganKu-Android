@@ -1,12 +1,12 @@
 package com.andreasoftware.keuanganku.data.model
 
+import com.andreasoftware.keuanganku.common.TimePeriod
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.andreasoftware.keuanganku.common.ISO8601String
-import com.andreasoftware.keuanganku.common.TimePeriod
 import com.andreasoftware.keuanganku.common.TimePeriodEnumValue
 import com.andreasoftware.keuanganku.util.TimeUtility
 import com.google.android.material.textfield.TextInputEditText
@@ -41,9 +41,9 @@ data class ExpenseLimiterModel(
     val categoryId: Long,
     val enumTimePeriodValue: TimePeriodEnumValue?,
     val limitAmount: Double,
-    val usedAmount: Double = 0.0,
     val createdAt: ISO8601String = TimeUtility.getCurrentISO8601(),
-    val updatedAt: ISO8601String = TimeUtility.getCurrentISO8601()
+    val updatedAt: ISO8601String = TimeUtility.getCurrentISO8601(),
+    val usedAmount: Double = 0.0
 ) : Parcelable {
 
     fun getTimePeriod(): TimePeriod? {
