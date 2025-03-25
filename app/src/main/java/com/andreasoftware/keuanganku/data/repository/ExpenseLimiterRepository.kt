@@ -2,12 +2,14 @@ package com.andreasoftware.keuanganku.data.repository
 
 import androidx.room.withTransaction
 import com.andreasoftware.keuanganku.common.SealedDataOperationResult
+import com.andreasoftware.keuanganku.common.TimePeriod
 import com.andreasoftware.keuanganku.data.dao.CategoryDao
 import com.andreasoftware.keuanganku.data.dao.ExpenseLimiterDao
 import com.andreasoftware.keuanganku.data.dao.TransactionDao
 import com.andreasoftware.keuanganku.data.dao.WalletDao
 import com.andreasoftware.keuanganku.data.db.AppDatabase
 import com.andreasoftware.keuanganku.data.model.ExpenseLimiterModel
+import com.andreasoftware.keuanganku.util.TimeUtility
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -31,7 +33,19 @@ class ExpenseLimiterRepository
                     enumTimePeriodValue = expenseLimiter.enumTimePeriodValue!!
                 )
                 if (checkLimiter == null){
-                    expenseLimiterDao.insert(expenseLimiter)
+                    val timePeriodEnum = TimePeriod.getEnumByValue(expenseLimiter.enumTimePeriodValue)!!
+                    val (start, end) = TimeUtility.getTimePeriodISO8601(timePeriodEnum)
+                    val usedAmount = expenseLimiterDao.calculateUsedAmount(
+                        categoryId = expenseLimiter.categoryId,
+                        startDate = start,
+                        endDate = end
+                    )?: 0.0
+                    val resultId = expenseLimiterDao.insert(expenseLimiter)
+                    if (resultId != null){
+                        expenseLimiterDao.updateAmount(resultId, usedAmount)
+                    } else {
+                        throw Exception("Error when inserting expense limiter")
+                    }
                 } else {
                     throw Exception("Expense limiter already exists")
                 }
