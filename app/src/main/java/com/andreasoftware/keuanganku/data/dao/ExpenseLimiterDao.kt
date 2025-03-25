@@ -22,11 +22,26 @@ interface ExpenseLimiterDao {
         categoryId: Long,
         enumTimePeriodValue: Short): ExpenseLimiterModel?
 
+    @Query("SELECT * FROM expense_limiters WHERE walletId = :walletId AND categoryId = :categoryId AND enumTimePeriodValue > :enumTimePeriodTarget")
+    fun getSameLimitersWithDifferentTimePeriod(
+        walletId: Long,
+        categoryId: Long,
+        enumTimePeriodTarget: Short): List<ExpenseLimiterModel?>
+
+    @Query("SELECT * FROM expense_limiters WHERE walletId = :walletId AND categoryId = :categoryId")
+    suspend fun getLimitersByWalletAndCategory(walletId: Long, categoryId: Long): List<ExpenseLimiterModel>
+
     @Insert
-    fun insert(expenseLimiter: ExpenseLimiterModel)
+    fun insert(expenseLimiter: ExpenseLimiterModel): Long?
 
     @Query("UPDATE expense_limiters SET usedAmount = usedAmount+:amount WHERE walletId = :walletId AND categoryId = :categoryId AND enumTimePeriodValue >= :enumTimePeriodValue")
     fun addUsedAmount(walletId: Long, categoryId: Long, enumTimePeriodValue: Short, amount: Double)
+
+    @Query("UPDATE expense_limiters SET usedAmount = usedAmount+:amount WHERE id = :id")
+    suspend fun addUsedAmount(id: Long, amount: Double)
+
+    @Query("UPDATE expense_limiters SET usedAmount = :amount WHERE id = :targetid")
+    fun updateAmount(targetid: Long, amount: Double)
 
     @Query("DELETE FROM expense_limiters WHERE id = :id")
     fun delete(id: Long)
