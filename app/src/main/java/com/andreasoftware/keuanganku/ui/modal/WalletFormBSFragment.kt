@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.viewModels
 import com.andreasoftware.keuanganku.R
+import com.andreasoftware.keuanganku.common.SealedDataOperationResult
 import com.andreasoftware.keuanganku.data.model.WalletModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.textfield.TextInputEditText
@@ -36,7 +37,7 @@ class WalletFormBSFragment(
                 balance = etInitialAmount.text.toString().toDouble()
             )
             viewModel.insertWallet(newWallet) {
-                if (it.isSuccess()) {
+                if (it is SealedDataOperationResult.Success){
                     onSuccessfulOperation()
                 } else {
                     onFailedOperation()

@@ -3,7 +3,7 @@ package com.andreasoftware.keuanganku.data.repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import androidx.room.withTransaction
-import com.andreasoftware.keuanganku.common.DataOperationResult
+import com.andreasoftware.keuanganku.common.SealedDataOperationResult
 import com.andreasoftware.keuanganku.common.TransactionType
 import com.andreasoftware.keuanganku.data.dao.TransactionDao
 import com.andreasoftware.keuanganku.data.dao.WalletDao
@@ -11,8 +11,6 @@ import com.andreasoftware.keuanganku.data.db.AppDatabase
 import com.andreasoftware.keuanganku.data.exception.WalletDAOException
 import com.andreasoftware.keuanganku.data.model.TransactionModel
 import com.andreasoftware.keuanganku.data.model.WalletModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -34,30 +32,30 @@ class WalletRepository
     val allWallet: LiveData<List<WalletModel>> = walletDao.getAll()
     val totalAmount: LiveData<Double> = walletDao.getTotalBalance().map { it ?: 0.0 }
 
-    suspend fun insertWallet(wallet: WalletModel): DataOperationResult {
-        return withContext(Dispatchers.IO) {
-            try {
-                db.withTransaction {
-                    val insertedId = walletDao.insert(wallet) // Tangkap ID yang dikembalikan
-                    val newIncome = TransactionModel(
-                        title = "Create new wallet '${wallet.name}'",
-                        description = "$WALLET_INIT_DESCRIPTION_PREFIX${wallet.name}$WALLET_INIT_DESCRIPTION_SUFFIX",
-                        amount = wallet.balance,
-                        walletId = insertedId,
-                        categoryId = WALLET_INIT_CATEGORY_ID,
-                        rating = WALLET_INIT_RATING,
-                        transactionTypeId = TransactionType.INCOME.value,
-                    )
-                    transactionDao.insert(newIncome)
-                }
-                return@withContext DataOperationResult(true)
-            } catch (e: Exception) {
-                return@withContext DataOperationResult(
-                    false,
-                    WalletDAOException.CREATE_ERROR.code,
-                    e.toString()
-                )
+    suspend fun insertWallet(newWallet: WalletModel): SealedDataOperationResult<Long> {
+        return try {
+            val insertedId = db.withTransaction {
+                walletDao.insert(newWallet)
             }
+            val newIncome = TransactionModel(
+                title = "Create new wallet '${newWallet.name}'",
+                description = "$WALLET_INIT_DESCRIPTION_PREFIX${newWallet.name}$WALLET_INIT_DESCRIPTION_SUFFIX",
+                amount = newWallet.balance,
+                walletId = insertedId,
+                categoryId = WALLET_INIT_CATEGORY_ID,
+                rating = WALLET_INIT_RATING,
+                transactionTypeId = TransactionType.INCOME.value,
+            )
+            db.withTransaction {
+                transactionDao.insert(newIncome)
+            }
+
+            SealedDataOperationResult.Success(insertedId)
+        } catch (e: Exception) {
+            SealedDataOperationResult.Error(
+                errorCode = WalletDAOException.CREATE_ERROR.code,
+                errorMessage = e.localizedMessage ?: "Unknown error"
+            )
         }
     }
 
