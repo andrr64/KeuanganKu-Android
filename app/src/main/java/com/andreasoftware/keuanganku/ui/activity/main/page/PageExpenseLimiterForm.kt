@@ -43,12 +43,13 @@ class PageExpenseLimiterForm :
             val selectedCategory = viewModel.selectedCategory
             val selectedTimePeriod = viewModel.selectedTimePeriod
             val limitAmountText = binding.etLimitAmount.text.toString()
+            val name = binding.etName.text.toString()
 
-            if (selectedWallet == null || selectedCategory == null || selectedTimePeriod == null || limitAmountText.isEmpty()) {
-                AppSnackBar.error(binding.root, "Please fill all fields")
+            if (selectedWallet == null || selectedCategory == null || selectedTimePeriod == null || limitAmountText.isEmpty() || name.isEmpty()) {
+                viewModel.postStatus(SealedDataOperationResult.Error(null, "Please fill all fields"))
                 return@setOnClickListener
             }
-
+    
             try {
                 val limitAmount = limitAmountText.toDouble()
                 val expenseLimiter = ExpenseLimiterModel.generateFromUI(
@@ -71,7 +72,7 @@ class PageExpenseLimiterForm :
 
     override fun setupObserver() {
         super.setupObserver()
-        viewModel.insertResult.observe(viewLifecycleOwner) { result ->
+        viewModel.status.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is SealedDataOperationResult.Success -> {
                     AppSnackBar.success(binding.root, "Expense limiter added successfully")

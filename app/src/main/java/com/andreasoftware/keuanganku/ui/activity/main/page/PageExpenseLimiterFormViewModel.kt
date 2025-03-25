@@ -31,13 +31,17 @@ class PageExpenseLimiterFormViewModel
     var selectedWallet: WalletModel? = null
     var selectedTimePeriod: TimePeriod? = null
 
-    private val _insertResult = MutableLiveData<SealedDataOperationResult<Any>>()
-    val insertResult: LiveData<SealedDataOperationResult<Any>> = _insertResult
+    private val _status = MutableLiveData<SealedDataOperationResult<Any>>()
+    val status: LiveData<SealedDataOperationResult<Any>> = _status
+
+    fun postStatus(statusBro: SealedDataOperationResult<Any>){
+        _status.postValue(statusBro)
+    }
 
     fun insert(expenseLimiter: ExpenseLimiterModel) {
         viewModelScope.launch(Dispatchers.IO) {
             val result = expenseLimiterRepository.insert(expenseLimiter)
-            _insertResult.postValue(result)
+            _status.postValue(result)
         }
     }
 }
