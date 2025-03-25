@@ -1,9 +1,7 @@
 package com.andreasoftware.keuanganku.data.repository
 
 import com.andreasoftware.keuanganku.common.TimePeriod
-import android.util.Log
 import androidx.room.withTransaction
-import com.andreasoftware.keuanganku.common.DataOperationResult2
 import com.andreasoftware.keuanganku.common.SealedDataOperationResult
 import com.andreasoftware.keuanganku.common.SortTransaction
 import com.andreasoftware.keuanganku.data.dao.ExpenseLimiterDao
@@ -57,18 +55,20 @@ class TransactionRepository
                         "Insufficient balance"
                     )
                 }
-
-                val timePeriodValue = TimePeriod.getEnumByISO8601String(transaction.date)
                 val categoryId = transaction.categoryId
                 val walletId = transaction.walletId
                 val amount = transaction.amount
 
+                val expenseLimiters = expenseLimiterDao.getLimitersByWalletAndCategory(
+                    walletId = walletId,
+                    categoryId = categoryId
+                )
+                for (limiter in expenseLimiters) {
+                    expenseLimiterDao.addUsedAmount(limiter.id, amount)
+                }
+
                 transactionDao.insert(transaction)
                 walletDao.subtractBalance(transaction.walletId, transaction.amount)
-                if (timePeriodValue != null){
-                    Log.d("TransactionRepository", "Time Period Value: $timePeriodValue")
-                    expenseLimiterDao.addUsedAmount(walletId, categoryId, timePeriodValue.value, amount)
-                }
             }
             SealedDataOperationResult.Success(Unit)
         } catch (e: Exception) {
@@ -85,7 +85,6 @@ class TransactionRepository
         sortBy: SortTransaction = SortTransaction.DATE_Z_A
     ): List<TransactionModel> {
         val (start, end) = TimeUtility.getTimePeriodISO8601(timePeriod)
-        Log.d("TransactionRepository", "Start: $start, End: $end")
 
         return when (sortBy) {
             SortTransaction.DATE_A_Z -> transactionDao.getTransactionsDateAscending(
