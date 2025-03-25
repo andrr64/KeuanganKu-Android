@@ -12,6 +12,7 @@ import com.andreasoftware.keuanganku.common.TransactionType
 import com.andreasoftware.keuanganku.data.model.TransactionModel
 import com.andreasoftware.keuanganku.data.repository.CategoryRepository
 import com.andreasoftware.keuanganku.util.CurrencyFormatter
+import com.andreasoftware.keuanganku.util.TimeUtility
 import java.util.Locale
 
 class TransactionItemAdapter(
@@ -27,6 +28,7 @@ class TransactionItemAdapter(
         val category: TextView = itemView.findViewById(R.id.transactonCategoryNameTextview)
         val type: TextView = itemView.findViewById(R.id.transactionTypeTextview)
         val transactionTypeIc: ImageView = itemView.findViewById(R.id.transactionItemIconType)
+        val tvTransactionDate: TextView = itemView.findViewById(R.id.tv_transaction_date)
         val parent: CardView = itemView.findViewById(R.id.componentTransactionItem)
     }
 
@@ -45,6 +47,7 @@ class TransactionItemAdapter(
         holder.category.text = category?.name ?: "Unknown"
         holder.type.text = TransactionType.getDisplayName(transaction.transactionTypeId)
         holder.parent.setOnClickListener { onItemClick(transaction) }
+        holder.tvTransactionDate.text = TimeUtility.ISO8601StringToSimpleDateString(transaction.date)
 
         if (transaction.transactionTypeId == TransactionType.INCOME.value) {
             holder.transactionTypeIc.setImageResource(R.drawable.ic_income_type_24)
