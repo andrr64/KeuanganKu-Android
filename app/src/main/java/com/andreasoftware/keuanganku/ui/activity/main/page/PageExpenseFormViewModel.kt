@@ -29,8 +29,8 @@ class PageExpenseFormViewModel
     private val _rating: MutableLiveData<Int> = MutableLiveData(1)
     val rating: LiveData<Int> get() = _rating
 
-    private val _insertResult = MutableLiveData<SealedDataOperationResult<Any>>()
-    val insertResult: LiveData<SealedDataOperationResult<Any>> = _insertResult
+    private val _status = MutableLiveData<SealedDataOperationResult<Any>>()
+    val status: LiveData<SealedDataOperationResult<Any>> = _status
 
     fun setRating(rating: Int) {
         _rating.value = rating
@@ -57,7 +57,7 @@ class PageExpenseFormViewModel
     fun insertExpense(expense: TransactionModel) {
         viewModelScope.launch(Dispatchers.IO) {
             val result = transactionRepository.insertExpense(expense)
-            _insertResult.postValue(result)
+            _status.postValue(result)
         }
     }
 }

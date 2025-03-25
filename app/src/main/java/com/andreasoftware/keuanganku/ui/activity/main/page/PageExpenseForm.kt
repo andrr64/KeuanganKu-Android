@@ -55,7 +55,7 @@ class PageExpenseForm : KSubPage<PageExpenseFormBinding, PageExpenseFormViewMode
             binding.transactionFormRatingBarDescription.text =
                 RatingDescription.getDescription(requireContext(), ratingValue)
         }
-        viewModel.insertResult.observe(viewLifecycleOwner) {
+        viewModel.status.observe(viewLifecycleOwner) {
             when (it) {
                 is SealedDataOperationResult.Success -> {
                     AppSnackBar.success(binding.root, "Expense limiter added successfully")
