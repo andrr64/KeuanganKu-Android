@@ -15,8 +15,6 @@ object TimeUtility {
         timeZone = TimeZone.getDefault()
     }
 
-
-
     fun getCurrentISO8601(): String {
         return format.format(Date())
     }
@@ -67,5 +65,15 @@ object TimeUtility {
         calendar.set(Calendar.MINUTE, 0)
         calendar.set(Calendar.SECOND, 0)
         calendar.set(Calendar.MILLISECOND, 0)
+    }
+
+    fun ISO8601StringToSimpleDateString(iso8601String: String): String {
+        return try {
+            val date = format.parse(iso8601String)
+            val customFormat = SimpleDateFormat("dd MMM yyyy HH:mm", Locale.getDefault())
+            customFormat.format(date)
+        } catch (e: Exception) {
+            "Invalid Date"
+        }
     }
 }
