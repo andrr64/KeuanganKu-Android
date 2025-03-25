@@ -46,7 +46,7 @@ class ExpenseLimiterItemAdapter(
         holder.title.text = TimePeriod.getDisplayNameByValue(data.enumTimePeriodValue ?: 0)
         holder.category.text = category?.name ?: "Unknown"
         holder.spentAmount.text = CurrencyFormatter.formatCurrency(spentAmount, locale)
-
+        holder.tvTitle.text = expenseLimiters[position].title
         holder.spendingPercentage.text = NumericFormater.toPercentage(spendingPercentage)
         holder.budgetLimit.text = CurrencyFormatter.formatCurrency(data.limitAmount, locale)
         holder.parent.setOnClickListener { onItemClick(data) }
@@ -84,5 +84,6 @@ class ExpenseLimiterItemAdapter(
         val budgetLimit: TextView = itemView.findViewById(R.id.tv_budget_limit)
         val parent: CardView = itemView.findViewById(R.id.layout_expenselimiter_item)
         val percentageBar: View = itemView.findViewById(R.id.bar_percentage)
+        val tvTitle: TextView = itemView.findViewById(R.id.tv_limiter_title)
     }
 }
