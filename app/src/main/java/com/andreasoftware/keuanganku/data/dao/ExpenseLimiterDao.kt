@@ -16,6 +16,12 @@ interface ExpenseLimiterDao {
     @Query("SELECT * FROM expense_limiters")
     fun getAllExpenseLimiters(): List<ExpenseLimiterModel>
 
+    @Query("SELECT * FROM expense_limiters WHERE walletId = :walletId AND categoryId = :categoryId AND enumTimePeriodValue = :enumTimePeriodValue")
+    fun getExpenseLimiterBy(
+        walletId: Long,
+        categoryId: Long,
+        enumTimePeriodValue: Short): ExpenseLimiterModel?
+
     @Insert
     fun insert(expenseLimiter: ExpenseLimiterModel)
 

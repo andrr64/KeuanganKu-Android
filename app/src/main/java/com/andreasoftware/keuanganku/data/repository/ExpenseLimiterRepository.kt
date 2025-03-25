@@ -25,7 +25,16 @@ class ExpenseLimiterRepository
     suspend fun insert(expenseLimiter: ExpenseLimiterModel): SealedDataOperationResult<Any> {
         return try {
             db.withTransaction {
-                expenseLimiterDao.insert(expenseLimiter)
+                val checkLimiter = expenseLimiterDao.getExpenseLimiterBy(
+                    walletId = expenseLimiter.walletId,
+                    categoryId = expenseLimiter.categoryId,
+                    enumTimePeriodValue = expenseLimiter.enumTimePeriodValue!!
+                )
+                if (checkLimiter == null){
+                    expenseLimiterDao.insert(expenseLimiter)
+                } else {
+                    throw Exception("Expense limiter already exists")
+                }
             }
             SealedDataOperationResult.Success(null)
         } catch (e: Exception) {
